@@ -1,7 +1,7 @@
 E-Rate
 =====
 
-Contents:
+Contents
 -Code for E-Rate analysis
 -Notes
 --Basic Tools
