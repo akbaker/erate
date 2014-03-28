@@ -28,7 +28,7 @@ Workflow
 
 4) Calculate minimum distance to existing fiber source
   
-    erate_mindist.py
+    min_dist.py
 
 5) Run query to create flat sample group CSV file
 
