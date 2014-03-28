@@ -14,13 +14,13 @@ Dependencies
 
 Workflow
 --------------
-1) Import a second copy of the 2013 CAI data (shp_cai2013) to work from
+1) Import a second copy of the 2013 CAI data to work from
 
 2) Import additional datasets.
 
-		ACS_data_import.sql
-		crosswalk_import.sql
-		nces_optring_import.sql
+	ACS_data_import.sql
+	crosswalk_import.sql
+	nces_optring_import.sql
 
 3) Clean CAI dataset -- keep only private schools, remove duplicates
   
@@ -32,11 +32,11 @@ Workflow
 
 5) Run query to create flat sample group CSV file
 
-    sample.sql
+    sample_group.sql
 
 6) Run query to create flat out-of-sample group CSV file 
 
-    outsample_query.sql
+    outsample_group.sql
 
 7) Import resulting CSVs into Stata
 
