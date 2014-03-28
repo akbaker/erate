@@ -1,24 +1,21 @@
 Workflow
 ==========
-1) Import NBM state data
+1) Download state-level shapefiles from nbm.gov
 
-	(Download state-level shapefiles from nbm.gov)
+2) Import NBM state data
+
 	nbm_state_import.py
 
-2) Set up tables in PostgreSQL
+3) Set up tables in PostgreSQL
 
-	postgres_table_prep_mar19.sql
+	cable_table_prep.sql
 
-3) Run calculations
+4) Run calculations
 
-	provider_counts_cable_public.py
-	provider_counts_cable_private.py
-	provider_counts_cable_library.py
+	public_schools.py
+	private_schools.py
+	libraries.py
 
-4) Sum across block, address, road columns
+5) Sum across block, address, road columns
 
-	column_totals_mar19.sql
-
-5) Export CSV file
-
-	cable_provider_export_mar14.sql
+	cable_column_totals.sql
