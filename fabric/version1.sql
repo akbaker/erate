@@ -301,4 +301,4 @@ select lstate,
 	order by lstate;
 
 ---EXPORT FILE
-COPY (SELECT * FROM fabric.master) to '/Users/FCC/Documents/allison/data/fabric/master_mar25.csv' with delimiter '|' CSV header;
+COPY (SELECT * FROM fabric.master) to '/Users/FCC/Documents/allison/data/fabric/master.csv' with delimiter '|' CSV header;
