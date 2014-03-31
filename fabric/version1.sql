@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS fabric.master;
+﻿DROP TABLE IF EXISTS fabric.master;
 
 --Create master table
 create table fabric.master as
@@ -238,9 +238,22 @@ update fabric.master
 	set item24=new_values.fiber_item24
 	from new_values
 	where master.school_id=new_values.school_id;
+update fabric.master
+	set item24=0
+	where item24 is null;
 
 ------------------------------------------------------
+----MAXIMUM VALUE
+alter table fabric.master
+	drop column if exists max_val;
+alter table fabric.master
+	add column max_val int;
+update fabric.master
+	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, item24);
+
 ----CORROBORATION SCORING
+alter table fabric.master
+	drop column if exists score;
 alter table fabric.master
 	add column score int;
 with new_values as(
@@ -265,9 +278,26 @@ select score, count(*)
 	group by score
 	order by score;
 
+select lstate, score, count(*)
+	from fabric.master
+	group by lstate, score
+	order by lstate, score;
+
 select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, item24, score
 	from fabric.master
 	where score = 3
+	order by lstate;
+
+----PIVOT TABLE
+select lstate,
+	count(case when score = -1 then max_val end) as nofiber_neg1,
+	count(case when score = 0 then max_val end) as unknown_0,
+	count(case when score = 1 then max_val end) as fiber_pos1,
+	count(case when score = 2 then max_val end) as fiber_pos2,
+	count(case when score = 3 then max_val end) as fiber_pos3,
+	count(case when score = 4 then max_val end) as fiber_pos4
+	from fabric.master
+	group by lstate
 	order by lstate;
 
 ---EXPORT FILE
