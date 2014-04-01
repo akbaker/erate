@@ -1,4 +1,4 @@
---CA K-12 HSN
+﻿--CA K-12 HSN
 alter table fabric.cenic
 	drop column if exists fiber;
 alter table fabric.cenic
@@ -160,3 +160,11 @@ update fabric.me_ind
 	where fiber is null;
 
 select fiber, count(*) from fabric.me_ind group by fiber;
+
+--NAVAJO SCHOOLS
+alter table fabric.navajo_schools
+	drop column if exists fiber;
+alter table fabric.navajo_schools
+	add column fiber int;
+update fabric.navajo_schools
+	set fiber = -1;

@@ -76,6 +76,25 @@ update fabric.master
 		and new_values.school_city = master.lcity
 		and new_values.school_zip = master.lzip5;
 
+--Navajo Schools
+----check matches
+select count(*)
+	from fabric.master, fabric.navajo_schools
+	where master.school_id=navajo_schools.nces_id;
+
+----add column
+alter table fabric.master
+	add column navajo int;
+with new_values as(
+select nces_id, fiber as navajo_fiber
+	from fabric.navajo_schools
+	order by nces_id
+)
+update fabric.master
+	set navajo = new_values.navajo_fiber
+	from new_values
+	where new_values.nces_id=master.school_id;
+
 --CA K-12 HSN
 ----Check matches
 select st_cd, cds_code
@@ -220,6 +239,16 @@ update fabric.master
 	where master.school_code_nj=new_values.school_id
 		and lstate = 'NJ';
 
+--TEXAS
+alter table fabric.master
+	add column tx_ind int;
+update fabric.master
+	set tx_ind = 1
+	where lea_name = 'ROUND ROCK ISD';
+update fabric.master
+	set tx_ind = 0
+	where tx_ind is null;
+
 --ITEM 24
 ----check matches
 select nces_pub_full.school_id, master.school_id
@@ -249,16 +278,17 @@ alter table fabric.master
 alter table fabric.master
 	add column max_val int;
 update fabric.master
-	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, item24);
+	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, navajo, item24);
 
-----CORROBORATION SCORING
+----CORROBORATION SCORING 
 alter table fabric.master
 	drop column if exists score;
 alter table fabric.master
 	add column score int;
 with new_values as(
 select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) + coalesce(nj_ind,0) 
-	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(item24,0) as row_score
+	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(tx_ind,0)
+	+ coalesce(navajo,0) + coalesce(item24,0) as row_score
 	from fabric.master
 )
 update fabric.master
@@ -267,10 +297,10 @@ update fabric.master
 	where master.school_id = new_values.school_id;
 	
 
-select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, item24, score
+select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, item24, score
 	from fabric.master
 	where lstate = 'NJ' or lstate = 'CA' or lstate = 'FL' or lstate = 'WV' or lstate = 'NC'
-		or lstate = 'NM' or lstate = 'ME'
+		or lstate = 'NM' or lstate = 'ME' or lstate = 'TX' or lstate = 'AZ'
 	order by school_id;
 
 select score, count(*)
@@ -283,12 +313,14 @@ select lstate, score, count(*)
 	group by lstate, score
 	order by lstate, score;
 
-select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, item24, score
+select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, navajo, item24, score
 	from fabric.master
 	where score = 3
 	order by lstate;
 
 ----PIVOT TABLE
+drop table if exists fabric.state_counts;
+
 create table fabric.state_counts as(
 select lstate,
 	count(case when score = -1 then max_val end) as nofiber_neg1,
