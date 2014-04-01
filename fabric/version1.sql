@@ -244,11 +244,38 @@ alter table fabric.master
 	add column tx_ind int;
 update fabric.master
 	set tx_ind = 1
-	where lea_name = 'ROUND ROCK ISD';
+	where lea_name = 'ROUND ROCK ISD'
+		and lstate = 'TX';
 update fabric.master
 	set tx_ind = 0
-	where tx_ind is null;
+	where tx_ind is null
+		and lstate = 'TX';
 
+
+--MONTANA
+alter table fabric.master
+	add column mt_ind int;
+update fabric.master
+	set mt_ind = -1
+	where lstate = 'MT' and (school_name = 'POLARIS SCHOOL' or school_name = 'PLENTY COUPS HIGH SCHOOL' 
+		or school_name = 'LUTHER SCHOOL' or school_name = 'HAMMOND SCHOOL' or school_name = 'HAWKS HOME SCHOOL' 
+		or school_name = 'BENTON LAKE SCHOOL' or school_name = 'KINSEY SCHOOL' or school_id = '302088000624' 
+		or school_name = 'WEST GLACIER SCHOOL' or school_name = 'MALMBORG SCHOOL' or school_name = 'PASS CREEK SCHOOL' 
+		or school_name = 'KESTER SCHOOL' or school_name = 'BABB SCHOOL' or school_name = 'EAST GLACIER PARK' 
+		or school_name = 'GLENDALE SCHOOL' or school_name = 'CARDWELL SCHOOL' or school_id = '300009800325' 
+		or school_name = 'SAGE CREEK ELEMENTARY' or school_name = 'YAAK SCHOOL' or school_id = '302067000619' 
+		or school_id = '302067000166' or school_id = '300093201025' or school_id = '300093201024' or school_id = '300093301026'
+		or school_id = '301719000538' or school_id = '301719000251' or school_name = 'FISHTAIL SCHOOL'
+		or school_name = 'LUSTRE SCHOOL' or school_name = 'MORIN SCHOOL' or school_name = 'PRAIRIE ELK COLONY SCHOOL'
+		or school_name = 'RIMROCK COLONY SCHOOL' or school_name = 'MIAMI COLONY SCHOOL' or school_name = 'MIDWAY COLONY SCHOOL'
+		or school_name = 'KING COLONY SCHOOL' or school_name = 'FAIRHAVEN COLONY SCHOOL' or school_name = 'CASCADE COLONY SCHOOL'
+		or school_name = 'DEERFIELD COLONY SCHOOL' or school_name = 'NORTH HARLEM COLONY SCHOOL' or school_name = 'SPRING CREEK COLONY SCHOOL');
+		
+update fabric.master
+	set mt_ind = 0
+	where mt_ind is null
+		and lstate = 'MT';
+	
 --ITEM 24
 ----check matches
 select nces_pub_full.school_id, master.school_id
@@ -278,7 +305,7 @@ alter table fabric.master
 alter table fabric.master
 	add column max_val int;
 update fabric.master
-	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, navajo, item24);
+	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, item24);
 
 ----CORROBORATION SCORING 
 alter table fabric.master
@@ -288,7 +315,7 @@ alter table fabric.master
 with new_values as(
 select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) + coalesce(nj_ind,0) 
 	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(tx_ind,0)
-	+ coalesce(navajo,0) + coalesce(item24,0) as row_score
+	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(item24,0) as row_score
 	from fabric.master
 )
 update fabric.master
@@ -297,7 +324,7 @@ update fabric.master
 	where master.school_id = new_values.school_id;
 	
 
-select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, item24, score
+select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, item24, score
 	from fabric.master
 	where lstate = 'NJ' or lstate = 'CA' or lstate = 'FL' or lstate = 'WV' or lstate = 'NC'
 		or lstate = 'NM' or lstate = 'ME' or lstate = 'TX' or lstate = 'AZ'
@@ -313,7 +340,7 @@ select lstate, score, count(*)
 	group by lstate, score
 	order by lstate, score;
 
-select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, navajo, item24, score
+select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, item24, score
 	from fabric.master
 	where score = 3
 	order by lstate;
