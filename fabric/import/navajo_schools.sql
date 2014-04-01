@@ -1,6 +1,7 @@
 ﻿drop table if exists fabric.navajo_schools;
 CREATE TABLE fabric.navajo_schools
 (
+	nces_id character(12),
 	school_name character varying(100),
 	state character(2),
 	port_speed character varying(50),
@@ -14,6 +15,6 @@ ALTER TABLE fabric.navajo_schools
 
 set client_encoding to 'latin1';
 copy fabric.navajo_schools
-	from '/Users/FCC/Documents/allison/data/fabric/State Connectivity Data/Dept_Indian_Affairs/Navajo School Bandwidth.csv'
+	from '/Users/FCC/Documents/allison/data/fabric/State Connectivity Data/Dept_Indian_Affairs/Navajo School Bandwidth with NCES.csv'
 	csv header delimiter ',';
 
