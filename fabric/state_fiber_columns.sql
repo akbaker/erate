@@ -168,3 +168,16 @@ alter table fabric.navajo_schools
 	add column fiber int;
 update fabric.navajo_schools
 	set fiber = -1;
+
+--MONTANA
+alter table fabric.mt_ind
+	drop column if exists fiber;
+alter table fabric.mt_ind
+	add column fiber int;
+update fabric.mt_ind
+	set fiber = 1 
+	where max_mbps >= 100;
+update fabric.mt_ind
+	set fiber = 0 
+	where max_mbps < 100;
+	

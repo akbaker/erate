@@ -253,8 +253,27 @@ update fabric.master
 
 
 --MONTANA
+----check matches
+select master.school_name, mt_ind.school_name, lstate, state
+	from fabric.master, fabric.mt_ind
+	where master.school_name = upper(mt_ind.school_name)
+		and lstate=state;
+
+-----add fiber column 
 alter table fabric.master
 	add column mt_ind int;
+with new_values as(
+select master.school_name as school, mt_ind.school_name, lstate, state, fiber as mt_fiber
+	from fabric.master, fabric.mt_ind
+	where master.school_name = upper(mt_ind.school_name)
+		and lstate=state
+)
+update fabric.master
+	set mt_ind=new_values.mt_fiber
+	from new_values
+	where master.school_name = upper(new_values.school)
+		and master.lstate = new_values.state;
+
 update fabric.master
 	set mt_ind = -1
 	where lstate = 'MT' and (school_name = 'POLARIS SCHOOL' or school_name = 'PLENTY COUPS HIGH SCHOOL' 
@@ -270,11 +289,6 @@ update fabric.master
 		or school_name = 'RIMROCK COLONY SCHOOL' or school_name = 'MIAMI COLONY SCHOOL' or school_name = 'MIDWAY COLONY SCHOOL'
 		or school_name = 'KING COLONY SCHOOL' or school_name = 'FAIRHAVEN COLONY SCHOOL' or school_name = 'CASCADE COLONY SCHOOL'
 		or school_name = 'DEERFIELD COLONY SCHOOL' or school_name = 'NORTH HARLEM COLONY SCHOOL' or school_name = 'SPRING CREEK COLONY SCHOOL');
-		
-update fabric.master
-	set mt_ind = 0
-	where mt_ind is null
-		and lstate = 'MT';
 	
 --ITEM 24
 ----check matches
@@ -306,6 +320,11 @@ alter table fabric.master
 	add column max_val int;
 update fabric.master
 	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, item24);
+select max_val, count(*)
+	from fabric.master
+	group by max_val
+	order by max_val;
+
 
 ----CORROBORATION SCORING 
 alter table fabric.master
