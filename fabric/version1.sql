@@ -31,6 +31,9 @@ update fabric.master
 	set cai1 = new_values.cai_fiber
 	from new_values
 	where new_values.nces_id=master.school_id;
+update fabric.master
+	set cai1 = -1
+	where cai1 = 0;
 
 alter table fabric.master
 	add column cai2 int;
@@ -43,6 +46,9 @@ update fabric.master
 	set cai2 = new_values.cai2_fiber
 	from new_values
 	where new_values.nces_id=master.state_schid;
+update fabric.master
+	set cai2 = -1
+	where cai2 = 0;
 
 alter table fabric.master
 	add column cai int;
@@ -263,15 +269,13 @@ select master.school_name, mt_ind.school_name, lstate, state
 alter table fabric.master
 	add column mt_ind int;
 with new_values as(
-select master.school_name as school, mt_ind.school_name, lstate, state, fiber as mt_fiber
-	from fabric.master, fabric.mt_ind
-	where master.school_name = upper(mt_ind.school_name)
-		and lstate=state
+select mt_ind.school_name, state, fiber as mt_fiber
+	from fabric.mt_ind
 )
 update fabric.master
 	set mt_ind=new_values.mt_fiber
 	from new_values
-	where master.school_name = upper(new_values.school)
+	where master.school_name = upper(new_values.school_name)
 		and master.lstate = new_values.state;
 
 update fabric.master
@@ -301,16 +305,14 @@ select sunesys.rev_appname, master.lea_name, appstate, lstate
 alter table fabric.master
 	add column sunesys int;
 with new_values as(
-select sunesys.rev_appname, master.lea_name, appstate, lstate, fiber as sunesys_fiber
-	from fabric.sunesys, fabric.master
-	where rev_appname=lea_name
-		and appstate=lstate
+select sunesys.rev_appname, appstate, fiber as sunesys_fiber
+	from fabric.sunesys
 )
 update fabric.master
 	set sunesys=new_values.sunesys_fiber
 	from new_values
-	where rev_appname=new_values.lea_name
-		and appstate=new_values.lstate;
+	where lea_name=new_values.rev_appname
+		and lstate=new_values.appstate;
 	
 --ITEM 24
 ----check matches
@@ -346,6 +348,42 @@ select max_val, count(*)
 	from fabric.master
 	group by max_val
 	order by max_val;
+
+
+----FIBER SCORE (FOR APRIL 15 MAP)
+alter table fabric.master
+	drop column if exists fiber;
+alter table fabric.master
+	add column fiber boolean;
+update fabric.master
+	set fiber = 'yes'
+	where ca_hsn = 1 or fl_ind = 1 or nj_ind = 1 or wv_ind = 1 or nc_ind = 1 or nm_ind = 1 or me_ind = 1 or tx_ind = 1 or mt_ind = 1
+		or navajo = 1;
+update fabric.master
+	set fiber = 'no'
+	where ca_hsn = -1 or fl_ind = -1 or nj_ind = -1 or wv_ind = -1 or nc_ind = -1 or nm_ind = -1 or me_ind = -1 or tx_ind = -1
+		or mt_ind = -1 or navajo = -1;
+update fabric.master
+	set fiber = 'yes'
+	where cai = 1
+		and fiber is null;
+update fabric.master
+	set fiber = 'no'
+	where cai = -1
+		and fiber is null;
+
+select fiber, count(*)
+	from fabric.master
+	group by fiber;
+
+create table fabric.map_fiber_apr15 as(
+select school_id, fips_state, leaid, stid, seasch, lea_name, school_name, lstreet, lcity, 
+	lstate, lzip5, school_type, school_status, school_loc, latitude, longitude, county_name, cong_dist, 
+	county_fips, school_lvl, tot_students, geom, fiber 
+from fabric.master
+);
+
+copy(select * from fabric.map_fiber_apr15) to '/Users/FCC/Documents/allison/data/fabric/map_fiber_apr15.csv' with delimiter '|' CSV header;
 
 
 ----CORROBORATION SCORING 
@@ -386,11 +424,29 @@ select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, 
 	where score = 3
 	order by lstate;
 
+----SOURCE COUNTS
+select count(*) from fabric.master where cai is not null;
+select verizon, count(*) from fabric.master group by verizon;
+select ca_hsn, count(*) from fabric.master group by ca_hsn;
+select fl_ind, count(*) from fabric.master group by fl_ind;
+select nj_ind, count(*) from fabric.master group by nj_ind;
+select wv_ind, count(*) from fabric.master group by wv_ind;
+select nc_ind, count(*) from fabric.master group by nc_ind;
+select nm_ind, count(*) from fabric.master group by nm_ind;
+select me_ind, count(*) from fabric.master group by me_ind;
+select tx_ind, count(*) from fabric.master group by tx_ind;
+select mt_ind, count(*) from fabric.master group by mt_ind;
+select navajo, count(*) from fabric.master group by navajo;
+select sunesys, count(*) from fabric.master group by sunesys;
+select item24, count(*) from fabric.master group by item24;
+
+
 ----PIVOT TABLE
 drop table if exists fabric.state_counts;
 
 create table fabric.state_counts as(
 select lstate,
+	count(case when score = -2 then max_val end) as nofiber_neg2,
 	count(case when score = -1 then max_val end) as nofiber_neg1,
 	count(case when score = 0 then max_val end) as unknown_0,
 	count(case when score = 1 then max_val end) as fiber_pos1,

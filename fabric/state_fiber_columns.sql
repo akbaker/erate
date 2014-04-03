@@ -190,10 +190,6 @@ alter table fabric.sunesys
 	add column rev_appname character varying(50);
 update fabric.sunesys
 	set rev_appname = appname;
-
-	
-
-
 --For CA
 update fabric.sunesys
 	set rev_appname = replace(rev_appname, 'SCH DIST', '')
@@ -214,6 +210,9 @@ update fabric.sunesys
 	set rev_appname = replace(rev_appname, 'UNIF', 'UNIFIED')
 	where appstate = 'CA';
 update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'UN ', 'UNIFIED')
+	where appstate = 'CA';
+update fabric.sunesys
 	set rev_appname = replace(rev_appname, 'H S', 'HIGH')
 	where appstate = 'CA';
 update fabric.sunesys
@@ -226,13 +225,50 @@ update fabric.sunesys
 	set rev_appname = replace(rev_appname, 'UN H S DIST', 'UNION HIGH')
 	where appstate = 'CA';
 update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'UN ', 'UNION ')
+	where appstate = 'CA';
+update fabric.sunesys
 	set rev_appname = replace(rev_appname, 'CUCAMONGA SCHOOL DISTRICT', 'CUCAMONGA ELEMENTARY')
 	where appstate = 'CA';
 update fabric.sunesys
-	set rev_appname = replace(rev_appname, 'HAWTHORNE ELEM', 'HAWTHORNE')
+	set rev_appname = replace(rev_appname, 'HAWTHORNE ELEMENTARY', 'HAWTHORNE')
 	where appstate = 'CA';
-
-
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'LENNOX ELEMENTARY', 'LENNOX')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'LUTHER BURBANK ELEMENTARY', 'LUTHER BURBANK')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'MORELAND SCHOOL', 'MORELAND ELEMENTARY')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'MOUNT', 'MT.')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'NUVIEW UNION ELEMENTARY', 'NUVIEW UNION')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'ONTARIO-MONTCLAIR', 'ONTARIO-MONTCLAIR ELEMENTARY')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'PALMDALE', 'PALMDALE ELEMENTARY')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'REDWOOD CITY', 'REDWOOD CITY ELEMENTARY')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'CO ', 'COUNTY ')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'EDUC', 'EDUCATION')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'STOCKTON CITY', 'STOCKTON')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'TRACY', 'TRACY JOINT')
+	where appstate = 'CA';
 --For FL
 update fabric.sunesys
 	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT OF VOLUSIA COUNTY', 'VOLUSIA')
@@ -322,10 +358,14 @@ update fabric.sunesys
 	set rev_appname = replace(rev_appname, 'SCHOOL DIST', 'SD')
 	where appstate = 'PA';
 
+update fabric.sunesys
+	set rev_appname = trim(both from rev_appname);
+
 alter table fabric.sunesys
 	drop column if exists fiber;
 alter table fabric.sunesys
 	add column fiber int;
-
+update fabric.sunesys
+	set fiber = 1;
 	
 	
