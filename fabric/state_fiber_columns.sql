@@ -171,6 +171,10 @@ update fabric.navajo_schools
 
 --MONTANA
 alter table fabric.mt_ind
+	add column state character(2);
+update fabric.mt_ind
+	set state = 'MT';
+alter table fabric.mt_ind
 	drop column if exists fiber;
 alter table fabric.mt_ind
 	add column fiber int;
@@ -180,4 +184,148 @@ update fabric.mt_ind
 update fabric.mt_ind
 	set fiber = 0 
 	where max_mbps < 100;
+
+--SUNESYS
+alter table fabric.sunesys
+	add column rev_appname character varying(50);
+update fabric.sunesys
+	set rev_appname = appname;
+
+	
+
+
+--For CA
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCH DIST', '')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT', '')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCH DISTRICT', '')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DIST', '')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'ELEM', 'ELEMENTARY')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'UNIF', 'UNIFIED')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'H S', 'HIGH')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'ALBANY', 'ALBANY CITY')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'CAMBRIAN ELEM SCHOOL DISTRICT', 'CAMBRIAN')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'UN H S DIST', 'UNION HIGH')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'CUCAMONGA SCHOOL DISTRICT', 'CUCAMONGA ELEMENTARY')
+	where appstate = 'CA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'HAWTHORNE ELEM', 'HAWTHORNE')
+	where appstate = 'CA';
+
+
+--For FL
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT OF VOLUSIA COUNTY', 'VOLUSIA')
+	where appstate = 'FL';
+--For GA
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL SYSTEM', '')
+	where appstate = 'GA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DIST', '')
+	where appstate = 'GA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT', '')
+	where appstate = 'GA';
+--For IL
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT', 'SD')
+	where appstate = 'IL';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'TOWNSHIP HIGH SCHOOL', 'TWP HSD 202')
+	where appstate = 'IL';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'H S DIST', 'HSD')
+	where appstate = 'IL';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'CUD60', 'CUSD 60')
+	where appstate = 'IL';
+--For MD
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT', 'PUBLIC SCHOOLS')
+	where appstate = 'MD';
+--For NJ
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'BOUND BROOK', 'BOUND BROOK BOROUGH')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'HILLSIDE', 'HILLSIDE TOWNSHIP')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'HUNTERDON CTL REG', 'HUNTERDON CENTRAL REGIONA')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'TWP', 'TOWNSHIP')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'VLY', 'VALLEY')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'REG', 'REGIONAL')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT', '')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DIST', '')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'HGH SCH DIST', '')
+	where appstate = 'NJ';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'PUBLIC SCHOOLS', '')
+	where appstate = 'NJ';
+--For OH
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCH DIST', '')
+	where appstate = 'OH';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT', '')
+	where appstate = 'OH';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DIST', '')
+	where appstate = 'OH';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'TRI RIVERS', 'TRI-RIVERS')
+	where appstate = 'OH';
+--For PA
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCH DIST', 'SD')
+	where appstate = 'PA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DISTRICT', 'SD')
+	where appstate = 'PA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCH DISTRICT', 'SD')
+	where appstate = 'PA';
+update fabric.sunesys
+	set rev_appname = replace(rev_appname, 'SCHOOL DIST', 'SD')
+	where appstate = 'PA';
+
+alter table fabric.sunesys
+	drop column if exists fiber;
+alter table fabric.sunesys
+	add column fiber int;
+
+	
 	

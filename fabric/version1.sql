@@ -289,6 +289,28 @@ update fabric.master
 		or school_name = 'RIMROCK COLONY SCHOOL' or school_name = 'MIAMI COLONY SCHOOL' or school_name = 'MIDWAY COLONY SCHOOL'
 		or school_name = 'KING COLONY SCHOOL' or school_name = 'FAIRHAVEN COLONY SCHOOL' or school_name = 'CASCADE COLONY SCHOOL'
 		or school_name = 'DEERFIELD COLONY SCHOOL' or school_name = 'NORTH HARLEM COLONY SCHOOL' or school_name = 'SPRING CREEK COLONY SCHOOL');
+
+--SUNESYS
+----check matches
+select sunesys.rev_appname, master.lea_name, appstate, lstate
+	from fabric.sunesys, fabric.master
+	where rev_appname=lea_name
+		and appstate=lstate;
+
+----add fiber column
+alter table fabric.master
+	add column sunesys int;
+with new_values as(
+select sunesys.rev_appname, master.lea_name, appstate, lstate, fiber as sunesys_fiber
+	from fabric.sunesys, fabric.master
+	where rev_appname=lea_name
+		and appstate=lstate
+)
+update fabric.master
+	set sunesys=new_values.sunesys_fiber
+	from new_values
+	where rev_appname=new_values.lea_name
+		and appstate=new_values.lstate;
 	
 --ITEM 24
 ----check matches
@@ -319,7 +341,7 @@ alter table fabric.master
 alter table fabric.master
 	add column max_val int;
 update fabric.master
-	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, item24);
+	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24);
 select max_val, count(*)
 	from fabric.master
 	group by max_val
@@ -334,7 +356,7 @@ alter table fabric.master
 with new_values as(
 select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) + coalesce(nj_ind,0) 
 	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(tx_ind,0)
-	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(item24,0) as row_score
+	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(sunesys,0) + coalesce(item24,0) as row_score
 	from fabric.master
 )
 update fabric.master
@@ -343,7 +365,7 @@ update fabric.master
 	where master.school_id = new_values.school_id;
 	
 
-select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, item24, score
+select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24, score
 	from fabric.master
 	where lstate = 'NJ' or lstate = 'CA' or lstate = 'FL' or lstate = 'WV' or lstate = 'NC'
 		or lstate = 'NM' or lstate = 'ME' or lstate = 'TX' or lstate = 'AZ'
@@ -359,7 +381,7 @@ select lstate, score, count(*)
 	group by lstate, score
 	order by lstate, score;
 
-select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, item24, score
+select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24, score
 	from fabric.master
 	where score = 3
 	order by lstate;
