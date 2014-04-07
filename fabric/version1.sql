@@ -174,7 +174,7 @@ update fabric.master
 alter table fabric.master
 	add column nc_ind int;
 update fabric.master
-	set nc_ind = 0
+	set nc_ind = -1
 	where (school_name = 'STANFIELD ELEMENTARY' or school_name = 'CHARLES E PERRY ELEMENTARY'
 		or county_name = 'NASH COUNTY' or county_name = 'DAVIDSON COUNTY' or county_name = 'FRANKLIN COUNTY'
 		or county_name = 'WARREN COUNTY' or county_name = 'IREDELL COUNTY' or county_name = 'CASEWELL COUNTY')
@@ -462,6 +462,20 @@ select lstate,
 	order by lstate
 );
 
+----STATE COUNTS
+drop table if exists fabric.state_counts_summary;
+
+create table fabric.state_counts_summary as(
+select lstate,
+	count(case when score < 0 then max_val end) as nofiber,
+	count(case when score = 0 then max_val end) as unk,
+	count(case when score > 0 then max_val end) as fiber
+	from fabric.master
+	group by lstate
+	order by lstate
+);
+
 ---EXPORT FILE
 COPY (SELECT * FROM fabric.master) to '/Users/FCC/Documents/allison/data/fabric/master.csv' with delimiter '|' CSV header;
 COPY (SELECT * FROM fabric.state_counts) to '/Users/FCC/Documents/allison/data/fabric/counts.csv' with delimiter '|' CSV header;
+COPY (SELECT * FROM fabric.state_counts_summary) to '/Users/FCC/Documents/allison/data/fabric/counts_state.csv' with delimiter '|' CSV header;
