@@ -4,7 +4,7 @@
 create table fabric.master as
 select school_id, fips_state, leaid, stid, seasch, lea_name, school_name, lstreet, lcity, 
 	lstate, lzip5, school_type, school_status, school_loc, latitude, longitude, county_name, cong_dist, 
-	county_fips, school_lvl, tot_students, geom, state_schid, school_code_fl, school_code_nj, ncessch
+	county_fips, school_lvl, tot_students, geom, state_schid, school_code_fl, school_code_nj, ncessch, size_sort
 from analysis.nces_pub_full;
 alter table fabric.master
 	add constraint fabric_master_pkey primary key (school_id),
@@ -58,6 +58,9 @@ update fabric.master
 update fabric.master
 	set cai = cai2
 	where cai2 is not null;
+update fabric.master
+	set cai = 0
+	where cai is null;
 
 --Verizon data
 -----check matches
@@ -376,6 +379,7 @@ select fiber, count(*)
 	from fabric.master
 	group by fiber;
 
+drop table if exists fabric.map_fiber_apr15;
 create table fabric.map_fiber_apr15 as(
 select school_id, fips_state, leaid, stid, seasch, lea_name, school_name, lstreet, lcity, 
 	lstate, lzip5, school_type, school_status, school_loc, latitude, longitude, county_name, cong_dist, 
