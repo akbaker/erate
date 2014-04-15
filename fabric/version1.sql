@@ -4,7 +4,8 @@
 create table fabric.master as
 select school_id, fips_state, leaid, stid, seasch, lea_name, school_name, lstreet, lcity, 
 	lstate, lzip5, school_type, school_status, school_loc, latitude, longitude, county_name, cong_dist, 
-	county_fips, school_lvl, tot_students, geom, state_schid, school_code_fl, school_code_nj, ncessch, size_sort
+	county_fips, school_lvl, tot_students, geom, state_schid, school_code_fl, school_code_nj, school_name_sd, 
+	ncessch, size_sort
 from analysis.nces_pub_full;
 alter table fabric.master
 	add constraint fabric_master_pkey primary key (school_id),
@@ -339,6 +340,145 @@ update fabric.master
 	set item24=0
 	where item24 is null;
 
+--CCI Data
+-----add fiber column
+alter table fabric.master
+	drop column if exists cci1;
+alter table fabric.master
+	add column cci1 int;
+
+with new_values as(
+select org_name, city, state, fiber as cci_fiber
+from fabric.cci
+where cai_type = 'Schools (K-12)'
+)
+update fabric.master
+	set cci1=new_values.cci_fiber
+	from new_values
+	where master.school_name = upper(new_values.org_name)
+	and master.lstate = new_values.state
+	and master.lcity = upper(new_values.city);
+
+
+alter table fabric.master
+	drop column if exists cciSD;
+alter table fabric.master
+	add column cciSD int;
+
+with new_values as(
+select org_name, service_address, city, state, fiber as cci_fiber
+from fabric.cci
+where cai_type = 'Schools (K-12)'
+	and state = 'SD'
+)
+update fabric.master
+	set cciSD=new_values.cci_fiber
+	from new_values
+	where master.school_name_sd = upper(new_values.org_name)
+		and master.lstate = new_values.state
+		and master.lcity = upper(new_values.city);
+
+alter table fabric.master
+	drop column if exists cciIA;
+alter table fabric.master
+	add column cciIA int;
+
+with new_values as(
+select org_name, service_address, city, state, fiber as cci_fiber
+from fabric.cci
+where cai_type = 'Schools (K-12)'
+	and state = 'IA'
+)
+update fabric.master
+	set cciIA=new_values.cci_fiber
+	from new_values
+	where master.lstreet = upper(new_values.service_address)
+	and master.lcity = upper(new_values.city)
+	and master.lstate = new_values.state
+	and (school_id <> '010264001385' and school_id <> '010264001385' and school_id <> '010264001386'
+		 and school_id <> '080453000664' and school_id <> '090057000113' and school_id <> '090219001529'
+		 and school_id <> '090498001043' and school_id <> '090330000664' and school_id <> '090002801366'
+		 and school_id <> '090015001373' and school_id <> '090432000864' and school_id <> '090339000713'
+		 and school_id <> '110008200441' and school_id <> '130258002727' and school_id <> '190822000419'
+		 and school_id <> '190798000398' and school_id <> '191329000415' and school_id <> '192244001345'
+		 and school_id <> '192244000523' and school_id <> '190549000173' and school_id <> '190393000412'
+		 and school_id <> '190575001620' and school_id <> '190575000176' and school_id <> '191104000682'
+		 and school_id <> '191311000170' and school_id <> '190001501485' and school_id <> '192253001355'
+		 and school_id <> '190330000024' and school_id <> '190597000203' and school_id <> '192466001414'
+		 and school_id <> '193063000990' and school_id <> '190897000232' and school_id <> '190897002128'
+		 and school_id <> '190897002082' and school_id <> '192820001644' and school_id <> '192058000712'
+		 and school_id <> '192058000713' and school_id <> '192058001217' and school_id <> '191095000676'
+		 and school_id <> '191830001049' and school_id <> '190003201317' and school_id <> '190873001501'
+		 and school_id <> '192172001296' and school_id <> '190375000081' and school_id <> '192085001246'
+		 and school_id <> '192871002058' and school_id <> '190693000303' and school_id <> '190693000305'
+		 and school_id <> '190402000013' and school_id <> '190402000099' and school_id <> '190474000134'
+		 and school_id <> '192802001635' and school_id <> '192802001636' and school_id <> '192556001459'
+		 and school_id <> '199901901259' and school_id <> '190912000595' and school_id <> '190309000006'
+		 and school_id <> '192799001630' and school_id <> '192799000309' and school_id <> '190684000293'
+		 and school_id <> '190678001998' and school_id <> '190678000284' and school_id <> '191269000525'
+		 and school_id <> '190786000104' and school_id <> '190786000761' and school_id <> '190786000388'
+		 and school_id <> '190786000389' and school_id <> '190786002113' and school_id <> '190786000387'
+		 and school_id <> '190786000391' and school_id <> '190945000600' and school_id <> '193135001830'
+		 and school_id <> '190960000631' and school_id <> '190960000629' and school_id <> '193096000331'
+		 and school_id <> '190468001436' and school_id <> '191071000673' and school_id <> '192316001403'
+		 and school_id <> '192211002034' and school_id <> '190627000214' and school_id <> '193192001861'
+		 and school_id <> '191518000913' and school_id <> '191266001401' and school_id <> '192412001405'
+		 and school_id <> '192901001671' and school_id <> '191041000665' and school_id <> '192067001230'
+		 and school_id <> '192238001338' and school_id <> '192112001888' and school_id <> '192112001267'
+		 and school_id <> '192667001551' and school_id <> '192541001452' and school_id <> '191488000912'
+		 and school_id <> '190322001938' and school_id <> '190322001937' and school_id <> '191332000805'
+		 and school_id <> '191152000702' and school_id <> '192415001409' and school_id <> '191034001433'
+		 and school_id <> '190792000394' and school_id <> '170942000548' and school_id <> '240021001349'
+		 and school_id <> '240051000865' and school_id <> '240051001067' and school_id <> '240015001344'
+		 and school_id <> '231110000406' and school_id <> '231478200246' and school_id <> '231101000176'
+		 and school_id <> '230828000226' and school_id <> '231167001010' and school_id <> '261119008022'
+		 and school_id <> '270819004415' and school_id <> '270001203287' and school_id <> '270001202262'
+		 and school_id <> '270001203292' and school_id <> '270001203290' and school_id <> '270001203295'
+		 and school_id <> '270001203296' and school_id <> '270001203294' and school_id <> '270001202263'
+		 and school_id <> '270001203289' and school_id <> '690003000004' and school_id <> '690003000007'
+		 and school_id <> '690003000047' and school_id <> '690003000046' and school_id <> '690003000006'
+		 and school_id <> '690003000018' and school_id <> '370420003231' and school_id <> '370387001548'
+		 and school_id <> '370342003005' and school_id <> '370108002374' and school_id <> '370268002875'
+		 and school_id <> '370177000734' and school_id <> '370472002805' and school_id <> '370297001291'
+		 and school_id <> '370225000973' and school_id <> '370204000911' and school_id <> '370225000968'
+		 and school_id <> '317802001674' and school_id <> '390479003035' and school_id <> '390494303589'
+		 and school_id <> '390472102804' and school_id <> '390472102803' and school_id <> '390021104735'
+		 and school_id <> '390029104828' and school_id <> '390472002801' and school_id <> '390472002800'
+		 and school_id <> '390467802652' and school_id <> '390467802652' and school_id <> '390442905450'
+		 and school_id <> '391000901626' and school_id <> '390451002014' and school_id <> '390465202586'
+		 and school_id <> '390465205594' and school_id <> '390465202582' and school_id <> '390029704834'
+		 and school_id <> '390132605397' and school_id <> '390494603606' and school_id <> '390494603605'
+		 and school_id <> '390050805218' and school_id <> '390001901514' and school_id <> '390047805037'
+		 and school_id <> '390052305233' and school_id <> '390141805616' and school_id <> '390052505235'
+		 and school_id <> '390465102581' and school_id <> '390465102578' and school_id <> '390465102580'
+		 and school_id <> '390446101483' and school_id <> '390494403592' and school_id <> '410883000081'
+		 and school_id <> '410883001584' and school_id <> '410883001686' and school_id <> '410883001716'
+		 and school_id <> '410883000094' and school_id <> '440114000313' and school_id <> '440021000355'
+		 and school_id <> '467830000012' and school_id <> '467830000016' and school_id <> '463049000647'
+		 and school_id <> '463049000630' and school_id <> '460004601164' and school_id <> '461785000163'
+		 and school_id <> '460004200939' and school_id <> '460004200656' and school_id <> '466518000568'
+		 and school_id <> '466518000933' and school_id <> '468043701249' and school_id <> '467746000732'
+		 and school_id <> '466546001273' and school_id <> '550852003356' and school_id <> '540162001427');
+
+
+
+
+
+alter table fabric.master
+	drop column if exists cci;
+alter table fabric.master
+	add column cci int;
+
+update fabric.master
+	set cci = cci1;
+update fabric.master
+	set cci = cciIA where cci is null;
+update fabric.master
+	set cci = cciSD where cci is null;
+
+
+--OHIO
+
 ------------------------------------------------------
 ----MAXIMUM VALUE
 alter table fabric.master
@@ -346,7 +486,7 @@ alter table fabric.master
 alter table fabric.master
 	add column max_val int;
 update fabric.master
-	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24);
+	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, cci, item24);
 select max_val, count(*)
 	from fabric.master
 	group by max_val
@@ -398,7 +538,7 @@ alter table fabric.master
 with new_values as(
 select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) + coalesce(nj_ind,0) 
 	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(tx_ind,0)
-	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(sunesys,0) + coalesce(item24,0) as row_score
+	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(item24,0) as row_score
 	from fabric.master
 )
 update fabric.master
@@ -407,7 +547,7 @@ update fabric.master
 	where master.school_id = new_values.school_id;
 	
 
-select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24, score
+select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24, cci, score
 	from fabric.master
 	where lstate = 'NJ' or lstate = 'CA' or lstate = 'FL' or lstate = 'WV' or lstate = 'NC'
 		or lstate = 'NM' or lstate = 'ME' or lstate = 'TX' or lstate = 'AZ'
@@ -442,6 +582,7 @@ select tx_ind, count(*) from fabric.master group by tx_ind;
 select mt_ind, count(*) from fabric.master group by mt_ind;
 select navajo, count(*) from fabric.master group by navajo;
 select sunesys, count(*) from fabric.master group by sunesys;
+select cci, count(*) from fabric.master group by cci;
 select item24, count(*) from fabric.master group by item24;
 
 

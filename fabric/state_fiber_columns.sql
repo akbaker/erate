@@ -368,4 +368,26 @@ alter table fabric.sunesys
 update fabric.sunesys
 	set fiber = 1;
 	
+
+--CCI DATA
+select planned_speed_tier, count(*)
+from analysis.nces_pub_full, fabric.cci
+where nces_pub_full.school_name = upper(cci.org_name)
+	and nces_pub_full.lstate = cci.state
+	and nces_pub_full.lcity = upper(cci.city)
+	and cai_type = 'Schools (K-12)'
+group by planned_speed_tier;
+
+--**See CCI Mod file**
+
+alter table fabric.cci
+	add column fiber int;
+update fabric.cci
+	set fiber = 1
+	where planned_speed_tier = '>=1 Gb'
+		or planned_speed_tier = '>= 100 Mb and < 1 Gb'
+		or planned_speed_tier = '>= 1 Gb';
+update fabric.cci
+	set fiber = 0
+	where fiber is null;
 	
