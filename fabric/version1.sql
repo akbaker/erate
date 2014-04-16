@@ -478,6 +478,28 @@ update fabric.master
 
 
 --OHIO
+-----check matches
+select count(*)
+from fabric.master, fabric.oh_ind
+where master.school_name = upper(oh_ind.building_name)
+	and lstate = 'OH';
+
+
+-----add fiber column 
+alter table fabric.master
+	drop column if exists oh_ind;
+alter table fabric.master
+	add column oh_ind int;
+
+with new_values as(
+select building_name, fiber as oh_fiber
+from fabric.oh_ind
+)
+update fabric.master
+	set oh_ind = new_values.oh_fiber
+	from new_values
+	where master.school_name = upper(new_values.building_name)
+	and master.lstate = 'OH';
 
 ------------------------------------------------------
 ----MAXIMUM VALUE
@@ -486,7 +508,7 @@ alter table fabric.master
 alter table fabric.master
 	add column max_val int;
 update fabric.master
-	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, cci, item24);
+	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, cci, oh_ind, item24);
 select max_val, count(*)
 	from fabric.master
 	group by max_val
@@ -521,9 +543,7 @@ select fiber, count(*)
 
 drop table if exists fabric.map_fiber_apr15;
 create table fabric.map_fiber_apr15 as(
-select school_id, fips_state, leaid, stid, seasch, lea_name, school_name, lstreet, lcity, 
-	lstate, lzip5, school_type, school_status, school_loc, latitude, longitude, county_name, cong_dist, 
-	county_fips, school_lvl, tot_students, geom, fiber 
+select school_id, leaid, latitude, longitude, tot_students, geom, fiber 
 from fabric.master
 );
 
@@ -538,7 +558,8 @@ alter table fabric.master
 with new_values as(
 select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) + coalesce(nj_ind,0) 
 	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(tx_ind,0)
-	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(item24,0) as row_score
+	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(oh_ind,0)
+	+ coalesce(item24,0) as row_score
 	from fabric.master
 )
 update fabric.master
@@ -547,10 +568,8 @@ update fabric.master
 	where master.school_id = new_values.school_id;
 	
 
-select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24, cci, score
+select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24, cci, oh_ind, score
 	from fabric.master
-	where lstate = 'NJ' or lstate = 'CA' or lstate = 'FL' or lstate = 'WV' or lstate = 'NC'
-		or lstate = 'NM' or lstate = 'ME' or lstate = 'TX' or lstate = 'AZ'
 	order by school_id;
 
 select score, count(*)
@@ -583,6 +602,7 @@ select mt_ind, count(*) from fabric.master group by mt_ind;
 select navajo, count(*) from fabric.master group by navajo;
 select sunesys, count(*) from fabric.master group by sunesys;
 select cci, count(*) from fabric.master group by cci;
+select oh_ind, count(*) from fabric.master group by oh_ind;
 select item24, count(*) from fabric.master group by item24;
 
 

@@ -390,4 +390,45 @@ update fabric.cci
 update fabric.cci
 	set fiber = 0
 	where fiber is null;
-	
+
+--OHIO DATA
+select count(*)
+from fabric.master, fabric.oh_ind
+where master.school_name = upper(oh_ind.building_name)
+	and lstate = 'OH';
+
+alter table fabric.oh_ind
+	add column fiber int;
+update fabric.oh_ind
+	set fiber = 1
+	where speed = '50mbs Ethernet';
+update fabric.oh_ind
+	set fiber = 0
+	where speed = 'Ethernet Other';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = '10mbs Ethernet';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = '20mbs Ethernet';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = 'T1 äóñ 1.54mbs';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = 'Wireless Other';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = 'Wireless 45mbs';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = 'Cable Modem';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = '30mbs Ethernet';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = '2mbs Business Class';
+update fabric.oh_ind
+	set fiber = -1
+	where speed = 'DSL';
