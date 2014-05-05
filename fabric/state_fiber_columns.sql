@@ -432,3 +432,19 @@ update fabric.oh_ind
 update fabric.oh_ind
 	set fiber = -1
 	where speed = 'DSL';
+
+--GEORGIA
+select *
+from analysis.nces_pub_full, fabric.ga_ind
+where nces_pub_full.school_name = upper(ga_ind.school_name)
+	and lcity = upper(city)
+	and lstate = 'GA';
+
+alter table fabric.ga_ind
+	add column fiber int;
+update fabric.ga_ind
+	set fiber = -1
+	where has_fiber = 'No';
+update fabric.ga_ind
+	set fiber = 1
+	where has_fiber = 'Yes' or has_fiber = 'yes';
