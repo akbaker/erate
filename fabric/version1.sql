@@ -501,6 +501,50 @@ update fabric.master
 	where master.school_name = upper(new_values.building_name)
 	and master.lstate = 'OH';
 
+--H&B Cable
+alter table fabric.master
+	drop column if exists hb_cable;
+alter table fabric.master
+	add column hb_cable int;
+
+update fabric.master
+	set hb_cable = 0 
+	where lstate = 'KS';
+update fabric.master
+	set hb_cable = 1
+	where school_id = '200034901970' or school_id = '200034902028' or school_id = '200034901992'
+		or school_id = '200582000731' or school_id = '200582000732' or school_id = '200582000733'
+		or school_id = '200465000912' or school_id = '200465000914' or school_id = '200465000913';
+	
+--Fat Beam
+alter table fabric.master
+	drop column if exists fatbeam;
+alter table fabric.master
+	add column fatbeam int;
+
+update fabric.master
+	set fatbeam = 1
+	where leaid = '5301140' or leaid = '5303510' or leaid = '5304950' or leaid = '5308670' or leaid = '5310110'
+		or leaid = '3005280' or leaid = '3005310' or leaid = '1600780' or leaid = '5305370' or leaid = '5302940'
+		or leaid = '1602670';
+
+--Georgia
+alter table fabric.master
+	drop column if exists ga_ind;
+alter table fabric.master
+	add column ga_ind int;
+
+with new_values as(
+select school_name, city, fiber AS ga_fiber
+from fabric.ga_ind
+)
+update fabric.master
+set ga_ind = new_values.ga_fiber
+from new_values
+where master.school_name = upper(new_values.school_name)
+	and lcity = upper(new_values.city)
+	and lstate = 'GA';
+
 ------------------------------------------------------
 ----MAXIMUM VALUE
 alter table fabric.master
@@ -508,7 +552,7 @@ alter table fabric.master
 alter table fabric.master
 	add column max_val int;
 update fabric.master
-	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, cci, oh_ind, item24);
+	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, cci, oh_ind, fatbeam, ga_ind);
 select max_val, count(*)
 	from fabric.master
 	group by max_val
@@ -559,7 +603,7 @@ with new_values as(
 select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) + coalesce(nj_ind,0) 
 	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(tx_ind,0)
 	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(oh_ind,0)
-	+ coalesce(item24,0) as row_score
+	+ coalesce(fatbeam,0) + coalesce(ga_ind,0) as row_score
 	from fabric.master
 )
 update fabric.master
@@ -603,7 +647,8 @@ select navajo, count(*) from fabric.master group by navajo;
 select sunesys, count(*) from fabric.master group by sunesys;
 select cci, count(*) from fabric.master group by cci;
 select oh_ind, count(*) from fabric.master group by oh_ind;
-select item24, count(*) from fabric.master group by item24;
+select fatbeam, count(*) from fabric.master group by fatbeam;
+select ga_ind, count(*) from fabric.master group by ga_ind;
 
 
 ----PIVOT TABLE
