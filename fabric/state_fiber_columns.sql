@@ -448,3 +448,13 @@ update fabric.ga_ind
 update fabric.ga_ind
 	set fiber = 1
 	where has_fiber = 'Yes' or has_fiber = 'yes';
+
+--BIE
+select *
+from fabric.master, fabric.bie_ind
+where master.seasch = bie_ind.school_code;
+
+alter table fabric.bie_ind
+	add column fiber int;
+update fabric.bie_ind
+	set fiber = -1;

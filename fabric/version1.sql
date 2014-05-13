@@ -545,6 +545,21 @@ where master.school_name = upper(new_values.school_name)
 	and lcity = upper(new_values.city)
 	and lstate = 'GA';
 
+--BIE
+alter table fabric.master
+	drop column if exists bie_ind;
+alter table fabric.master
+	add column bie_ind int;
+
+with new_values as(
+select school_code, fiber AS bie_fiber
+from fabric.bie_ind
+)
+update fabric.master
+set bie_ind = new_values.bie_fiber
+from new_values
+where master.seasch = new_values.school_code;
+
 ------------------------------------------------------
 ----MAXIMUM VALUE
 alter table fabric.master
@@ -596,40 +611,57 @@ copy(select * from fabric.map_fiber_apr15) to '/Users/FCC/Documents/allison/data
 
 ----CORROBORATION SCORING 
 alter table fabric.master
-	drop column if exists score;
+	drop column if exists score_full;
 alter table fabric.master
-	add column score int;
+	add column score_full int;
 with new_values as(
-select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) + coalesce(nj_ind,0) 
-	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(tx_ind,0)
-	+ coalesce(mt_ind,0) + coalesce(navajo,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(oh_ind,0)
-	+ coalesce(fatbeam,0) + coalesce(ga_ind,0) as row_score
+select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(navajo,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) 
+	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(nj_ind,0) 
+	+ coalesce(tx_ind,0) + coalesce(mt_ind,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(oh_ind,0)
+	+ coalesce(hb_cable,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0) + coalesce(bie_ind,0) as row_score
 	from fabric.master
 )
 update fabric.master
-	set score=new_values.row_score
+	set score_full=new_values.row_score
 	from new_values
 	where master.school_id = new_values.school_id;
+
+alter table fabric.master
+	drop column if exists score_public;
+alter table fabric.master
+	add column score_public int;
+	with new_values as(
+select school_id, coalesce(cai,0) + coalesce(navajo,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) 
+	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0)
+	+ coalesce(tx_ind,0) + coalesce(mt_ind,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(oh_ind,0)
+	+ coalesce(fatbeam,0) + coalesce(ga_ind,0) + coalesce(bie_ind,0) as row_score
+	from fabric.master
+)
+update fabric.master
+	set score_public=new_values.row_score
+	from new_values
+	where master.school_id = new_values.school_id;
+
 	
-
-select school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24, cci, oh_ind, score
+select score_full, count(*)
 	from fabric.master
-	order by school_id;
+	group by score_full
+	order by score_full;
 
-select score, count(*)
+select score_public, count(*)
 	from fabric.master
-	group by score
-	order by score;
+	group by score_public
+	order by score_public;
 
-select lstate, score, count(*)
+select lstate, score_full, count(*)
 	from fabric.master
-	group by lstate, score
-	order by lstate, score;
+	group by lstate, score_full
+	order by lstate, score_full;
 
-select lstate, school_id, cai, verizon, ca_hsn, fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, item24, score
+select lstate, score_public, count(*)
 	from fabric.master
-	where score = 3
-	order by lstate;
+	group by lstate, score_public
+	order by lstate, score_public;
 
 ----SOURCE COUNTS
 select count(*) from fabric.master where cai is not null;
@@ -652,30 +684,60 @@ select ga_ind, count(*) from fabric.master group by ga_ind;
 
 
 ----PIVOT TABLE
-drop table if exists fabric.state_counts;
+drop table if exists fabric.state_counts_full;
 
-create table fabric.state_counts as(
+create table fabric.state_counts_full as(
 select lstate,
-	count(case when score = -2 then max_val end) as nofiber_neg2,
-	count(case when score = -1 then max_val end) as nofiber_neg1,
-	count(case when score = 0 then max_val end) as unknown_0,
-	count(case when score = 1 then max_val end) as fiber_pos1,
-	count(case when score = 2 then max_val end) as fiber_pos2,
-	count(case when score = 3 then max_val end) as fiber_pos3,
-	count(case when score = 4 then max_val end) as fiber_pos4
+	count(case when score_full = -3 then max_val end) as nofiber_neg3,
+	count(case when score_full = -2 then max_val end) as nofiber_neg2,
+	count(case when score_full = -1 then max_val end) as nofiber_neg1,
+	count(case when score_full = 0 then max_val end) as unknown_0,
+	count(case when score_full = 1 then max_val end) as fiber_pos1,
+	count(case when score_full = 2 then max_val end) as fiber_pos2,
+	count(case when score_full = 3 then max_val end) as fiber_pos3,
+	count(case when score_full = 4 then max_val end) as fiber_pos4
+	from fabric.master
+	group by lstate
+	order by lstate
+);
+
+drop table if exists fabric.state_counts_public;
+
+create table fabric.state_counts_public as(
+select lstate,
+	count(case when score_public = -3 then max_val end) as nofiber_neg3,
+	count(case when score_public = -2 then max_val end) as nofiber_neg2,
+	count(case when score_public = -1 then max_val end) as nofiber_neg1,
+	count(case when score_public = 0 then max_val end) as unknown_0,
+	count(case when score_public = 1 then max_val end) as fiber_pos1,
+	count(case when score_public = 2 then max_val end) as fiber_pos2,
+	count(case when score_public = 3 then max_val end) as fiber_pos3,
+	count(case when score_public = 4 then max_val end) as fiber_pos4
 	from fabric.master
 	group by lstate
 	order by lstate
 );
 
 ----STATE COUNTS
-drop table if exists fabric.state_counts_summary;
+drop table if exists fabric.state_counts_summary_full;
 
-create table fabric.state_counts_summary as(
+create table fabric.state_counts_summary_full as(
 select lstate,
-	count(case when score < 0 then max_val end) as nofiber,
-	count(case when score = 0 then max_val end) as unk,
-	count(case when score > 0 then max_val end) as fiber
+	count(case when score_full < 0 then max_val end) as nofiber,
+	count(case when score_full = 0 then max_val end) as unk,
+	count(case when score_full > 0 then max_val end) as fiber
+	from fabric.master
+	group by lstate
+	order by lstate
+);
+
+drop table if exists fabric.state_counts_summary_public;
+
+create table fabric.state_counts_summary_public as(
+select lstate,
+	count(case when score_public < 0 then max_val end) as nofiber,
+	count(case when score_public = 0 then max_val end) as unk,
+	count(case when score_public > 0 then max_val end) as fiber
 	from fabric.master
 	group by lstate
 	order by lstate
@@ -683,5 +745,7 @@ select lstate,
 
 ---EXPORT FILE
 COPY (SELECT * FROM fabric.master) to '/Users/FCC/Documents/allison/data/fabric/master.csv' with delimiter '|' CSV header;
-COPY (SELECT * FROM fabric.state_counts) to '/Users/FCC/Documents/allison/data/fabric/counts.csv' with delimiter '|' CSV header;
-COPY (SELECT * FROM fabric.state_counts_summary) to '/Users/FCC/Documents/allison/data/fabric/counts_state.csv' with delimiter '|' CSV header;
+COPY (SELECT * FROM fabric.state_counts_full) to '/Users/FCC/Documents/allison/data/fabric/counts_full.csv' with delimiter '|' CSV header;
+COPY (SELECT * FROM fabric.state_counts_public) to '/Users/FCC/Documents/allison/data/fabric/counts_public.csv' with delimiter '|' CSV header;
+COPY (SELECT * FROM fabric.state_counts_summary_full) to '/Users/FCC/Documents/allison/data/fabric/counts_state_full.csv' with delimiter '|' CSV header;
+COPY (SELECT * FROM fabric.state_counts_summary_public) to '/Users/FCC/Documents/allison/data/fabric/counts_state_public.csv' with delimiter '|' CSV header;
