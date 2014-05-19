@@ -560,6 +560,23 @@ set bie_ind = new_values.bie_fiber
 from new_values
 where master.seasch = new_values.school_code;
 
+--Zayo
+alter table fabric.master
+	drop column if exists zayo_ind;
+alter table fabric.master
+	add column zayo_ind int;
+
+with new_values as(
+select street_address, city, state, fiber AS zayo_fiber
+from fabric.zayo
+)
+update fabric.master
+set zayo_ind = new_values.zayo_fiber
+from new_values
+where master.lstreet = upper(new_values.street_address)
+	and master.lcity = upper(new_values.city)
+	and master.lstate = upper(new_values.state);
+
 ------------------------------------------------------
 ----MAXIMUM VALUE
 alter table fabric.master
@@ -567,7 +584,7 @@ alter table fabric.master
 alter table fabric.master
 	add column max_val int;
 update fabric.master
-	set max_val = greatest(cai,verizon,ca_hsn,fl_ind, nj_ind, wv_ind, nc_ind, nm_ind, me_ind, tx_ind, mt_ind, navajo, sunesys, cci, oh_ind, fatbeam, ga_ind);
+	set max_val = greatest(cai,verizon,navajo,ca_hsn,fl_ind,wv_ind,nc_ind,nm_ind,me_ind,nj_ind,tx_ind,mt_ind,sunesys,cci,oh_ind,hb_cable,fatbeam,ga_ind,bie_ind,zayo_ind);
 select max_val, count(*)
 	from fabric.master
 	group by max_val
@@ -618,7 +635,8 @@ with new_values as(
 select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(navajo,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) 
 	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(nj_ind,0) 
 	+ coalesce(tx_ind,0) + coalesce(mt_ind,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(oh_ind,0)
-	+ coalesce(hb_cable,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0) + coalesce(bie_ind,0) as row_score
+	+ coalesce(hb_cable,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0) + coalesce(bie_ind,0) + coalesce(zayo_ind,0) 
+	as row_score
 	from fabric.master
 )
 update fabric.master
@@ -664,7 +682,7 @@ select lstate, score_public, count(*)
 	order by lstate, score_public;
 
 ----SOURCE COUNTS
-select count(*) from fabric.master where cai is not null;
+select cai, count(*) from fabric.master group by cai;
 select verizon, count(*) from fabric.master group by verizon;
 select ca_hsn, count(*) from fabric.master group by ca_hsn;
 select fl_ind, count(*) from fabric.master group by fl_ind;
@@ -681,6 +699,9 @@ select cci, count(*) from fabric.master group by cci;
 select oh_ind, count(*) from fabric.master group by oh_ind;
 select fatbeam, count(*) from fabric.master group by fatbeam;
 select ga_ind, count(*) from fabric.master group by ga_ind;
+select hb_cable, count(*) from fabric.master group by hb_cable;
+select bie_ind, count(*) from fabric.master group by bie_ind;
+select navajo, bie_ind, count(*) from fabric.master group by navajo, bie_ind;
 
 
 ----PIVOT TABLE
@@ -701,6 +722,24 @@ select lstate,
 	order by lstate
 );
 
+drop table if exists fabric.state_counts_full_rurality;
+
+create table fabric.state_counts_full as(
+select lstate, l,
+	count(case when score_full = -3 then max_val end) as nofiber_neg3,
+	count(case when score_full = -2 then max_val end) as nofiber_neg2,
+	count(case when score_full = -1 then max_val end) as nofiber_neg1,
+	count(case when score_full = 0 then max_val end) as unknown_0,
+	count(case when score_full = 1 then max_val end) as fiber_pos1,
+	count(case when score_full = 2 then max_val end) as fiber_pos2,
+	count(case when score_full = 3 then max_val end) as fiber_pos3,
+	count(case when score_full = 4 then max_val end) as fiber_pos4
+	from fabric.master
+	group by lstate
+	order by lstate
+);
+
+
 drop table if exists fabric.state_counts_public;
 
 create table fabric.state_counts_public as(
@@ -717,6 +756,67 @@ select lstate,
 	group by lstate
 	order by lstate
 );
+
+----CREATE DUMMY FOR GREATER THAN 100 and 100 STUDENTS OR LESS
+alter table fabric.master
+	add column gt_100 int;
+
+update fabric.master
+	set gt_100 = 0
+	where tot_students <= 100;
+update fabric.master
+	set gt_100 = 1
+	where tot_students > 100;
+
+----NATIONAL COUNTS
+drop table if exists fabric.national_counts_full;
+
+create table fabric.national_counts_full as(
+select gt_100,
+	count(case when score_full < 0 then max_val end) as nofiber,
+	count(case when score_full = 0 then max_val end) as unk,
+	count(case when score_full > 0 then max_val end) as fiber
+	from fabric.master
+	group by gt_100
+	order by gt_100
+);
+
+drop table if exists fabric.national_counts_full_rurality;
+
+create table fabric.national_counts_full_rurality as(
+select gt_100, school_loc,
+	count(case when score_full < 0 then max_val end) as nofiber,
+	count(case when score_full = 0 then max_val end) as unk,
+	count(case when score_full > 0 then max_val end) as fiber
+	from fabric.master
+	group by gt_100, school_loc
+	order by gt_100, school_loc
+);
+
+drop table if exists fabric.national_counts_public;
+
+create table fabric.national_counts_public as(
+select gt_100,
+	count(case when score_public < 0 then max_val end) as nofiber,
+	count(case when score_public = 0 then max_val end) as unk,
+	count(case when score_public > 0 then max_val end) as fiber
+	from fabric.master
+	group by gt_100
+	order by gt_100
+);
+
+drop table if exists fabric.national_counts_public_rurality;
+
+create table fabric.national_counts_public_rurality as(
+select gt_100, school_loc,
+	count(case when score_public < 0 then max_val end) as nofiber,
+	count(case when score_public = 0 then max_val end) as unk,
+	count(case when score_public > 0 then max_val end) as fiber
+	from fabric.master
+	group by gt_100, school_loc
+	order by gt_100, school_loc
+);
+
 
 ----STATE COUNTS
 drop table if exists fabric.state_counts_summary_full;

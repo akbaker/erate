@@ -458,3 +458,15 @@ alter table fabric.bie_ind
 	add column fiber int;
 update fabric.bie_ind
 	set fiber = -1;
+
+--Zayo
+select *
+from fabric.master, fabric.zayo
+where upper(master.lstreet) = upper(zayo.street_address)
+	and upper(master.lcity) = upper(zayo.city)
+	and upper(master.lstate) = upper(zayo.state);
+
+alter table fabric.zayo
+	add column fiber int;
+update fabric.zayo
+	set fiber = 1;
