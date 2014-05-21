@@ -249,3 +249,145 @@ update fabric.master2
 	where nc_ind is null and lstate = 'NC';
 
 --NEW MEXICO
+select master2.ncessch, nm_ind.nces_id
+	from fabric.master2, fabric.nm_ind
+	where master2.ncessch=nm_ind.nces_id
+		and lstate = 'NM';
+
+alter table fabric.master2
+	drop column if exists nm_ind;
+alter table fabric.master2
+	add column nm_ind int;
+with new_values as(
+select nces_id, fiber as nm_fiber
+	from fabric.nm_ind
+	order by nces_id
+)
+update fabric.master2
+	set nm_ind=new_values.nm_fiber
+	from new_values
+	where master2.ncessch=new_values.nces_id
+		and lstate = 'NM';
+
+--MAINE
+select master2.ncessch, me_ind.nces_id
+	from fabric.master2, fabric.me_ind
+	where master2.ncessch=me_ind.nces_id
+		and lstate = 'ME';
+
+alter table fabric.master2
+	drop column if exists me_ind;
+alter table fabric.master2
+	add column me_ind int;
+with new_values as(
+select nces_id, fiber as me_fiber
+	from fabric.me_ind
+	order by nces_id
+)
+update fabric.master2
+	set me_ind=new_values.me_fiber
+	from new_values
+	where master2.ncessch=new_values.nces_id
+		and lstate = 'ME';
+
+--NEW JERSEY
+alter table fabric.master2
+	drop column if exists stid_nj;
+alter table fabric.master2
+	add column stid_nj character(6);
+alter table fabric.master2
+	drop column if exists seasch_nj;
+alter table fabric.master2
+	add column seasch_nj character(3);
+update fabric.master2
+	set stid_nj = stid
+	where char_length(stid) = 6
+	and lstate = 'NJ';
+update fabric.master2
+	set stid_nj = '0' || stid
+	where char_length(stid) = 5
+	and lstate = 'NJ';
+update fabric.master2
+	set seasch_nj = seasch
+	where char_length(seasch) = 3
+	and lstate = 'NJ';
+update fabric.master2
+	set seasch_nj = '0' || seasch
+	where char_length(seasch) = 2
+	and lstate = 'NJ';
+alter table fabric.master2
+	add column school_code_nj character(9);
+update fabric.master2
+	set school_code_nj = stid_nj || seasch_nj;
+
+select school_code_nj, nj_ind.school_id
+	from fabric.master2, fabric.nj_ind
+	where master2.school_code_nj=nj_ind.school_id
+		and lstate = 'NJ';
+
+alter table fabric.master2
+	add column nj_ind int;
+with new_values as(
+select school_id, fiber as nj_fiber
+	from fabric.nj_ind
+	order by school_id
+)
+update fabric.master2
+	set nj_ind=new_values.nj_fiber
+	from new_values
+	where master2.school_code_nj=new_values.school_id
+		and lstate = 'NJ';
+
+--TEXAS
+alter table fabric.master2
+	drop column if exists tx_ind;
+alter table fabric.master2
+	add column tx_ind int;
+update fabric.master2
+	set tx_ind = 1
+	where leanm = 'ROUND ROCK ISD'
+		and lstate = 'TX';
+update fabric.master2
+	set tx_ind = 1
+	where leanm = 'PALESTINE ISD'
+		and lstate = 'TX';
+
+--MONTANA
+select master2.schnam, mt_ind.school_name
+	from fabric.master2, fabric.mt_ind
+	where master2.schnam = upper(mt_ind.school_name)
+		and master2.leanm = upper(mt_ind.district_name)
+		and lstate='MT';
+
+alter table fabric.master2
+	drop column if exists mt_ind;
+alter table fabric.master2
+	add column mt_ind int;
+with new_values as(
+select school_name, district_name, fiber as mt_fiber
+	from fabric.mt_ind
+)
+update fabric.master2
+	set mt_ind=new_values.mt_fiber
+	from new_values
+	where master2.schnam = upper(new_values.school_name)
+		and master2.leanm = upper(new_values.district_name)
+		and lstate = 'MT';
+
+update fabric.master2
+	set mt_ind = -1
+	where lstate = 'MT' and (schnam = 'POLARIS SCHOOL' or schnam = 'PLENTY COUPS HIGH SCHOOL' 
+		or schnam = 'LUTHER SCHOOL' or schnam = 'HAMMOND SCHOOL' or schnam = 'HAWKS HOME SCHOOL' 
+		or schnam = 'BENTON LAKE SCHOOL' or schnam = 'KINSEY SCHOOL' or ncessch = '302088000624' 
+		or schnam = 'WEST GLACIER SCHOOL' or schnam = 'MALMBORG SCHOOL' or schnam = 'PASS CREEK SCHOOL' 
+		or schnam = 'KESTER SCHOOL' or schnam = 'BABB SCHOOL' or schnam = 'EAST GLACIER PARK' 
+		or schnam = 'GLENDALE SCHOOL' or schnam = 'CARDWELL SCHOOL' or ncessch = '300009800325' 
+		or schnam = 'SAGE CREEK ELEMENTARY' or schnam = 'YAAK SCHOOL' or ncessch = '302067000619' 
+		or ncessch = '302067000166' or ncessch = '300093201025' or ncessch = '300093201024' or ncessch = '300093301026'
+		or ncessch = '301719000538' or ncessch = '301719000251' or schnam = 'FISHTAIL SCHOOL'
+		or schnam = 'LUSTRE SCHOOL' or schnam = 'MORIN SCHOOL' or schnam = 'PRAIRIE ELK COLONY SCHOOL'
+		or schnam = 'RIMROCK COLONY SCHOOL' or schnam = 'MIAMI COLONY SCHOOL' or schnam = 'MIDWAY COLONY SCHOOL'
+		or schnam = 'KING COLONY SCHOOL' or schnam = 'FAIRHAVEN COLONY SCHOOL' or schnam = 'CASCADE COLONY SCHOOL'
+		or schnam = 'DEERFIELD COLONY SCHOOL' or schnam = 'NORTH HARLEM COLONY SCHOOL' or schnam = 'SPRING CREEK COLONY SCHOOL');
+
+--SUNESYS
