@@ -120,3 +120,132 @@ update fabric.master2
 	where master2.schnam = new_values.school_name
 		and master2.lcity = new_values.school_city
 		and master2.lstate = new_values.state;
+
+--CALIFORNIA (HSN K-12)
+alter table fabric.master2
+	drop column if exists st_cd;
+alter table fabric.master2
+	add column st_cd character varying(30);
+update fabric.master2
+	set st_cd = stid || seasch
+	where lstate = 'CA';
+
+select st_cd, cds_code, fiber
+	from fabric.master2, fabric.cenic
+	where master2.st_cd = cds_code
+	and lstate = 'CA';
+
+alter table fabric.master2
+	drop column if exists ca_ind;
+alter table fabric.master2
+	add column ca_ind int;
+with new_values as(
+select cds_code, fiber as ca_fiber
+	from fabric.cenic
+	order by cds_code
+)
+update fabric.master2
+	set ca_ind = new_values.ca_fiber
+	from new_values
+	where new_values.cds_code=master2.st_cd
+		and lstate = 'CA';
+
+--FLORIDA
+alter table fabric.master2
+	drop column if exists stid_fl;
+alter table fabric.master2
+	add column stid_fl character varying(2);
+update fabric.master2
+	set stid_fl = '0' || stid
+	from fabric.fl_ind
+	where char_length(stid) = 1
+	and lstate = 'FL';
+update fabric.master2
+	set stid_fl = stid
+	from fabric.fl_ind
+	where char_length(stid) = 2;
+alter table fabric.master2
+	drop column if exists sea_fl;
+alter table fabric.master2
+	add column sea_fl character varying(4);
+update fabric.master2
+	set sea_fl = '000' || seasch
+	where char_length(seasch) = 1
+	and lstate = 'FL';
+update fabric.master2
+	set sea_fl = '00' || seasch
+	where char_length(seasch) = 2
+	and lstate = 'FL';
+update fabric.master2
+	set sea_fl = '0' || seasch
+	where char_length(seasch) = 3
+	and lstate  = 'FL';
+update fabric.master2
+	set sea_fl = seasch
+	where char_length(seasch) = 4
+	and lstate = 'FL';
+alter table fabric.master2
+	drop column if exists scd_fl;
+alter table fabric.master2
+	add column scd_fl character varying(22);
+update fabric.master2
+	set scd_fl = stid_fl || ' ' || sea_fl
+	where lstate = 'FL';
+
+select scd_fl, school_code, fiber
+	from fabric.master2, fabric.fl_ind
+	where master2.scd_fl = fl_ind.school_code
+		and lstate = 'FL';
+
+alter table fabric.master2
+	drop column if exists fl_ind;
+alter table fabric.master2
+	add column fl_ind int;
+with new_values as(
+select school_code, fiber as fl_fiber
+	from fabric.fl_ind
+	order by school_code
+)
+update fabric.master2
+	set fl_ind=new_values.fl_fiber
+	from new_values
+	where master2.scd_fl=new_values.school_code
+		and lstate = 'FL';
+
+--WEST VIRGINIA
+select wv_school_id, seasch
+	from fabric.master2, fabric.wv_ind
+	where master2.seasch=wv_ind.wv_school_id
+		and lstate = 'WV';
+
+alter table fabric.master2
+	drop column if exists wv_ind;
+alter table fabric.master2
+	add column wv_ind int;
+with new_values as(
+select wv_school_id, fiber as wv_fiber
+	from fabric.wv_ind
+	order by wv_school_id
+)
+update fabric.master2
+	set wv_ind=new_values.wv_fiber
+	from new_values
+	where master2.seasch=new_values.wv_school_id
+		and lstate = 'WV';
+
+--NORTH CAROLINA
+alter table fabric.master2
+	drop column if exists nc_ind;
+alter table fabric.master2
+	add column nc_ind int;
+update fabric.master2
+	set nc_ind = -1
+	where (schnam = 'STANFIELD ELEMENTARY' or schnam = 'CHARLES E PERRY ELEMENTARY'
+		or coname = 'NASH COUNTY' or coname = 'DAVIDSON COUNTY' or coname = 'FRANKLIN COUNTY'
+		or coname = 'WARREN COUNTY' or coname = 'IREDELL COUNTY' or coname = 'CASEWELL COUNTY')
+		and lstate = 'NC';
+update fabric.master2
+	set nc_ind = 1
+	where nc_ind is null and lstate = 'NC';
+
+--NEW MEXICO

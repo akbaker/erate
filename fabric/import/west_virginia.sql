@@ -1,8 +1,8 @@
-drop table if exists fabric.wv_ind;
+﻿drop table if exists fabric.wv_ind;
 CREATE TABLE fabric.wv_ind
 (
 	resa character varying(4),
-	county_number int,
+	county_number character varying(10),
 	county_name character varying(20),
 	school_number character varying(15),
 	school_name character varying(100),
