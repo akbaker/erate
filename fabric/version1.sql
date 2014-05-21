@@ -257,6 +257,10 @@ update fabric.master
 	where lea_name = 'ROUND ROCK ISD'
 		and lstate = 'TX';
 update fabric.master
+	set tx_ind = 1
+	where lea_name = 'PALESTINE ISD'
+		and lstate = 'TX';
+update fabric.master
 	set tx_ind = 0
 	where tx_ind is null
 		and lstate = 'TX';
@@ -576,6 +580,17 @@ from new_values
 where master.lstreet = upper(new_values.street_address)
 	and master.lcity = upper(new_values.city)
 	and master.lstate = upper(new_values.state);
+
+--ARIZONA
+alter table fabric.master
+	drop column if exists az_ind;
+alter table fabric.master
+	add column az_ind int;
+
+update fabric.master
+	set az_ind = 1
+	where lea_name = 'NOGALES UNIFIED DISTRICT'
+		and lstate = 'AZ';
 
 ------------------------------------------------------
 ----MAXIMUM VALUE
