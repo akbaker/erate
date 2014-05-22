@@ -20,3 +20,5 @@ COPY fabric.ga_ind
 	FROM '/Users/FCC/Documents/allison/data/fabric/State Connectivity Data/GA/Georgia SchoolFiberSurvey with address.csv'
 	CSV HEADER DELIMITER ',';
 
+DELETE FROM fabric.ga_ind
+WHERE school_name IS NULL;

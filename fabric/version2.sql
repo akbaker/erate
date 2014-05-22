@@ -391,3 +391,88 @@ update fabric.master2
 		or schnam = 'DEERFIELD COLONY SCHOOL' or schnam = 'NORTH HARLEM COLONY SCHOOL' or schnam = 'SPRING CREEK COLONY SCHOOL');
 
 --SUNESYS
+select sunesys.rev_appname, leanm, appstate, lstate
+	from fabric.sunesys, fabric.master2
+	where rev_appname=leanm
+		and appstate=lstate
+		and apptype = 'District';
+
+alter table fabric.master2
+	add column sunesys int;
+with new_values as(
+select sunesys.rev_appname, appstate, apptype, fiber as sunesys_fiber
+	from fabric.sunesys
+)
+update fabric.master2
+	set sunesys=new_values.sunesys_fiber
+	from new_values
+	where leanm=new_values.rev_appname
+		and lstate=new_values.appstate
+		and apptype = 'District';
+
+--OHIO
+select schnam, building_name, fiber, lcity, building_city
+from fabric.master2, fabric.oh_ind
+where master2.schnam = upper(oh_ind.building_name)
+	and master2.lcity = upper(oh_ind.building_city)
+	and lstate = 'OH';
+
+alter table fabric.master2
+	drop column if exists oh_ind;
+alter table fabric.master2
+	add column oh_ind int;
+with new_values as(
+select building_name, building_city, fiber as oh_fiber
+from fabric.oh_ind
+)
+update fabric.master2
+	set oh_ind = new_values.oh_fiber
+	from new_values
+	where master2.schnam = upper(new_values.building_name)
+	and master2.lcity = upper(new_values.building_city)
+	and master2.lstate = 'OH';
+
+--H&B CABLE
+alter table fabric.master
+	drop column if exists hb_cable;
+alter table fabric.master
+	add column hb_cable int;
+update fabric.master
+	set hb_cable = 1
+	where school_id = '200034901970' or school_id = '200034902028' or school_id = '200034901992'
+		or school_id = '200582000731' or school_id = '200582000732' or school_id = '200582000733'
+		or school_id = '200465000912' or school_id = '200465000914' or school_id = '200465000913';
+
+--FAT BEAM
+alter table fabric.master
+	drop column if exists fatbeam;
+alter table fabric.master
+	add column fatbeam int;
+update fabric.master
+	set fatbeam = 1
+	where leaid = '5301140' or leaid = '5303510' or leaid = '5304950' or leaid = '5308670' or leaid = '5310110'
+		or leaid = '3005280' or leaid = '3005310' or leaid = '1600780' or leaid = '5305370' or leaid = '5302940'
+		or leaid = '1602670';
+
+--GEORGIA
+select schnam, school_name, lcity, city, fiber
+from fabric.master2, fabric.ga_ind
+where master2.schnam = upper(ga_ind.school_name)
+	and master2.lcity = upper(ga_ind.city);
+
+alter table fabric.master2
+	drop column if exists ga_ind;
+alter table fabric.master2
+	add column ga_ind int;
+with new_values as(
+select school_name, city, fiber AS ga_fiber
+from fabric.ga_ind
+)
+update fabric.master2
+set ga_ind = new_values.ga_fiber
+from new_values
+where master2.schnam = upper(new_values.school_name)
+	and lcity = upper(new_values.city)
+	and lstate = 'GA';
+
+--BIE
