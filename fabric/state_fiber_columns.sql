@@ -112,7 +112,18 @@ select fiber, count(*) from fabric.nj_ind group by fiber;
 
 --WEST VIRGINIA
 alter table fabric.wv_ind
+	drop column if exists wv_school_id;
+alter table fabric.wv_ind
 	add column wv_school_id character(5);
+update fabric.wv_ind
+	set county_number = '0' || county_number
+	where char_length(county_number) = 1;
+update fabric.wv_ind
+	set school_number = '00' || school_number
+	where char_length(school_number) = 1;
+update fabric.wv_ind
+	set school_number = '0' || school_number
+	where char_length(school_number) = 2;
 update fabric.wv_ind
 	set wv_school_id = county_number || school_number;
 
@@ -170,6 +181,18 @@ update fabric.navajo_schools
 	set fiber = -1;
 
 --MONTANA
+alter table fabric.mt_ind
+	add column schlvl character varying(2);
+update fabric.mt_ind
+	set schlvl = 1
+	where school_level = 'Primary';
+update fabric.mt_ind
+	set schlvl = 2
+	where school_level = 'Middle';
+update fabric.mt_ind
+	set schlvl = 3
+	where school_level = 'High';
+
 alter table fabric.mt_ind
 	add column state character(2);
 update fabric.mt_ind

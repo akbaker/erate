@@ -476,3 +476,65 @@ where master2.schnam = upper(new_values.school_name)
 	and lstate = 'GA';
 
 --BIE
+select school_code, seasch, fiber
+from fabric.master2, fabric.bie_ind
+where seasch = school_code;
+
+alter table fabric.master2
+	drop column if exists bie_ind;
+alter table fabric.master2
+	add column bie_ind int;
+with new_values as(
+select school_code, fiber AS bie_fiber
+from fabric.bie_ind
+)
+update fabric.master2
+set bie_ind = new_values.bie_fiber
+from new_values
+where master2.seasch = new_values.school_code;
+
+--NAVAJO
+select ncessch, nces_id, fiber
+from fabric.master2, fabric.navajo_schools
+where master2.ncessch=navajo_schools.nces_id;
+
+alter table fabric.master2
+	drop column if exists navajo;
+alter table fabric.master2
+	add column navajo int;
+with new_values as(
+select nces_id, fiber as navajo_fiber
+	from fabric.navajo_schools
+	order by nces_id
+)
+update fabric.master2
+	set navajo = new_values.navajo_fiber
+	from new_values
+	where new_values.nces_id=master2.ncessch;
+
+--ARIZONA
+alter table fabric.master2
+	drop column if exists az_ind;
+alter table fabric.master2
+	add column az_ind int;
+update fabric.master2
+	set az_ind = 1
+	where leanm = 'NOGALES UNIFIED DISTRICT'
+		and lstate = 'AZ';
+
+--TEXAS
+alter table fabric.master2
+	drop column if exists tx_ind;
+alter table fabric.master2
+	add column tx_ind int;
+update fabric.master2
+	set tx_ind = 1
+	where leanm = 'ROUND ROCK ISD'
+		and lstate = 'TX';
+update fabric.master2
+	set tx_ind = 1
+	where leanm = 'PALESTINE ISD'
+		and lstate = 'TX';
+
+--------------------------------CORROBORATION SCORING----------------------------------
+
