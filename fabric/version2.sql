@@ -537,4 +537,7 @@ update fabric.master2
 		and lstate = 'TX';
 
 --------------------------------CORROBORATION SCORING----------------------------------
+alter table fabric.master2
+	add column score_map;
+
 

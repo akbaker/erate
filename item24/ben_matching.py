@@ -45,37 +45,32 @@ try:
 	theSQL = theSQL + " FROM fabric.item24_cxns_mar28_expanded"
 	theSQL = theSQL + " GROUP BY ben;"
 	theCur.execute(theSQL)
-	print theSQL
+	numben = theCur.rowcount
+	counter = 1
 	driver = theCur.fetchall()
 	for r in driver:
-		theSQL2 = "SELECT * FROM fabric.nces_pub_ben"
+		print "processing ben " + str(counter) + " out of " + str(numben)
+		counter = counter + 1
+		theSQL2 = "SELECT * FROM fabric.nces_pub_ben_final"
 		theSQL2 = theSQL2 + " WHERE ben = '" + str(r[0]) + "'"
 		theSQL2 = theSQL2 + " AND size_sort IS NOT NULL"
 		theSQL2 = theSQL2 + " ORDER BY leaid, size_sort;"
 		theCur.execute(theSQL2)
-		print theSQL2
 		schools = theCur.fetchall()
-		maxschools = theCur.rowcount
 		theSQL3 = "SELECT * FROM fabric.item24_cxns_mar28_expanded"
 		theSQL3 = theSQL3 + " WHERE ben = '" + str(r[0]) + "'"
 		theSQL3 = theSQL3 + " ORDER BY download_speed DESC;"
 		theCur.execute(theSQL3)
-		print theSQL3
 		cxns = theCur.fetchall()
-		maxcxns = theCur.rowcount
 		for i,j in zip(schools, cxns):
-			print i
-			print j
-			theSQL4 = "UPDATE fabric.nces_pub_ben"
+			theSQL4 = "UPDATE fabric.nces_pub_ben_final"
 			theSQL4 = theSQL4 + " SET type_cxn = '" + str(j[4]) + "'"
 			theSQL4 = theSQL4 + " WHERE school_id = '" + str(i[0]) + "'; commit; "
 			theCur.execute(theSQL4)		
-			print theSQL4
-			theSQL5 = "UPDATE fabric.nces_pub_ben"
+			theSQL5 = "UPDATE fabric.nces_pub_ben_final"
 			theSQL5 = theSQL5 + " SET download_speed = " + str(j[6])
 			theSQL5 = theSQL5 + " WHERE school_id = '" + str(i[0]) + "'; commit;"
 			theCur.execute(theSQL5)
-			print theSQL5
 	theCur.close()
 	del theCur
 	del conn, myConn
