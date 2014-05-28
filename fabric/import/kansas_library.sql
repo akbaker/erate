@@ -5,8 +5,8 @@ CREATE TABLE fabric.ks_lib
 	county character varying(50),
 	num_computers int,
 	population character varying(10),
-	download_speed character varying(5),
-	upload_speed character varying(5),
+	download_speed double precision,
+	upload_speed double precision,
 	cxn_type character varying(3),
 	empty character varying (3)
 )

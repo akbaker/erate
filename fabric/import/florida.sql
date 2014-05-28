@@ -1,4 +1,4 @@
-drop table if exists fabric.fl_ind;
+﻿drop table if exists fabric.fl_ind;
 CREATE TABLE fabric.fl_ind
 (
 	school_code character varying(8),
