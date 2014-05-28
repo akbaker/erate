@@ -162,10 +162,10 @@ alter table fabric.me_ind
 	add column fiber int;
 update fabric.me_ind
 	set fiber = 1
-	where cai_type = 'K12' and (cxn_type = 'FIBER' or cxn_type = 'DARK FIBER');
+	where cxn_type = 'FIBER' or cxn_type = 'DARK FIBER';
 update fabric.me_ind
 	set fiber = -1
-	where cai_type = 'K12' and (cxn_type <> 'FIBER' or cxn_type <> 'DARK FIBER');
+	where cxn_type <> 'FIBER' or cxn_type <> 'DARK FIBER';
 update fabric.me_ind
 	set fiber = 0
 	where fiber is null;
