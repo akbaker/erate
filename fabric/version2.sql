@@ -536,8 +536,38 @@ update fabric.master2
 	where leanm = 'PALESTINE ISD'
 		and lstate = 'TX';
 
+--ZAYO
+alter table fabric.master2
+	drop column if exists zayo_ind;
+alter table fabric.master2
+	add column zayo_ind int;
+
+with new_values as(
+select ncessch, fiber as zayo_fiber
+from fabric.zayo_school_match
+)
+update fabric.master2
+set zayo_ind = new_values.zayo_fiber
+from new_values
+where master2.ncessch = new_values.ncessch;
+
+
+
 --------------------------------CORROBORATION SCORING----------------------------------
 alter table fabric.master2
-	add column score_map;
+	drop column if exists score_map;
+alter table fabric.master2
+	add column score_map int;
 
-
+with new_values as(
+select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coalesce(wv_ind,0) 
+	+ coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(mt_ind,0)
+	+ coalesce(sunesys,0) + coalesce(oh_ind,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0)
+	+ coalesce(navajo,0) + coalesce(bie_ind,0) + coalesce(az_ind,0) + coalesce(tx_ind,0)
+	as row_score
+from fabric.master2
+)
+update fabric.master2
+set score_map = new_values.row_score
+from new_values
+where master2.ncessch = new_values.ncessch;
