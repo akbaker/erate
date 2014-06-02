@@ -433,22 +433,22 @@ update fabric.master2
 	and master2.lstate = 'OH';
 
 --H&B CABLE
-alter table fabric.master
+alter table fabric.master2
 	drop column if exists hb_cable;
-alter table fabric.master
+alter table fabric.master2
 	add column hb_cable int;
-update fabric.master
+update fabric.master2
 	set hb_cable = 1
-	where school_id = '200034901970' or school_id = '200034902028' or school_id = '200034901992'
-		or school_id = '200582000731' or school_id = '200582000732' or school_id = '200582000733'
-		or school_id = '200465000912' or school_id = '200465000914' or school_id = '200465000913';
+	where ncessch = '200034901970' or ncessch = '200034902028' or ncessch = '200034901992'
+		or ncessch = '200582000731' or ncessch = '200582000732' or ncessch = '200582000733'
+		or ncessch = '200465000912' or ncessch = '200465000914' or ncessch = '200465000913';
 
 --FAT BEAM
-alter table fabric.master
+alter table fabric.master2
 	drop column if exists fatbeam;
-alter table fabric.master
+alter table fabric.master2
 	add column fatbeam int;
-update fabric.master
+update fabric.master2
 	set fatbeam = 1
 	where leaid = '5301140' or leaid = '5303510' or leaid = '5304950' or leaid = '5308670' or leaid = '5310110'
 		or leaid = '3005280' or leaid = '3005310' or leaid = '1600780' or leaid = '5305370' or leaid = '5302940'
@@ -554,6 +554,7 @@ where master2.ncessch = new_values.ncessch;
 
 
 --------------------------------CORROBORATION SCORING----------------------------------
+--JUNE 1ST MAP SCORE
 alter table fabric.master2
 	drop column if exists score_map;
 alter table fabric.master2
@@ -571,3 +572,63 @@ update fabric.master2
 set score_map = new_values.row_score
 from new_values
 where master2.ncessch = new_values.ncessch;
+
+alter table fabric.master2
+	drop column if exists fiber_map;
+alter table fabric.master2
+	add column fiber_map int;
+
+update fabric.master2
+set fiber_map = 1
+where score_map > 0;
+
+update fabric.master2
+set fiber_map = 0
+where score_map = 0;
+
+update fabric.master2
+set fiber_map = -1
+where score_map < 0;
+
+select fiber_map, count(*)
+from fabric.master2
+group by fiber_map
+order by fiber_map;
+
+select score_map, count(*)
+from fabric.master2
+group by score_map
+order by score_map;
+
+drop table if exists fabric.map_fiber_june1;
+create table fabric.map_fiber_june1 as(
+select ncessch, leaid, member, geom, score_map, fiber_map
+from fabric.master2
+);
+
+copy(select * from fabric.map_fiber_june1) to '/Users/FCC/Documents/allison/data/fabric/map_fiber_june1.csv' with delimiter '|' CSV header;
+
+--FULL SCORE
+alter table fabric.master2
+	drop column if exists score_full;
+alter table fabric.master2
+	add column score_full int;
+with new_values as(
+select ncessch, coalesce(cai,0) + coalesce(verizon,0) + coalesce(navajo,0) + coalesce(ca_ind,0) 
+	+ coalesce(fl_ind,0) + coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) 
+	+ coalesce(me_ind,0) + coalesce(nj_ind,0) + coalesce(mt_ind,0) + coalesce(sunesys,0) 
+	+ coalesce(oh_ind,0) + coalesce(hb_cable,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0) 
+	+ coalesce(navajo,0) + coalesce(bie_ind,0) + coalesce(zayo_ind,0) + coalesce(az_ind,0)
+	+ coalesce(tx_ind,0)
+	as row_score
+	from fabric.master2
+)
+update fabric.master2
+set score_full=new_values.row_score
+from new_values
+where master2.ncessch = new_values.ncessch;
+
+select score_full, count(*)
+from fabric.master2
+group by score_full
+order by score_full;
