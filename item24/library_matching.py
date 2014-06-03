@@ -51,25 +51,27 @@ try:
 	for r in driver:
 		print "processing frn " + str(counter) + " out of " + str(numfrn)
 		counter = counter + 1
-		theSQL2 = "SELECT * FROM fabric.block4_cxns_libonly"
+		theSQL2 = "SELECT frn, size_sort FROM fabric.block4_cxns_libonly"
 		theSQL2 = theSQL2 + " WHERE frn = '" + str(r[0]) + "'"
 		theSQL2 = theSQL2 + " AND size_sort IS NOT NULL"
 		theSQL2 = theSQL2 + " ORDER BY frn, size_sort;"
 		theCur.execute(theSQL2)
 		schools = theCur.fetchall()
-		theSQL3 = "SELECT * FROM fabric.item24_cxns_mar28_expanded"
+		theSQL3 = "SELECT frn, type_cxn, download_speed FROM fabric.item24_cxns_mar28_expanded"
 		theSQL3 = theSQL3 + " WHERE frn = '" + str(r[0]) + "'"
 		theSQL3 = theSQL3 + " ORDER BY download_speed DESC;"
 		theCur.execute(theSQL3)
 		cxns = theCur.fetchall()
 		for i,j in zip(schools, cxns):
 			theSQL4 = "UPDATE fabric.block4_cxns_libonly"
-			theSQL4 = theSQL4 + " SET type_cxn = '" + str(j[4]) + "'"
-			theSQL4 = theSQL4 + " WHERE frn = '" + str(i[0]) + "'; commit; "
+			theSQL4 = theSQL4 + " SET type_cxn = '" + str(j[1]) + "'"
+			theSQL4 = theSQL4 + " WHERE frn = '" + str(i[0]) + "'"
+			theSQL4 = theSQL4 + " AND size_sort = '" + str(i[1]) + "'; commit; "
 			theCur.execute(theSQL4)		
 			theSQL5 = "UPDATE fabric.block4_cxns_libonly"
-			theSQL5 = theSQL5 + " SET download_speed = " + str(j[6])
-			theSQL5 = theSQL5 + " WHERE frn = '" + str(i[0]) + "'; commit;"
+			theSQL5 = theSQL5 + " SET download_speed = " + str(j[2])
+			theSQL5 = theSQL5 + " WHERE frn = '" + str(i[0]) + "'"
+			theSQL5 = theSQL5 + " AND size_sort = '" + str(i[1]) + "'; commit;"
 			theCur.execute(theSQL5)
 	theCur.close()
 	del theCur

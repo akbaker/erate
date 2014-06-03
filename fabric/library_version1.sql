@@ -3,7 +3,6 @@ into fabric.lib_master
 from analysis.imls_lib;
 ----17598 records
 
-
 --CAI
 alter table fabric.lib_master
 add column cai int;

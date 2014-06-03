@@ -27,9 +27,6 @@ into fabric.block4_cxns_libonly
 from fabric.block4_may22_libonly, fabric.block4_lib_check_counts
 where block4_may22_libonly.frn = block4_lib_check_counts.frn;
 
-select *
-from fabric.block4_cxns_libonly;
-
 --CREATE COLUMN FOR SORTING
 alter table fabric.block4_cxns_libonly
 drop column if exists size_sort;
@@ -49,3 +46,114 @@ drop column if exists download_speed;
 
 alter table fabric.block4_cxns_libonly
 add column download_speed double precision;
+
+--RANGE OF SPEEDS
+select download_speed, count(*)
+from fabric.block4_cxns_libonly
+group by download_speed
+order by download_speed;
+
+--CREATE BINS
+alter table fabric.block4_cxns_libonly
+drop column if exists bin;
+
+alter table fabric.block4_cxns_libonly
+add column bin int;
+
+update fabric.block4_cxns_libonly
+set bin = 1
+where download_speed < 1.5;
+
+update fabric.block4_cxns_libonly
+set bin = 2
+where download_speed >= 1.5 and download_speed < 5;
+
+update fabric.block4_cxns_libonly
+set bin = 3
+where download_speed >= 5 and download_speed < 10;
+
+update fabric.block4_cxns_libonly
+set bin = 4
+where download_speed >= 10 and download_speed < 25;
+
+update fabric.block4_cxns_libonly
+set bin = 5
+where download_speed >= 25 and download_speed < 100;
+
+update fabric.block4_cxns_libonly
+set bin = 6
+where download_speed >= 100 and download_speed < 1000;
+
+update fabric.block4_cxns_libonly
+set bin = 7
+where download_speed >= 1000;
+
+select bin, count(*)
+from fabric.block4_cxns_libonly
+group by bin
+order by bin;
+
+--DROP OUTLIER
+select *
+from fabric.block4_cxns_libonly
+order by download_speed desc;
+
+delete from fabric.block4_cxns_libonly
+where frn = '2562206';
+
+--CREATE DECILES
+alter table fabric.block4_cxns_libonly
+drop column if exists decile;
+
+alter table fabric.block4_cxns_libonly
+add column decile int;
+
+with new_values as(
+SELECT frn, size_sort, download_speed, ntile(10) 
+	over (order by download_speed) as decile
+FROM fabric.block4_cxns_libonly
+)
+update fabric.block4_cxns_libonly
+set decile = new_values.decile
+from new_values
+where block4_cxns_libonly.frn = new_values.frn 
+	and block4_cxns_libonly.size_sort = new_values.size_sort;
+
+--CREATE MEDIAN FUCNTION
+CREATE FUNCTION _final_median(anyarray) RETURNS float8 AS $$ 
+  WITH q AS
+  (
+     SELECT val
+     FROM unnest($1) val
+     WHERE VAL IS NOT NULL
+     ORDER BY 1
+  ),
+  cnt AS
+  (
+    SELECT COUNT(*) AS c FROM q
+  )
+  SELECT AVG(val)::float8
+  FROM 
+  (
+    SELECT val FROM q
+    LIMIT  2 - MOD((SELECT c FROM cnt), 2)
+    OFFSET GREATEST(CEIL((SELECT c FROM cnt) / 2.0) - 1,0)  
+  ) q2;
+$$ LANGUAGE sql IMMUTABLE;
+ 
+CREATE AGGREGATE median(anyelement) (
+  SFUNC=array_append,
+  STYPE=anyarray,
+  FINALFUNC=_final_median,
+  INITCOND='{}'
+);
+
+--FIND MEDIAN SPEED FOR EACH DECILE
+select decile, median(download_speed) AS median_value, avg(download_speed) AS avg_value
+from fabric.block4_cxns_libonly
+group by decile
+order by decile;
+
+--COUNT OBSERVATIONS
+select count(*)
+from fabric.block4_cxns_libonly;

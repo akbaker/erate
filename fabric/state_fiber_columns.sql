@@ -484,12 +484,10 @@ update fabric.bie_ind
 
 --Zayo
 select *
-from fabric.master, fabric.zayo
-where upper(master.lstreet) = upper(zayo.street_address)
-	and upper(master.lcity) = upper(zayo.city)
-	and upper(master.lstate) = upper(zayo.state);
+from fabric.zayo_school_match;
 
-alter table fabric.zayo
-	add column fiber int;
-update fabric.zayo
-	set fiber = 1;
+alter table fabric.zayo_school_match
+add column fiber int;
+
+update fabric.zayo_school_match
+set fiber = 1;
