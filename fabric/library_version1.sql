@@ -126,6 +126,7 @@ where lib_master.lib_name = upper(new_values.site_name)
 
 
 -------------------------CORROBORATION SCORE------------------------------
+---Full score
 alter table fabric.lib_master
 	drop column if exists score;
 alter table fabric.lib_master
@@ -187,5 +188,56 @@ select count(case when score < 0 then 1 end) as nofiber,
 	from fabric.lib_master
 );
 
+---Public score
+alter table fabric.lib_master
+	drop column if exists score_public;
+alter table fabric.lib_master
+	add column score_public int;
+with new_values as(
+select lib_id, coalesce(cai,0) + coalesce(ks_lib,0) + coalesce(me_lib,0) + coalesce(mo_lib,0)
+	as row_score
+	from fabric.lib_master
+)
+update fabric.lib_master
+	set score_public=new_values.row_score
+	from new_values
+	where lib_master.lib_id = new_values.lib_id;
+	
+update fabric.lib_master
+	set score_public = 0
+	where score_public IS NULL;
+
+select score_public, count(*)
+from fabric.lib_master
+group by score_public
+order by score_public;
+
+--PIVOT TABLE 
+drop table if exists fabric.state_counts_library_public;
+
+create table fabric.state_counts_library_public as(
+select stab,
+	count(*),
+	count(case when score_public = -2 then 1 end) as nofiber_neg2,
+	count(case when score_public = -1 then 1 end) as nofiber_neg1,
+	count(case when score_public = 0 then 1 end) as unknown_0,
+	count(case when score_public = 1 then 1 end) as fiber_pos1,
+	count(case when score_public = 2 then 1 end) as fiber_pos2
+	from fabric.lib_master
+	group by stab
+	order by stab
+);
+
+--NATIONAL COUNTS
+drop table if exists fabric.national_counts_library_public;
+
+create table fabric.national_counts_library_public as(
+select count(case when score_public < 0 then 1 end) as nofiber,
+	count(case when score_public = 0 then 1 end) as unk,
+	count(case when score_public > 0 then 1 end) as fiber
+	from fabric.lib_master
+);
+
 --EXPORT TABLES
 COPY (SELECT * FROM fabric.state_counts_library) to '/Users/FCC/Documents/allison/data/fabric/counts_library.csv' with delimiter '|' CSV header;
+COPY (SELECT * FROM fabric.state_counts_library_public) to '/Users/FCC/Documents/allison/data/fabric/counts_library_public.csv' with delimiter '|' CSV header;
