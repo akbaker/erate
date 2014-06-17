@@ -5,7 +5,6 @@ CREATE TABLE fabric.block4_may22
 	f471_appnum character varying(6),
 	frn character varying(8),
 	block5_item22 character varying(15),
-	sub_worksheet character varying(10),
 	entity_rcv_svc_num character varying(15),
 	entity_rcv_name character varying(100),
 	entity_rcv_type character varying(20),
@@ -27,5 +26,5 @@ ALTER TABLE fabric.block4_may22
 
 --set client_encoding to 'latin1';
 copy fabric.block4_may22
-	from '/Users/FCC/Documents/allison/data/fabric/item24/FCCREQ_3_BLOCK4_REV1.csv'
-	csv header delimiter '|';
+	from '/Users/FCC/Documents/allison/data/Block4_09_13/FCCREQ_3_BLOCK4_REV.csv'
+	csv delimiter '|';
