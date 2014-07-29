@@ -212,6 +212,9 @@ from fabric.lib_master
 group by score_public
 order by score_public;
 
+--MAP DATA (JULY 25)
+COPY (select stab, fscskey, lib_id, lib_name, lib_pop, longitude, latitude, fips_state, lib_loc, geom, block_fips, score_public AS fiber from fabric.lib_master) to '/Users/FCC/Documents/allison/data/fabric/library_fiber.csv' with delimiter '|' CSV header;
+
 --PIVOT TABLE 
 drop table if exists fabric.state_counts_library_public;
 

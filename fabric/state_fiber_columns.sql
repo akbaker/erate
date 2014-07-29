@@ -491,3 +491,18 @@ add column fiber int;
 
 update fabric.zayo_school_match
 set fiber = 1;
+
+--Puerto Rico
+select *
+from fabric.pr_ind;
+
+alter table fabric.pr_ind
+add column fiber int;
+
+update fabric.pr_ind
+set fiber = 1
+where physical_cxn = 'x-Fiber';
+
+update fabric.pr_ind
+set fiber = -1
+where physical_cxn = 'Copper' OR physical_cxn = 'Wireless';

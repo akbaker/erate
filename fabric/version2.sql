@@ -551,7 +551,21 @@ set zayo_ind = new_values.zayo_fiber
 from new_values
 where master2.ncessch = new_values.ncessch;
 
+--PUERTO RICO
+alter table fabric.master2
+	drop column if exists pr_ind;
+alter table fabric.master2
+	add column pr_ind int;
 
+with new_values as(
+select school_code, fiber
+from fabric.pr_ind
+)
+update fabric.master2
+set pr_ind = new_values.fiber
+from new_values
+where seasch = school_code
+	and lstate = 'PR';
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --JUNE 1ST MAP SCORE
@@ -565,6 +579,7 @@ select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coal
 	+ coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(mt_ind,0)
 	+ coalesce(sunesys,0) + coalesce(oh_ind,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0)
 	+ coalesce(navajo,0) + coalesce(bie_ind,0) + coalesce(az_ind,0) + coalesce(tx_ind,0)
+	+ coalesce(pr_ind,0)
 	as row_score
 from fabric.master2
 )

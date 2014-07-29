@@ -62,7 +62,7 @@ select type_cxn, count(*)
 from fabric.nces_pub_ben_final
 group by type_cxn;
 
---COST PER STUDENT
+--SPEED PER STUDENT
 alter table fabric.nces_pub_ben_final
 add column speed_per_student double precision;
 

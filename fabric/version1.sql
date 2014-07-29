@@ -592,6 +592,27 @@ update fabric.master
 	where lea_name = 'NOGALES UNIFIED DISTRICT'
 		and lstate = 'AZ';
 
+--PUERTO RICO
+select *
+from fabric.master, fabric.pr_ind
+where seasch = school_code
+	and lstate = 'PR';
+
+alter table fabric.master
+	drop column if exists pr_ind;
+alter table fabric.master
+	add column pr_ind int;
+
+with new_values as(
+select school_code, fiber
+from fabric.pr_ind
+)
+update fabric.master
+set pr_ind = new_values.fiber
+from new_values
+where seasch = new_values.school_code
+	and lstate = 'PR';
+
 ------------------------------------------------------
 ----MAXIMUM VALUE
 alter table fabric.master
@@ -599,7 +620,7 @@ alter table fabric.master
 alter table fabric.master
 	add column max_val int;
 update fabric.master
-	set max_val = greatest(cai,verizon,navajo,ca_hsn,fl_ind,wv_ind,nc_ind,nm_ind,me_ind,nj_ind,tx_ind,mt_ind,sunesys,cci,oh_ind,hb_cable,fatbeam,ga_ind,bie_ind,zayo_ind);
+	set max_val = greatest(cai,verizon,navajo,ca_hsn,fl_ind,wv_ind,nc_ind,nm_ind,me_ind,nj_ind,tx_ind,mt_ind,sunesys,cci,oh_ind,hb_cable,fatbeam,ga_ind,bie_ind,zayo_ind,pr_ind);
 select max_val, count(*)
 	from fabric.master
 	group by max_val
@@ -651,7 +672,7 @@ select school_id, coalesce(cai,0) + coalesce(verizon,0) + coalesce(navajo,0) + c
 	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(nj_ind,0) 
 	+ coalesce(tx_ind,0) + coalesce(mt_ind,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(oh_ind,0)
 	+ coalesce(hb_cable,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0) + coalesce(bie_ind,0) + coalesce(zayo_ind,0) 
-	as row_score
+	+ coalesce(pr_ind,0) as row_score
 	from fabric.master
 )
 update fabric.master
@@ -667,7 +688,7 @@ alter table fabric.master
 select school_id, coalesce(cai,0) + coalesce(navajo,0) + coalesce(ca_hsn,0) + coalesce(fl_ind,0) 
 	+ coalesce(wv_ind,0) + coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0)
 	+ coalesce(tx_ind,0) + coalesce(mt_ind,0) + coalesce(sunesys,0) + coalesce(cci,0) + coalesce(oh_ind,0)
-	+ coalesce(fatbeam,0) + coalesce(ga_ind,0) + coalesce(bie_ind,0) as row_score
+	+ coalesce(fatbeam,0) + coalesce(ga_ind,0) + coalesce(bie_ind,0) + coalesce(pr_ind,0) as row_score
 	from fabric.master
 )
 update fabric.master
