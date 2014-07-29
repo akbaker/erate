@@ -82,3 +82,10 @@ where mb13_14 >= 100;
 update fabric.mo_lib
 set fiber = 0
 where mb13_14 < 100;
+
+--VERMONT
+alter table fabric.vt_lib
+add column fiber int;
+
+update fabric.vt_lib
+set fiber = 1;

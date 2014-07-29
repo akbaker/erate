@@ -568,7 +568,7 @@ where seasch = school_code
 	and lstate = 'PR';
 
 --------------------------------CORROBORATION SCORING----------------------------------
---JUNE 1ST MAP SCORE
+--AUGUST 1ST MAP SCORE
 alter table fabric.master2
 	drop column if exists score_map;
 alter table fabric.master2
@@ -615,13 +615,18 @@ from fabric.master2
 group by score_map
 order by score_map;
 
-drop table if exists fabric.map_fiber_june1;
-create table fabric.map_fiber_june1 as(
+drop table if exists fabric.map_fiber_aug1;
+create table fabric.map_fiber_aug1 as(
 select ncessch, leaid, member, geom, score_map, fiber_map
 from fabric.master2
 );
 
-copy(select * from fabric.map_fiber_june1) to '/Users/FCC/Documents/allison/data/fabric/map_fiber_june1.csv' with delimiter '|' CSV header;
+copy(select * from fabric.map_fiber_aug1) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/map_fiber_aug1.csv' with delimiter '|' CSV header;
+
+select fiber_map, score_map, count(*)
+from fabric.map_fiber_aug1
+group by fiber_map, score_map
+order by fiber_map, score_map;
 
 --FULL SCORE
 alter table fabric.master2

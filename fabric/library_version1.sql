@@ -1,4 +1,6 @@
-﻿select *
+﻿drop table if exists fabric.lib_master;
+
+select *
 into fabric.lib_master
 from analysis.imls_lib;
 ----17598 records
@@ -122,6 +124,25 @@ set mo_lib = new_values.mo_fiber
 from new_values
 where lib_master.lib_name = upper(new_values.site_name)
 	and stab = 'MO';
+
+--VERMONT
+select *
+from fabric.lib_master, fabric.vt_lib
+where lib_master.lib_id = vt_lib.library_id
+	and stab = 'VT';
+
+alter table fabric.lib_master
+add column vt_lib int;
+
+with new_values as(
+select library_id, fiber as vt_fiber
+from fabric.vt_lib
+)
+update fabric.lib_master
+set vt_lib = new_values.vt_fiber
+from new_values
+where lib_master.lib_id = new_values.library_id
+	and stab = 'VT';
 
 
 
