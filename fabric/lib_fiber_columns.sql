@@ -89,3 +89,22 @@ add column fiber int;
 
 update fabric.vt_lib
 set fiber = 1;
+
+--OHIO
+alter table fabric.oh_lib
+add column fiber int;
+
+update fabric.oh_lib
+set fiber = 1
+where (conn_type = 'Ethernet' OR conn_type = 'EVPL') AND bandwidth >= 100;
+
+update fabric.oh_lib
+set fiber = -1
+where conn_type = 'T1';
+
+update fabric.oh_lib
+set fiber = 0
+where fiber IS NULL;
+
+select *
+from fabric.oh_lib;

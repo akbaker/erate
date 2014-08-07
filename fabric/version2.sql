@@ -3,7 +3,7 @@ drop table if exists fabric.master2;
 
 create table fabric.master2 as
 select ncessch, fipst, leaid, schno, stid, seasch, leanm, schnam, lstree, lcity, lstate, lzip, lzip4, type, 
-	status, latcod, loncod, conum, coname, cdcode, bies, level, chartr, member, geom
+	status, ulocal, latcod, loncod, conum, coname, cdcode, bies, level, chartr, member, geom
 from analysis.nces_public_2011;
 
 alter table fabric.master2
@@ -617,7 +617,7 @@ order by score_map;
 
 drop table if exists fabric.map_fiber_aug1;
 create table fabric.map_fiber_aug1 as(
-select ncessch, leaid, member, geom, score_map, fiber_map
+select ncessch, leaid, ulocal, member, geom, score_map, fiber_map
 from fabric.master2
 );
 

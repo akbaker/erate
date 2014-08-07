@@ -19,7 +19,7 @@ on block4_lib_count.frn = item24_cxns_lib_count.frn
 where num_lines >= num_libraries;
 
 --JOIN ON FRN: KEEP ONLY LIBRARIES WITH CXNS
-select funding_year, f471_appnum, block4_may22_libonly.frn, block5_item22, sub_worksheet, entity_rcv_svc_num
+select funding_year, f471_appnum, block4_may22_libonly.frn, block5_item22, sub_worksheet, entity_rcv_svc_num,
 	entity_rcv_name, entity_rcv_type, nces_code, rural_urban, student_count, student_nslp_count, 
 	nslp_eligible_pct, discount_pct, weighted_product, prek_adult_juvenile_flag, alt_discount_mechanism_flag,
 	num_libraries, num_lines
