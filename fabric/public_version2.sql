@@ -6,81 +6,65 @@ select ncessch, fipst, leaid, schno, stid, seasch, leanm, schnam, lstree, lcity,
 	status, ulocal, latcod, loncod, conum, coname, cdcode, bies, level, chartr, member, geom
 from analysis.nces_public_2011;
 
-alter table fabric.master3
-	add constraint fabric_master3_pkey primary key (ncessch),
-	add constraint enforce_dims_geom check (st_ndims(geom) = 2),
-	add constraint enforce_geotype_geom check (geometrytype(geom) = 'POINT'::text OR geom IS NULL),
-	add constraint enforce_srid_geom check (st_srid(geom) = 4326);
-
 --VIEW TABLE
 select *
 from fabric.master3;
 
 --CAI 
-select ncessch, nces_id, fiber
-from fabric.master3, analysis.shp_cai2013_clean
-where shp_cai2013_clean.nces_id = master3.ncessch;
+select ncessch, caiid, fiber
+from fabric.master3, analysis.cai_dec2013
+where cai_dec2013.caiid = master3.ncessch;
 
 alter table fabric.master3
 	drop column if exists cai1;
 alter table fabric.master3
 	add column cai1 int;
 with new_values as(
-select nces_id, fiber as cai_fiber
-	from analysis.shp_cai2013_clean
-	where transtech <> '-999'
-	order by nces_id
+select caiid, fiber as cai_fiber
+	from analysis.cai_dec2013
 )
 update fabric.master3
 	set cai1 = new_values.cai_fiber
 	from new_values
-	where new_values.nces_id=master3.ncessch;
-update fabric.master3
-	set cai1 = -1
-	where cai1 = 0;
+	where new_values.caiid=master3.ncessch;
 
-select seasch, nces_id, fiber
-from fabric.master3, analysis.shp_cai2013_clean
-where shp_cai2013_clean.nces_id = master3.seasch;
+select seasch, caiid, lstate, statecode, fiber
+from fabric.master3, analysis.cai_dec2013
+where cai_dec2013.caiid = master3.seasch
+	and lstate = statecode;
 
 alter table fabric.master3
 	drop column if exists cai2;
 alter table fabric.master3
 	add column cai2 int;
 with new_values as(
-select nces_id, fiber as cai_fiber
-	from analysis.shp_cai2013_clean
-	where transtech <> '-999'
-	order by nces_id
+select caiid, statecode, fiber as cai_fiber
+	from analysis.cai_dec2013
 )
 update fabric.master3
 	set cai2 = new_values.cai_fiber
 	from new_values
-	where new_values.nces_id=master3.seasch;
-update fabric.master3
-	set cai2 = -1
-	where cai2 = 0;
+	where new_values.caiid=master3.seasch
+		and statecode=lstate;
 
-select stid, nces_id, fiber
-from fabric.master3, analysis.shp_cai2013_clean
-where shp_cai2013_clean.nces_id = master3.stid;
+select stid, caiid, lstate, statecode fiber
+from fabric.master3, analysis.cai_dec2013
+where cai_dec2013.caiid = master3.stid
+	and statecode = lstate;
 
 alter table fabric.master3
 	drop column if exists cai3;
 alter table fabric.master3
 	add column cai3 int;
 with new_values as(
-select nces_id, fiber as cai_fiber
-	from analysis.shp_cai2013_clean
-	order by nces_id
+select caiid, statecode, fiber as cai_fiber
+	from analysis.cai_dec2013
 )
 update fabric.master3
 	set cai3 = new_values.cai_fiber
 	from new_values
-	where new_values.nces_id=master3.stid;
-update fabric.master3
-	set cai3 = -1
-	where cai3 = 0;
+	where new_values.caiid=master3.stid
+		and statecode = lstate;
 
 alter table fabric.master3
 	add column cai int;
@@ -100,28 +84,6 @@ update fabric.master3
 select cai, count(*)
 from fabric.master3
 group by cai;
-
---VERIZON
-select *
-from fabric.master3, analysis.verizon_sch
-where master3.schnam = verizon_sch.school_name
-	and master3.lcity = verizon_sch.school_city
-	and master3.lstate = verizon_sch.state;
-
-alter table fabric.master3
-	drop column if exists verizon;
-alter table fabric.master3
-	add column verizon int;
-with new_values as(
-select school_name, school_city, state, fiber as verizon_fiber
-	from analysis.verizon_sch
-)
-update fabric.master3
-	set verizon = new_values.verizon_fiber
-	from new_values
-	where master3.schnam = new_values.school_name
-		and master3.lcity = new_values.school_city
-		and master3.lstate = new_values.state;
 
 --CALIFORNIA (HSN K-12)
 alter table fabric.master3
@@ -241,13 +203,13 @@ alter table fabric.master3
 alter table fabric.master3
 	add column nc_ind int;
 update fabric.master3
-	set nc_ind = -1
+	set nc_ind = -2
 	where (schnam = 'STANFIELD ELEMENTARY' or schnam = 'CHARLES E PERRY ELEMENTARY'
 		or coname = 'NASH COUNTY' or coname = 'DAVIDSON COUNTY' or coname = 'FRANKLIN COUNTY'
 		or coname = 'WARREN COUNTY' or coname = 'IREDELL COUNTY' or coname = 'CASEWELL COUNTY')
 		and lstate = 'NC';
 update fabric.master3
-	set nc_ind = 1
+	set nc_ind = 2
 	where nc_ind is null and lstate = 'NC';
 
 --NEW MEXICO
@@ -298,11 +260,11 @@ alter table fabric.master3
 alter table fabric.master3
 	add column tx_ind int;
 update fabric.master3
-	set tx_ind = 1
+	set tx_ind = 2
 	where leanm = 'ROUND ROCK ISD'
 		and lstate = 'TX';
 update fabric.master3
-	set tx_ind = 1
+	set tx_ind = 2
 	where leanm = 'PALESTINE ISD'
 		and lstate = 'TX';
 
@@ -392,7 +354,7 @@ alter table fabric.master3
 alter table fabric.master3
 	add column fatbeam int;
 update fabric.master3
-	set fatbeam = 1
+	set fatbeam = 2
 	where leaid = '5301140' or leaid = '5303510' or leaid = '5304950' or leaid = '5308670' or leaid = '5310110'
 		or leaid = '3005280' or leaid = '3005310' or leaid = '1600780' or leaid = '5305370' or leaid = '5302940'
 		or leaid = '1602670';
@@ -461,7 +423,7 @@ alter table fabric.master3
 alter table fabric.master3
 	add column az_ind int;
 update fabric.master3
-	set az_ind = 1
+	set az_ind = 2
 	where leanm = 'NOGALES UNIFIED DISTRICT'
 		and lstate = 'AZ';
 
@@ -471,11 +433,11 @@ alter table fabric.master3
 alter table fabric.master3
 	add column tx_ind int;
 update fabric.master3
-	set tx_ind = 1
+	set tx_ind = 2
 	where leanm = 'ROUND ROCK ISD'
 		and lstate = 'TX';
 update fabric.master3
-	set tx_ind = 1
+	set tx_ind = 2
 	where leanm = 'PALESTINE ISD'
 		and lstate = 'TX';
 
@@ -502,49 +464,72 @@ alter table fabric.master3
 	add column email int;
 
 update fabric.master3
-set email = 1
+set email = 2
 where leaid = '0200150';
 
 update fabric.master3
-set email = 1 
+set email = 2 
 where leaid = '2510050';
 
 update fabric.master3
-set email = 1
+set email = 2
 where ncessch = '551044001363';
 
 update fabric.master3
-set email = 1
+set email = 2
 where ncessch = '390500203801' or ncessch = '390500203802' or ncessch = '390500203803' or ncessch = '390500203804'
 	or ncessch = '390500200199' or ncessch = '390500203805';
 
 update fabric.master3
-set email = 1
+set email = 2
 where ncessch = '173441003526' or ncessch = '173441003527' or ncessch = '173441003538' or ncessch = '173441003528' 
 	or ncessch = '173441003530' or ncessch = '173441006107' or ncessch = '173441003534' or ncessch = '170020406200' 
 	or ncessch = '173441006155' or ncessch = '173441003535' or ncessch = '173441005967' or ncessch = '173441003540' 
 	or ncessch = '173441003536' or ncessch = '173441005338' or ncessch = '173441003529';
 
 update fabric.master3
-set email = 1
+set email = 2
 where ncessch = '171410004687' or ncessch = '171410001760' or ncessch = '171410001762' or ncessch = '171410005506' 
 	or ncessch = '171410001761';
 
 update fabric.master3
-set email = 1
+set email = 2
 where ncessch = '171605001914' or ncessch = '171605001913' or ncessch = '171605001912';
 
 update fabric.master3
-set email = 1
+set email = 2
 where ncessch = '550567000601' or ncessch = '550567000602' or ncessch = '550567000603' or ncessch = '550567002704'
 	or ncessch = '550567000604';
 
 update fabric.master3
-set email = 1
+set email = 2
 where leaid = '5308910' or leaid = '5309930';
 
+update fabric.master3
+set email = 2
+where leaid = '3904857' or leaid = '3910030' or leaid = '3904859' or leaid = '3904858';
+
+update fabric.master3
+set email = 2
+where leaid = '2102940' or leaid = '2104620';
+
+update fabric.master3
+set email = 2 
+where leaid = '2003570' or leaid = '2008130' or leaid = '2009450' or leaid = '2008310' or leaid = '2011430';
+
+update fabric.master3
+set email = 2
+where leaid = '010162' or leaid = '012311' or leaid = '010599' or leaid = '010601' or leaid = '010561'
+	or leaid = '010447' or leaid = '010627' or leaid = '010628' or leaid = '010630' or leaid = '012609';
+
+update fabric.master3
+set email = 2
+where leaid = '1918930';
+
+
+
 --------------------------------CORROBORATION SCORING----------------------------------
---AUGUST 1ST MAP SCORE
+--MAP SCORE
 alter table fabric.master3
 	drop column if exists score_map;
 alter table fabric.master3
@@ -555,7 +540,7 @@ select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coal
 	+ coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(mt_ind,0)
 	+ coalesce(sunesys,0) + coalesce(oh_ind,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0)
 	+ coalesce(navajo,0) + coalesce(bie_ind,0) + coalesce(az_ind,0) + coalesce(tx_ind,0)
-	+ coalesce(pr_ind,0)
+	+ coalesce(pr_ind,0) + coalesce(email,0)
 	as row_score
 from fabric.master3
 )
