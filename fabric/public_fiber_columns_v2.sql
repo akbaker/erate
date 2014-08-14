@@ -1,4 +1,51 @@
-﻿--CA K-12 HSN
+﻿--CAI (Dec 2013)
+-----delete all non-school observations
+delete from analysis.cai_dec2013
+where caicat <> '1';
+
+-----create fiber indicator
+update analysis.cai_dec2013
+	set maxaddown = ''
+	where maxaddown = 'ZZ';
+alter table analysis.cai_dec2013
+	drop column if exists dn_speed;
+alter table analysis.cai_dec2013
+	add column dn_speed int;
+update analysis.cai_dec2013
+	set dn_speed = cast(nullif(maxaddown, '') AS int);
+
+alter table analysis.cai_dec2013
+	drop column if exists fiber;
+alter table analysis.cai_dec2013
+	add column fiber int;
+update analysis.cai_dec2013
+	set fiber = 0
+	where bbservice = 'U' or bbservice = 'N';
+update analysis.cai_dec2013
+	set fiber = 0
+	where transtech = -999 OR transtech = 0 OR transtech = 4;
+update analysis.cai_dec2013
+	set fiber = 1
+	where bbservice = 'Y'
+		and transtech = 50;
+update analysis.cai_dec2013
+	set fiber = -1
+	where bbservice = 'Y'
+		and ((transtech >= 10 and transtech < 50) OR transtech > 50);
+
+------list & drop duplicates
+select caiid, count(*) as mycount
+	into analysis.dup_cai_dec2013
+	from analysis.cai_dec2013
+	group by caiid
+	order by mycount desc;
+select count(*) from analysis.dup_cai_dec2013 where mycount = 1;
+delete from analysis.dup_cai_dec2013 where mycount = 1;
+
+delete from analysis.cai_dec2013 using analysis.dup_cai_dec2013
+	where cai_dec2013.caiid=dup_cai_dec2013.caiid;
+
+--CA K-12 HSN
 alter table fabric.cenic
 	drop column if exists fiber;
 alter table fabric.cenic
@@ -7,6 +54,12 @@ update fabric.cenic
 	set fiber = -1
 	where connection_type <> 'Carrier Ethernet (e.g. - OptiMan, MetroEthernet)'  and
 		connection_type <> 'Private Fiber' and connection_type <> 'Shared Private Fiber';
+update fabric.cenic 
+	set fiber = 1
+	where (connection_type = 'Other' or connection_type = 'Point-to-point' or connection_type IS NULL)
+		and (connection_speed = '100Mbs' or connection_speed = '10Gbps' or connection_speed = '155Mbs'
+		or connection_speed = '1Gbs' or connection_speed = '> 100Mbs < 155Mbs' or connection_speed = '> 10Gbps'
+		or connection_speed = '>155Mbs < 1Gbs' or connection_speed = '>1Gbps < 10Gbps');
 update fabric.cenic
 	set fiber = 1
 	where connection_type = 'Carrier Ethernet (e.g. - OptiMan, MetroEthernet)' 

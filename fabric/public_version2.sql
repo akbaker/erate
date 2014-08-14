@@ -513,6 +513,35 @@ update fabric.master3
 set email = 1
 where ncessch = '551044001363';
 
+update fabric.master3
+set email = 1
+where ncessch = '390500203801' or ncessch = '390500203802' or ncessch = '390500203803' or ncessch = '390500203804'
+	or ncessch = '390500200199' or ncessch = '390500203805';
+
+update fabric.master3
+set email = 1
+where ncessch = '173441003526' or ncessch = '173441003527' or ncessch = '173441003538' or ncessch = '173441003528' 
+	or ncessch = '173441003530' or ncessch = '173441006107' or ncessch = '173441003534' or ncessch = '170020406200' 
+	or ncessch = '173441006155' or ncessch = '173441003535' or ncessch = '173441005967' or ncessch = '173441003540' 
+	or ncessch = '173441003536' or ncessch = '173441005338' or ncessch = '173441003529';
+
+update fabric.master3
+set email = 1
+where ncessch = '171410004687' or ncessch = '171410001760' or ncessch = '171410001762' or ncessch = '171410005506' 
+	or ncessch = '171410001761';
+
+update fabric.master3
+set email = 1
+where ncessch = '171605001914' or ncessch = '171605001913' or ncessch = '171605001912';
+
+update fabric.master3
+set email = 1
+where ncessch = '550567000601' or ncessch = '550567000602' or ncessch = '550567000603' or ncessch = '550567002704'
+	or ncessch = '550567000604';
+
+update fabric.master3
+set email = 1
+where leaid = '5308910' or leaid = '5309930';
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --AUGUST 1ST MAP SCORE
