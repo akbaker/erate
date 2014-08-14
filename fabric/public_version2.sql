@@ -77,9 +77,6 @@ update fabric.master3
 update fabric.master3
 	set cai = cai3
 	where cai3 is not null;
-update fabric.master3
-	set cai = 0
-	where cai is null;
 
 select cai, count(*)
 from fabric.master3

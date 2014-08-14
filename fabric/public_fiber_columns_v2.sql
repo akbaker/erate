@@ -469,7 +469,7 @@ update fabric.oh_ind
 --GEORGIA
 select *
 from analysis.nces_public_2011, fabric.ga_ind
-where nces_public_2011.school_name = upper(ga_ind.school_name)
+where nces_public_2011.schnam = upper(ga_ind.school_name)
 	and lcity = upper(city)
 	and lstate = 'GA';
 alter table fabric.ga_ind
