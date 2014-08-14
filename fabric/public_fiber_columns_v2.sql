@@ -34,6 +34,8 @@ update analysis.cai_dec2013
 		and ((transtech >= 10 and transtech < 50) OR transtech > 50);
 
 ------list & drop duplicates
+drop table if exists analysis.dup_cai_dec2013;
+
 select caiid, count(*) as mycount
 	into analysis.dup_cai_dec2013
 	from analysis.cai_dec2013
@@ -45,29 +47,33 @@ delete from analysis.dup_cai_dec2013 where mycount = 1;
 delete from analysis.cai_dec2013 using analysis.dup_cai_dec2013
 	where cai_dec2013.caiid=dup_cai_dec2013.caiid;
 
+select *
+from analysis.cai_dec2013
+order by caiid;
+
 --CA K-12 HSN
 alter table fabric.cenic
 	drop column if exists fiber;
 alter table fabric.cenic
 	add column fiber int;
 update fabric.cenic
-	set fiber = -1
+	set fiber = -2
 	where connection_type <> 'Carrier Ethernet (e.g. - OptiMan, MetroEthernet)'  and
 		connection_type <> 'Private Fiber' and connection_type <> 'Shared Private Fiber';
 update fabric.cenic 
-	set fiber = 1
+	set fiber = 2
 	where (connection_type = 'Other' or connection_type = 'Point-to-point' or connection_type IS NULL)
 		and (connection_speed = '100Mbs' or connection_speed = '10Gbps' or connection_speed = '155Mbs'
 		or connection_speed = '1Gbs' or connection_speed = '> 100Mbs < 155Mbs' or connection_speed = '> 10Gbps'
 		or connection_speed = '>155Mbs < 1Gbs' or connection_speed = '>1Gbps < 10Gbps');
 update fabric.cenic
-	set fiber = 1
+	set fiber = 2
 	where connection_type = 'Carrier Ethernet (e.g. - OptiMan, MetroEthernet)' 
 		and (connection_speed = '100Mbs' or connection_speed = '10Gbps' or connection_speed = '155Mbs'
 		or connection_speed = '1Gbs' or connection_speed = '> 100Mbs < 155 Mbs' or connection_speed = '> 10Gbps'
 		or connection_speed =  '> 155 Mbs < 1Gbs' or connection_speed = '> 1Gbs < 10Gbps');
 update fabric.cenic
-	set fiber = 1
+	set fiber = 2
 	where connection_type = 'Private Fiber' or connection_type = 'Shared Private Fiber';
 update fabric.cenic
 	set fiber = 0
@@ -76,35 +82,41 @@ update fabric.cenic
 select fiber, count(*) from fabric.cenic group by fiber;
 
 --FLORIDA
-alter table analysis.nces_pub_full
+alter table analysis.nces_public_2011
+	drop column if exists stid_fl;
+alter table analysis.nces_public_2011
 	add column stid_fl character(2);
-update analysis.nces_pub_full
+update analysis.nces_public_2011
 	set stid_fl = '0' || stid
 	from fabric.fl_ind
 	where char_length(stid) = 1
 	and lstate = 'FL';
-update analysis.nces_pub_full
+update analysis.nces_public_2011
 	set stid_fl = stid
 	from fabric.fl_ind
 	where char_length(stid) = 2
 	and lstate = 'FL';
-alter table analysis.nces_pub_full
+alter table analysis.nces_public_2011
+	drop column if exists sea_fl;
+alter table analysis.nces_public_2011
 	add column sea_fl character(4);
-update analysis.nces_pub_full
+update analysis.nces_public_2011
 	set sea_fl = '000' || seasch
 	where char_length(seasch) = 1
 	and lstate = 'FL';
-update analysis.nces_pub_full
+update analysis.nces_public_2011
 	set sea_fl = '00' || seasch
 	where char_length(seasch) = 2
 	and lstate = 'FL';
-update analysis.nces_pub_full
+update analysis.nces_public_2011
 	set sea_fl = '0' || seasch
 	where char_length(seasch) = 3
 	and lstate  = 'FL';
-alter table analysis.nces_pub_full
+alter table analysis.nces_public_2011
+	drop column if exists school_code_fl;
+alter table analysis.nces_public_2011
 	add column school_code_fl character(7);
-update analysis.nces_pub_full
+update analysis.nces_public_2011
 	set school_code_fl = stid_fl || ' ' || sea_fl;
 
 alter table fabric.fl_ind
@@ -122,46 +134,6 @@ update fabric.fl_ind
 	where cxn_fiber is null;
 
 select fiber, count(*) from fabric.fl_ind group by fiber;
-
---NEW JERSEY
-alter table analysis.nces_pub_full
-	add column stid_nj character(6);
-alter table analysis.nces_pub_full
-	add column seasch_nj character(3);
-update analysis.nces_pub_full
-	set stid_nj = stid
-	where char_length(stid) = 6
-	and lstate = 'NJ';
-update analysis.nces_pub_full
-	set stid_nj = '0' || stid
-	where char_length(stid) = 5
-	and lstate = 'NJ';
-update analysis.nces_pub_full
-	set seasch_nj = seasch
-	where char_length(seasch) = 3
-	and lstate = 'NJ';
-update analysis.nces_pub_full
-	set seasch_nj = '0' || seasch
-	where char_length(seasch) = 2
-	and lstate = 'NJ';
-alter table analysis.nces_pub_full
-	add column school_code_nj character(9);
-update analysis.nces_pub_full
-	set school_code_nj = stid_nj || seasch_nj;
-
-
-alter table fabric.nj_ind
-	drop column if exists fiber;
-alter table fabric.nj_ind
-	add column fiber int;
-update fabric.nj_ind
-	set fiber = 1
-	where internet_speed >= 100;
-update fabric.nj_ind
-	set fiber = 0
-	where internet_speed < 100;
-
-select fiber, count(*) from fabric.nj_ind group by fiber;
 
 --WEST VIRGINIA
 alter table fabric.wv_ind
@@ -185,10 +157,10 @@ alter table fabric.wv_ind
 alter table fabric.wv_ind
 	add column fiber int;
 update fabric.wv_ind
-	set fiber = 1
+	set fiber = 2
 	where fiber_ind = 'Y';
 update fabric.wv_ind
-	set fiber = -1
+	set fiber = -2
 	where fiber_ind = 'N';
 update fabric.wv_ind
 	set fiber = 0
@@ -214,10 +186,10 @@ alter table fabric.me_ind
 alter table fabric.me_ind
 	add column fiber int;
 update fabric.me_ind
-	set fiber = 1
+	set fiber = 2
 	where cxn_type = 'FIBER' or cxn_type = 'DARK FIBER';
 update fabric.me_ind
-	set fiber = -1
+	set fiber = -2
 	where cxn_type <> 'FIBER' or cxn_type <> 'DARK FIBER';
 update fabric.me_ind
 	set fiber = 0
@@ -235,6 +207,8 @@ update fabric.navajo_schools
 
 --MONTANA
 alter table fabric.mt_ind
+	drop column if exists schlvl;
+alter table fabric.mt_ind
 	add column schlvl character varying(2);
 update fabric.mt_ind
 	set schlvl = 1
@@ -246,6 +220,8 @@ update fabric.mt_ind
 	set schlvl = 3
 	where school_level = 'High';
 
+alter table fabric.mt_ind
+	drop column if exists state;
 alter table fabric.mt_ind
 	add column state character(2);
 update fabric.mt_ind
@@ -262,6 +238,8 @@ update fabric.mt_ind
 	where max_mbps < 100;
 
 --SUNESYS
+alter table fabric.sunesys
+	drop column if exists rev_appname;
 alter table fabric.sunesys
 	add column rev_appname character varying(50);
 update fabric.sunesys
@@ -442,37 +420,16 @@ alter table fabric.sunesys
 alter table fabric.sunesys
 	add column fiber int;
 update fabric.sunesys
-	set fiber = 1;
+	set fiber = 2;
 	
-
---CCI DATA
-select planned_speed_tier, count(*)
-from analysis.nces_pub_full, fabric.cci
-where nces_pub_full.school_name = upper(cci.org_name)
-	and nces_pub_full.lstate = cci.state
-	and nces_pub_full.lcity = upper(cci.city)
-	and cai_type = 'Schools (K-12)'
-group by planned_speed_tier;
-
---**See CCI Mod file**
-
-alter table fabric.cci
-	add column fiber int;
-update fabric.cci
-	set fiber = 1
-	where planned_speed_tier = '>=1 Gb'
-		or planned_speed_tier = '>= 100 Mb and < 1 Gb'
-		or planned_speed_tier = '>= 1 Gb';
-update fabric.cci
-	set fiber = 0
-	where fiber is null;
-
 --OHIO DATA
 select count(*)
 from fabric.master, fabric.oh_ind
 where master.school_name = upper(oh_ind.building_name)
 	and lstate = 'OH';
 
+alter table fabric.oh_ind
+	drop column if exists fiber;
 alter table fabric.oh_ind
 	add column fiber int;
 update fabric.oh_ind
@@ -511,21 +468,19 @@ update fabric.oh_ind
 
 --GEORGIA
 select *
-from analysis.nces_pub_full, fabric.ga_ind
-where nces_pub_full.school_name = upper(ga_ind.school_name)
+from analysis.nces_public_2011, fabric.ga_ind
+where nces_public_2011.school_name = upper(ga_ind.school_name)
 	and lcity = upper(city)
 	and lstate = 'GA';
-
-select *
-from 
-
+alter table fabric.ga_ind
+	drop column if exists fiber;
 alter table fabric.ga_ind
 	add column fiber int;
 update fabric.ga_ind
-	set fiber = -1
+	set fiber = -2
 	where has_fiber = 'No';
 update fabric.ga_ind
-	set fiber = 1
+	set fiber = 2
 	where has_fiber = 'Yes' or has_fiber = 'yes';
 
 --BIE
@@ -534,31 +489,25 @@ from fabric.master, fabric.bie_ind
 where master.seasch = bie_ind.school_code;
 
 alter table fabric.bie_ind
+	drop column if exists fiber;
+alter table fabric.bie_ind
 	add column fiber int;
 update fabric.bie_ind
-	set fiber = -1;
-
---Zayo
-select *
-from fabric.zayo_school_match;
-
-alter table fabric.zayo_school_match
-add column fiber int;
-
-update fabric.zayo_school_match
-set fiber = 1;
+	set fiber = -2;
 
 --Puerto Rico
 select *
 from fabric.pr_ind;
 
 alter table fabric.pr_ind
-add column fiber int;
+	drop column if exists fiber;
+alter table fabric.pr_ind
+	add column fiber int;
 
 update fabric.pr_ind
-set fiber = 1
+set fiber = 2
 where physical_cxn = 'x-Fiber';
 
 update fabric.pr_ind
-set fiber = -1
+set fiber = -2
 where physical_cxn = 'Copper' OR physical_cxn = 'Wireless';
