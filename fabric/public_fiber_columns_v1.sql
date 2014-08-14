@@ -463,6 +463,9 @@ where nces_pub_full.school_name = upper(ga_ind.school_name)
 	and lcity = upper(city)
 	and lstate = 'GA';
 
+select *
+from 
+
 alter table fabric.ga_ind
 	add column fiber int;
 update fabric.ga_ind

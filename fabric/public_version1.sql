@@ -28,6 +28,7 @@ alter table fabric.master2
 with new_values as(
 select nces_id, fiber as cai_fiber
 	from analysis.shp_cai2013_clean
+	where transtech <> '-999'
 	order by nces_id
 )
 update fabric.master2
@@ -49,6 +50,7 @@ alter table fabric.master2
 with new_values as(
 select nces_id, fiber as cai_fiber
 	from analysis.shp_cai2013_clean
+	where transtech <> '-999'
 	order by nces_id
 )
 update fabric.master2
