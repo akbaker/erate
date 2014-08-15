@@ -1,0 +1,79 @@
+﻿--LIBRARY FIBER COLUMNS
+
+--CAI
+alter table fabric.imls_cai
+add column fiber int;
+
+update fabric.imls_cai
+set fiber = 1
+where transtech = 50;
+
+update fabric.imls_cai
+set fiber = -1
+where transtech <> 50 AND transtech <> -999;
+
+update fabric.imls_cai
+set fiber = 0
+where transtech = -999;
+
+select *
+from fabric.imls_cai;
+
+select fiber, count(*)
+from fabric.imls_cai
+group by fiber;
+
+--KANSAS
+alter table fabric.ks_lib
+add column fiber int;
+
+update fabric.ks_lib
+set fiber = 1
+where download_speed > 100;
+
+update fabric.ks_lib
+set fiber = -1
+where cxn_type = 'T-1' OR download_speed IS NULL;
+
+update fabric.ks_lib
+set fiber = 0
+where download_speed < 100 AND cxn_type IS NULL;
+
+select fiber, count(*)
+from fabric.ks_lib
+group by fiber;
+
+--MISSOURI
+alter table fabric.mo_lib
+add column fiber int;
+
+update fabric.mo_lib
+set fiber = 1
+where mb13_14 >= 100;
+
+update fabric.mo_lib
+set fiber = 0
+where mb13_14 < 100;
+
+--VERMONT
+alter table fabric.vt_lib
+add column fiber int;
+
+update fabric.vt_lib
+set fiber = 2;
+
+--OHIO
+alter table fabric.oh_lib
+add column fiber int;
+
+update fabric.oh_lib
+set fiber = 2
+where (conn_type = 'Ethernet' OR conn_type = 'EVPL') AND bandwidth >= 100;
+
+update fabric.oh_lib
+set fiber = -2
+where conn_type = 'T1';
+
+update fabric.oh_lib
+set fiber = 0
+where fiber IS NULL;
