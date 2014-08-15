@@ -523,7 +523,22 @@ update fabric.master3
 set email = 2
 where leaid = '1918930';
 
+update fabric.master3
+set email = 2
+where ncessch = '190762000363' or ncessch = '190762000364' or ncessch = '190762000362' or ncessch = '192910001673'
+	or ncessch = '192910001674';
 
+update fabric.master3
+set email = 2
+where ncessch = '200825000755' or ncessch = '200825000754' or ncessch = '200825000752';
+
+update fabric.master3
+set email = 2
+where ncessch = '484437005066' or ncessch = '483557005577' or ncessch = '483557010997' or ncessch = '483557007057'
+	or ncessch = '481998001952' or ncessch = '481998001953' or ncessch = '481998001954' or ncessch = '481998006704' 
+	or ncessch = '481095000558' or ncessch = '481035000559' or ncessch = '481095005161' or ncessch = '482301002333' 
+	or ncessch = '482301002334' or ncessch = '482301002337' or ncessch = '482301002340' or ncessch = '482301002341' 
+	or ncessch = '482301002335' or ncessch = '482301002336' or ncessch = '482301002336' or ncessch = '482301006561';
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
@@ -573,15 +588,17 @@ from fabric.master3
 group by score_map
 order by score_map;
 
-drop table if exists fabric.map_fiber_aug1;
-create table fabric.map_fiber_aug1 as(
-select ncessch, leaid, ulocal, member, geom, score_map, fiber_map
+drop table if exists fabric.map_fiber;
+create table fabric.map_fiber as(
+select master3.ncessch, master3.schnam, master3.leaid, master3.leanm, master3.lcity, master3.lstate, master3.ulocal, master3.member, 
+	master3.geom, master3.az_ind AS arizona, master3.bie_ind AS bie, master3.cai, master3.ca_ind AS california, 
+	master3.fatbeam, master3.fl_ind AS florida, master3.ga_ind AS georgia, master3.me_ind AS maine, master3.mt_ind AS montana, 
+	master3.navajo, master3.nc_ind AS north_carolina, master3.nm_ind AS new_mexico, master3.oh_ind AS ohio, 
+	master3.pr_ind AS puerto_rico, master3.sunesys, master3.tx_ind AS texas, master3.wv_ind AS west_virginia, 
+	master3.email AS email_submissions, master3.score_map AS score, master3.fiber_map AS fiber_v2, master2.fiber_map AS fiber_v1
 from fabric.master3
+left join fabric.master2
+on master3.ncessch = master2.ncessch
 );
 
-copy(select * from fabric.map_fiber_aug1) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/map_fiber_aug1.csv' with delimiter '|' CSV header;
-
-select fiber_map, score_map, count(*)
-from fabric.map_fiber_aug1
-group by fiber_map, score_map
-order by fiber_map, score_map;
+copy(select * from fabric.map_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/map_fiber.csv' with delimiter '|' CSV header;

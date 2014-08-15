@@ -174,7 +174,7 @@ alter table fabric.nm_ind
 alter table fabric.nm_ind
 	add column fiber int;
 update fabric.nm_ind
-	set fiber = 1
+	set fiber = 2
 	where effective_bandw >= 100;
 update fabric.nm_ind
 	set fiber = 0
@@ -203,7 +203,7 @@ alter table fabric.navajo_schools
 alter table fabric.navajo_schools
 	add column fiber int;
 update fabric.navajo_schools
-	set fiber = -1;
+	set fiber = -2;
 
 --MONTANA
 alter table fabric.mt_ind
@@ -231,7 +231,7 @@ alter table fabric.mt_ind
 alter table fabric.mt_ind
 	add column fiber int;
 update fabric.mt_ind
-	set fiber = 1 
+	set fiber = 2
 	where max_mbps >= 100;
 update fabric.mt_ind
 	set fiber = 0 
