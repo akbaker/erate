@@ -483,7 +483,7 @@ alter table fabric.master3
 	drop column if exists farmers,
 	drop column if exists toledotel,
 	drop column if exists wabash,
-	drop column if exists corn_net,
+	drop column if exists com_net,
 	drop column if exists yadtel,
 	drop column if exists heart_iowa,
 	drop column if exists mckenzie,
@@ -510,7 +510,7 @@ alter table fabric.master3
 	add column clear_lake int,
 	add column peoples_telecom int,
 	add column west_texas_rural int,
-	add column corn_net int,
+	add column com_net int,
 	add column yadtel int,
 	add column heart_iowa int,
 	add column mckenzie int,
@@ -602,7 +602,7 @@ where ncessch = '484437005066' or ncessch = '483557005577' or ncessch = '4835570
 	or ncessch = '482301002335' or ncessch = '482301002336' or ncessch = '482301002336' or ncessch = '482301006561';
 
 update fabric.master3
-set corn_net = 2
+set com_net = 2
 where ncessch = '391003103298' or ncessch = '390493303563' or ncessch = '390493503567' or ncessch = '390493503568'
 	or ncessch = '390493403566' or ncessch = '390493803575'
 	or ncessch = '391002301885' or ncessch = '391002203926' or ncessch = '390493701065' or ncessch = '391001901250' 
@@ -682,7 +682,7 @@ select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coal
 	+ coalesce(ketchikan,0) + coalesce(galena,0) + coalesce(farmers,0) + coalesce(toledotel,0)
 	+ coalesce(wabash,0) + coalesce(peoples_rural,0) + coalesce(south_central,0) + coalesce(garden_valley,0)
 	+ coalesce(mtc,0) + coalesce(clear_lake,0) + coalesce(peoples_telecom,0) + coalesce(west_texas_rural,0)
-	+ coalesce(corn_net,0) + coalesce(yadtel,0) + coalesce(heart_iowa,0) + coalesce(mckenzie,0)
+	+ coalesce(com_net,0) + coalesce(yadtel,0) + coalesce(heart_iowa,0) + coalesce(mckenzie,0)
 	+ coalesce(alliance,0) + coalesce(ganado,0) + coalesce(us_connect,0) + coalesce(middleburgh,0)
 	+ coalesce(dupage,0)
 	as row_score
@@ -732,7 +732,7 @@ drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
 select master3.ncessch, master3.schnam, master3.leaid, master3.leanm, master3.lcity, master3.lstate, master3.ulocal, master3.member, 
 	master3.geom, master3.fiber_map AS fiber_v2, master2.fiber_map AS fiber_v1,  master3.score_map AS score, alliance, master3.bie_ind AS bie, master3.ca_ind AS california, 
-	citizens, clear_lake, corn_net, master3.cai, dc, dupage, elmwood, farmers, master3.fatbeam, master3.fl_ind AS florida, galena, ganado,
+	citizens, clear_lake, com_net, master3.cai, dc, dupage, elmwood, farmers, master3.fatbeam, master3.fl_ind AS florida, galena, ganado,
 	garden_valley, master3.ga_ind AS georgia, heart_iowa, hudson, ketchikan, master3.me_ind AS maine, master3.mt_ind AS montana, mtc,
 	master3.navajo, master3.nm_ind AS new_mexico, master3.az_ind AS nogales, master3.nc_ind AS north_carolina, master3.oh_ind AS ohio, 
 	palestine, peoples_rural, peoples_telecom, master3.pr_ind AS puerto_rico, revere, rock_island, round_rock, south_central,

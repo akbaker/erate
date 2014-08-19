@@ -175,42 +175,68 @@ where lib_master3.fscskey = new_values.fscs
 
 --EMAIL SUBMISSIONS
 alter table fabric.lib_master3
-add column email int;
+	drop column if exists grantsburg,
+	drop column if exists toledotel,
+	drop column if exists wabash,
+	drop column if exists peoples_telecom,
+	drop column if exists peoples_rural,
+	drop column if exists clear_lake,
+	drop column if exists com_net,
+	drop column if exists alliance,
+	drop column if exists us_connect,
+	drop column if exists heart_iowa,
+	drop column if exists dc;
+alter table fabric.lib_master3
+	add column grantsburg int,
+	add column toledotel int,
+	add column wabash int,
+	add column peoples_telecom int,
+	add column peoples_rural int,
+	add column clear_lake int,
+	add column com_net int,
+	add column alliance int,
+	add column us_connect int,
+	add column heart_iowa int,
+	add column dc int;
 
 update fabric.lib_master3
-set email = 2
+set grantsburg = 2
 where fscskey = 'WI0120';
 
 update fabric.lib_master3
-set email = 2
+set toledotel = 2
 where libid = 'WA0069-027';
 
 update fabric.lib_master3
-set email = 2
+set wabash = 2
 where libid = 'OH0043-002' or libid = 'OH0043-005' or fscskey = 'OH0083' or fscskey = 'OH0055';
 
 update fabric.lib_master3
-set email = 2
+set peoples_telecom = 2
 where fscskey = 'KS0256';
 
 update fabric.lib_master3
-set email = 2
+set peoples_rural = 2
 where fscskey = 'KY0052' or fscskey = 'KY0090';
 
 update fabric.lib_master3
-set email = 2
+set clear_lake = 2
 where fscskey = 'IA0077' or fscskey = 'IA0084';
 
 update fabric.lib_master3
-set email = 2
+set com_net = 2
+where libid = 'OH0176-002';
+
+update fabric.lib_master3
+set alliance = 2
 where fscskey = 'IA0108';
 
 update fabric.lib_master3
-set email = 2
+set heart_iowa = 2
 where fscskey = 'IA0200' or fscskey = 'IA0395' or fscskey = 'IA0506' or fscskey = 'IA0243';
 
 update fabric.lib_master3
-set email = 2
+set dc = 2
 where libid = 'DC0001-003' or libid = 'DC0001-005' or libid = 'DC0001-006' or libid = 'DC0001-007'
 	or libid = 'DC0001-028' or libid = 'DC0001-004' or libid = 'DC0001-008' or libid = 'DC0001-009'
 	or libid = 'DC0001-015' or libid = 'DC0001-010' or libid = 'DC0001-002' or libid = 'DC0001-011'
@@ -220,7 +246,7 @@ where libid = 'DC0001-003' or libid = 'DC0001-005' or libid = 'DC0001-006' or li
 	or libid = 'DC0001-023';
 
 update fabric.lib_master3
-set email = -2
+set us_connect = -2
 where fscskey = 'CO0094'; 
 
 -------------------------CORROBORATION SCORE------------------------------
@@ -233,7 +259,10 @@ alter table fabric.lib_master3
 with new_values as(
 select libid, coalesce(cai,0) + coalesce(ks_lib,0) + coalesce(me_lib,0)
 	+ coalesce(mo_lib,0) + coalesce(vt_lib,0) + coalesce(oh_lib,0)
-	+ coalesce(email,0)
+	+ coalesce(alliance,0) + coalesce(clear_lake,0) + coalesce(com_net,0)
+	+ coalesce(grantsburg,0) + coalesce(peoples_rural,0) + coalesce(peoples_telecom,0)
+	+ coalesce(toledotel,0) + coalesce(us_connect,0) + coalesce(wabash,0) 
+	+ coalesce(heart_iowa,0) + coalesce(dc,0)
 	as row_score
 from fabric.lib_master3
 )
@@ -283,14 +312,13 @@ from fabric.lib_master3
 );
 copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
 
-
-
 drop table if exists fabric.libmap_fiber;
 create table fabric.libmap_fiber as(
 select lib_master3.fscskey, lib_master3.system_name, lib_master3.libid, lib_master3.libname, lib_master3.c_out_ty AS lib_type, 
-	lib_master3.geom, lib_master3.visits, lib_master3.cai, lib_master3.ks_lib AS kansas, lib_master3.me_lib AS maine, 
-	lib_master3.mo_lib AS missouri, lib_master3.vt_lib AS vermont, lib_master3.oh_lib AS ohio, email,
-	lib_master3.score_map AS score, lib_master2.fiber_map AS fiber_v1, lib_master3.fiber_map AS fiber_v2
+	lib_master3.geom, lib_master3.visits, lib_master2.fiber_map AS fiber_v1, lib_master3.fiber_map AS fiber_v2, lib_master3.score_map AS score, 
+	alliance, clear_lake, com_net, lib_master3.cai, dc, grantsburg, heart_iowa, lib_master3.ks_lib AS kansas, lib_master3.me_lib AS maine, 
+	lib_master3.mo_lib AS missouri, lib_master3.oh_lib AS ohio, peoples_rural, peoples_telecom, toledotel, us_connect,
+	lib_master3.vt_lib AS vermont, wabash
 from fabric.lib_master3
 left join fabric.lib_master2
 on lib_master3.libid = lib_master2.libid
