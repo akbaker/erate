@@ -731,11 +731,12 @@ copy(select * from fabric.publicmap) to '/Users/FCC/Documents/allison/E-rate ana
 drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
 select master3.ncessch, master3.schnam, master3.leaid, master3.leanm, master3.lcity, master3.lstate, master3.ulocal, master3.member, 
-	master3.geom, master3.az_ind AS nogales, master3.bie_ind AS bie, master3.cai, master3.ca_ind AS california, 
-	master3.fatbeam, master3.fl_ind AS florida, master3.ga_ind AS georgia, master3.me_ind AS maine, master3.mt_ind AS montana, 
-	master3.navajo, master3.nc_ind AS north_carolina, master3.nm_ind AS new_mexico, master3.oh_ind AS ohio, 
-	master3.pr_ind AS puerto_rico, master3.sunesys, master3.tx_ind AS texas, master3.wv_ind AS west_virginia, 
-	master3.email AS email_submissions, master3.score_map AS score, master3.fiber_map AS fiber_v2, master2.fiber_map AS fiber_v1
+	master3.geom, master3.fiber_map AS fiber_v2, master2.fiber_map AS fiber_v1,  master3.score_map AS score, alliance, master3.bie_ind AS bie, master3.ca_ind AS california, 
+	citizens, clear_lake, corn_net, master3.cai, dc, dupage, elmwood, farmers, master3.fatbeam, master3.fl_ind AS florida, galena, ganado,
+	garden_valley, master3.ga_ind AS georgia, heart_iowa, hudson, ketchikan, master3.me_ind AS maine, master3.mt_ind AS montana, mtc,
+	master3.navajo, master3.nm_ind AS new_mexico, master3.az_ind AS nogales, master3.nc_ind AS north_carolina, master3.oh_ind AS ohio, 
+	palestine, peoples_rural, peoples_telecom, master3.pr_ind AS puerto_rico, revere, rock_island, round_rock, south_central,
+	master3.sunesys, middleburgh, toledotel, us_connect, wabash, west_texas_rural, master3.wv_ind AS west_virginia, yadtel
 from fabric.master3
 left join fabric.master2
 on master3.ncessch = master2.ncessch
