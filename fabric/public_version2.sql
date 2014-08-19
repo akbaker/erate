@@ -426,15 +426,17 @@ update fabric.master3
 
 --TEXAS
 alter table fabric.master3
-	drop column if exists tx_ind;
+	drop column if exists round_rock,
+	drop column if exists palestine;
 alter table fabric.master3
-	add column tx_ind int;
+	add column round_rock int,
+	add column palestine int;
 update fabric.master3
-	set tx_ind = 2
+	set round_rock = 2
 	where leanm = 'ROUND ROCK ISD'
 		and lstate = 'TX';
 update fabric.master3
-	set tx_ind = 2
+	set palestine = 2
 	where leanm = 'PALESTINE ISD'
 		and lstate = 'TX';
 
@@ -471,84 +473,128 @@ where ncessch = nces_code;
 
 --EMAIL SUBMISSIONS
 alter table fabric.master3
-	drop column if exists email;
+	drop column if exists revere,
+	drop column if exists citizens,
+	drop column if exists hudson,
+	drop column if exists rock_island,
+	drop column if exists elmwood,
+	drop column if exists ketchikan,
+	drop column if exists galena,
+	drop column if exists farmers,
+	drop column if exists toledotel,
+	drop column if exists wabash,
+	drop column if exists corn_net,
+	drop column if exists yadtel,
+	drop column if exists heart_iowa,
+	drop column if exists mckenzie,
+	drop column if exists alliance,
+	drop column if exists ganado,
+	drop column if exists us_connect,
+	drop column if exists middleburgh,
+	drop column if exists dupage;
 alter table fabric.master3
-	add column email int;
+	add column revere int,
+	add column citizens int,
+	add column hudson int,
+	add column rock_island int,
+	add column elmwood int,
+	add column ketchikan int,
+	add column galena int,
+	add column farmers int,
+	add column toledotel int,
+	add column wabash int,
+	add column peoples_rural int,
+	add column south_central int,
+	add column garden_valley int,
+	add column mtc int,
+	add column clear_lake int,
+	add column peoples_telecom int,
+	add column west_texas_rural int,
+	add column corn_net int,
+	add column yadtel int,
+	add column heart_iowa int,
+	add column mckenzie int,
+	add column alliance int,
+	add column dc int,
+	add column ganado int,
+	add column us_connect int,
+	add column middleburgh int,
+	add column dupage int;
 
 update fabric.master3
-set email = 2
+set revere = 2
 where leaid = '0200150';
 
 update fabric.master3
-set email = 2 
+set citizens = 2 
 where leaid = '2510050';
 
 update fabric.master3
-set email = 2
+set hudson = 2
 where ncessch = '551044001363';
 
 update fabric.master3
-set email = 2
+set rock_island = 2
 where ncessch = '390500203801' or ncessch = '390500203802' or ncessch = '390500203803' or ncessch = '390500203804'
 	or ncessch = '390500200199' or ncessch = '390500203805';
 
 update fabric.master3
-set email = 2
+set elmwood = 2
 where ncessch = '173441003526' or ncessch = '173441003527' or ncessch = '173441003538' or ncessch = '173441003528' 
 	or ncessch = '173441003530' or ncessch = '173441006107' or ncessch = '173441003534' or ncessch = '170020406200' 
 	or ncessch = '173441006155' or ncessch = '173441003535' or ncessch = '173441005967' or ncessch = '173441003540' 
 	or ncessch = '173441003536' or ncessch = '173441005338' or ncessch = '173441003529';
 
 update fabric.master3
-set email = 2
+set ketchikan = 2
 where ncessch = '171410004687' or ncessch = '171410001760' or ncessch = '171410001762' or ncessch = '171410005506' 
 	or ncessch = '171410001761';
 
 update fabric.master3
-set email = 2
+set galena = 2
 where ncessch = '171605001914' or ncessch = '171605001913' or ncessch = '171605001912';
 
 update fabric.master3
-set email = 2
+set farmers = 2
 where ncessch = '550567000601' or ncessch = '550567000602' or ncessch = '550567000603' or ncessch = '550567002704'
 	or ncessch = '550567000604';
 
 update fabric.master3
-set email = 2
+set toledotel = 2
 where leaid = '5308910' or leaid = '5309930';
 
 update fabric.master3
-set email = 2
+set wabash = 2
 where leaid = '3904857' or leaid = '3910030' or leaid = '3904859' or leaid = '3904858';
 
 update fabric.master3
-set email = 2
+set peoples_rural = 2
 where leaid = '2102940' or leaid = '2104620';
 
 update fabric.master3
-set email = 2 
+set south_central = 2 
 where leaid = '2003570' or leaid = '2008130' or leaid = '2009450' or leaid = '2008310' or leaid = '2011430';
 
 update fabric.master3
-set email = 2
+set garden_valley = 2
 where leaid = '2703570' or leaid = '2700103' or leaid = '2711910' or leaid = '2712300' or leaid = '2713020'
 	or leaid = '2718920' or leaid = '2724030' or leaid = '2729070' or leaid = '2730450' or leaid = '2791449';
 
 update fabric.master3
-set email = 2
+set mtc = 2
 where leaid = '1918930';
 
 update fabric.master3
-set email = 2
+set clear_lake = 2
 where ncessch = '190762000363' or ncessch = '190762000364' or ncessch = '190762000362' or ncessch = '192910001673'
 	or ncessch = '192910001674';
 
 update fabric.master3
-set email = 2
+set peoples_telecom = 2
 where ncessch = '200825000755' or ncessch = '200825000754' or ncessch = '200825000752';
 
 update fabric.master3
-set email = 2
+set west_texas_rural = 2
 where ncessch = '484437005066' or ncessch = '483557005577' or ncessch = '483557010997' or ncessch = '483557007057'
 	or ncessch = '481998001952' or ncessch = '481998001953' or ncessch = '481998001954' or ncessch = '481998006704' 
 	or ncessch = '481095000558' or ncessch = '481035000559' or ncessch = '481095005161' or ncessch = '482301002333' 
@@ -556,7 +602,7 @@ where ncessch = '484437005066' or ncessch = '483557005577' or ncessch = '4835570
 	or ncessch = '482301002335' or ncessch = '482301002336' or ncessch = '482301002336' or ncessch = '482301006561';
 
 update fabric.master3
-set email = 2
+set corn_net = 2
 where ncessch = '391003103298' or ncessch = '390493303563' or ncessch = '390493503567' or ncessch = '390493503568'
 	or ncessch = '390493403566' or ncessch = '390493803575'
 	or ncessch = '391002301885' or ncessch = '391002203926' or ncessch = '390493701065' or ncessch = '391001901250' 
@@ -570,23 +616,23 @@ where ncessch = '391003103298' or ncessch = '390493303563' or ncessch = '3904935
 	or ncessch = '390500503815' or ncessch = '390448901764' or ncessch = '390448901767' or ncessch = '390448901766';
 
 update fabric.master3
-set email = 2
+set yadtel = 2
 where ncessch = '370231000997' or ncessch = '370231000987' or ncessch = '370117002853' or ncessch = '370117000485'
 	or ncessch = '370117002516' or ncessch = '370117000486' or ncessch = '370117000487' or ncessch = '370117002065'
 	or ncessch = '370117000489' or ncessch = '370117000490' or ncessch = '370117002066' or ncessch = '370117002816'
 	or ncessch = '370117000491';
 
 update fabric.master3
-set email = 2
+set heart_iowa = 2
 where ncessch = '190444000118' or ncessch = '190444000087' or ncessch = '191069002048' or ncessch = '190004000132'
 	or ncessch = '190006000182';
 
 update fabric.master3
-set email = 2
+set mckenzie = 2
 where leaid = '4702790';
 
 update fabric.master3
-set email = 2
+set alliance = 2
 where ncessch = '460002800014' or ncessch = '460002800874' or ncessch = '460002800013' or ncessch = '46048000036'
 	or ncessch = '46048000986' or ncessch = '46048000035' or ncessch = '460795000071' or ncessch = '460795000072' 
 	or ncessch = '460795000414' or ncessch = '460795001237' or ncessch = '460795000073' or ncessch = '462637000224' 
@@ -597,26 +643,26 @@ where ncessch = '460002800014' or ncessch = '460002800874' or ncessch = '4600028
 	or ncessch = '193102001806';
 
 update fabric.master3
-set email = 2
+set ganado = 2
 where ncessch = '482031002006' or ncessch = '482031002007' or ncessch = '482031012317' or ncessch = '484281004881'
 	or ncessch = '484281004882' or ncessch = '484281009599' or ncessch = '484281004883' or ncessch = '484281004884'
 	or ncessch = '482835021546' or ncessch = '482835003167' or ncessch = '482835011929';
 
 update fabric.master3
-set email = 2
+set us_connect = 2
 where ncessch = '080615001082' or ncessch = '080615001074' or ncessch = '080615001081' or ncessch = '310007200188' 
 	or ncessch = '310014001421';
 update fabric.master3
-set email = -2
+set us_connect = -2
 where ncessch = '080384000503' or ncessch = '080384000622' or ncessch = '080384000502' or ncessch = '080384001695'
 	or ncessch = '310007201879' or ncessch = '317581001914' or ncessch = '317581001533';
 
 update fabric.master3
-set email = 2
+set middleburgh = 2
 where leaid = '3619260' or leaid = '3626100';
 
 update fabric.master3
-set email = 2
+set dupage = 2
 where ncessch = '171394001738' or ncessch = '171394001737';
 
 --------------------------------CORROBORATION SCORING----------------------------------
@@ -630,8 +676,15 @@ with new_values as(
 select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coalesce(wv_ind,0) 
 	+ coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(mt_ind,0)
 	+ coalesce(sunesys,0) + coalesce(oh_ind,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0)
-	+ coalesce(navajo,0) + coalesce(bie_ind,0) + coalesce(az_ind,0) + coalesce(tx_ind,0)
-	+ coalesce(pr_ind,0) + coalesce(dc_ind,0) + coalesce(email,0)
+	+ coalesce(navajo,0) + coalesce(bie_ind,0) + coalesce(az_ind,0) + coalesce(round_rock,0)
+	+ coalesce(palestine,0) + coalesce(pr_ind,0) + coalesce(dc,0) + coalesce(revere,0)
+	+ coalesce(citizens,0) + coalesce(hudson,0) + coalesce(rock_island,0) + coalesce(elmwood,0)
+	+ coalesce(ketchikan,0) + coalesce(galena,0) + coalesce(farmers,0) + coalesce(toledotel,0)
+	+ coalesce(wabash,0) + coalesce(peoples_rural,0) + coalesce(south_central,0) + coalesce(garden_valley,0)
+	+ coalesce(mtc,0) + coalesce(clear_lake,0) + coalesce(peoples_telecom,0) + coalesce(west_texas_rural,0)
+	+ coalesce(corn_net,0) + coalesce(yadtel,0) + coalesce(heart_iowa,0) + coalesce(mckenzie,0)
+	+ coalesce(alliance,0) + coalesce(ganado,0) + coalesce(us_connect,0) + coalesce(middleburgh,0)
+	+ coalesce(dupage,0)
 	as row_score
 from fabric.master3
 )
@@ -678,7 +731,7 @@ copy(select * from fabric.publicmap) to '/Users/FCC/Documents/allison/E-rate ana
 drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
 select master3.ncessch, master3.schnam, master3.leaid, master3.leanm, master3.lcity, master3.lstate, master3.ulocal, master3.member, 
-	master3.geom, master3.az_ind AS arizona, master3.bie_ind AS bie, master3.cai, master3.ca_ind AS california, 
+	master3.geom, master3.az_ind AS nogales, master3.bie_ind AS bie, master3.cai, master3.ca_ind AS california, 
 	master3.fatbeam, master3.fl_ind AS florida, master3.ga_ind AS georgia, master3.me_ind AS maine, master3.mt_ind AS montana, 
 	master3.navajo, master3.nc_ind AS north_carolina, master3.nm_ind AS new_mexico, master3.oh_ind AS ohio, 
 	master3.pr_ind AS puerto_rico, master3.sunesys, master3.tx_ind AS texas, master3.wv_ind AS west_virginia, 
