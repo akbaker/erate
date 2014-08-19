@@ -511,3 +511,16 @@ where physical_cxn = 'x-Fiber';
 update fabric.pr_ind
 set fiber = -2
 where physical_cxn = 'Copper' OR physical_cxn = 'Wireless';
+
+--DC
+select *
+from fabric.dc_ind;
+
+alter table fabric.dc_ind
+	drop column if exists fiber;
+alter table fabric.dc_ind
+	add column fiber int;
+
+update fabric.dc_ind
+set fiber = 2
+where technology = 'Fiber';

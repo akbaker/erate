@@ -201,6 +201,28 @@ update fabric.lib_master3
 set email = 2
 where fscskey = 'IA0077' or fscskey = 'IA0084';
 
+update fabric.lib_master3
+set email = 2
+where fscskey = 'IA0108';
+
+update fabric.lib_master3
+set email = 2
+where fscskey = 'IA0200' or fscskey = 'IA0395' or fscskey = 'IA0506' or fscskey = 'IA0243';
+
+update fabric.lib_master3
+set email = 2
+where libid = 'DC0001-003' or libid = 'DC0001-005' or libid = 'DC0001-006' or libid = 'DC0001-007'
+	or libid = 'DC0001-028' or libid = 'DC0001-004' or libid = 'DC0001-008' or libid = 'DC0001-009'
+	or libid = 'DC0001-015' or libid = 'DC0001-010' or libid = 'DC0001-002' or libid = 'DC0001-011'
+	or libid = 'DC0001-012' or libid = 'DC0001-030' or libid = 'DC0001-013' or libid = 'DC0001-025'
+	or libid = 'DC0001-014' or libid = 'DC0001-016' or libid = 'DC0001-017' or libid = 'DC0001-018'
+	or libid = 'DC0001-019' or libid = 'DC0001-021' or libid = 'DC0001-022' or libid = 'DC0001-020'
+	or libid = 'DC0001-023';
+
+update fabric.lib_master3
+set email = -2
+where fscskey = 'CO0094'; 
+
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
 alter table fabric.lib_master3
@@ -254,6 +276,15 @@ order by score_map;
 select *
 from fabric.lib_master3;
 
+drop table if exists fabric.libmap;
+create table fabric.libmap as(
+select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, score_map, fiber_map
+from fabric.lib_master3
+);
+copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
+
+
+
 drop table if exists fabric.libmap_fiber;
 create table fabric.libmap_fiber as(
 select lib_master3.fscskey, lib_master3.system_name, lib_master3.libid, lib_master3.libname, lib_master3.c_out_ty AS lib_type, 
@@ -265,4 +296,4 @@ left join fabric.lib_master2
 on lib_master3.libid = lib_master2.libid
 );
 
-copy(select * from fabric.libmap_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
+copy(select * from fabric.libmap_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber_publish.csv' with delimiter '|' CSV header;

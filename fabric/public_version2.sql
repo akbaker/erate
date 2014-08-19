@@ -454,6 +454,21 @@ from new_values
 where seasch = school_code
 	and lstate = 'PR';
 
+--DC
+alter table fabric.master3
+	drop column if exists dc_ind;
+alter table fabric.master3
+	add column dc_ind int;
+
+with new_values as(
+select nces_code, fiber
+from fabric.dc_ind
+)
+update fabric.master3
+set dc_ind = new_values.fiber
+from new_values
+where ncessch = nces_code;
+
 --EMAIL SUBMISSIONS
 alter table fabric.master3
 	drop column if exists email;
@@ -516,8 +531,8 @@ where leaid = '2003570' or leaid = '2008130' or leaid = '2009450' or leaid = '20
 
 update fabric.master3
 set email = 2
-where leaid = '010162' or leaid = '012311' or leaid = '010599' or leaid = '010601' or leaid = '010561'
-	or leaid = '010447' or leaid = '010627' or leaid = '010628' or leaid = '010630' or leaid = '012609';
+where leaid = '2703570' or leaid = '2700103' or leaid = '2711910' or leaid = '2712300' or leaid = '2713020'
+	or leaid = '2718920' or leaid = '2724030' or leaid = '2729070' or leaid = '2730450' or leaid = '2791449';
 
 update fabric.master3
 set email = 2
@@ -540,6 +555,70 @@ where ncessch = '484437005066' or ncessch = '483557005577' or ncessch = '4835570
 	or ncessch = '482301002334' or ncessch = '482301002337' or ncessch = '482301002340' or ncessch = '482301002341' 
 	or ncessch = '482301002335' or ncessch = '482301002336' or ncessch = '482301002336' or ncessch = '482301006561';
 
+update fabric.master3
+set email = 2
+where ncessch = '391003103298' or ncessch = '390493303563' or ncessch = '390493503567' or ncessch = '390493503568'
+	or ncessch = '390493403566' or ncessch = '390493803575'
+	or ncessch = '391002301885' or ncessch = '391002203926' or ncessch = '390493701065' or ncessch = '391001901250' 
+	or ncessch = '390493203561' or ncessch = '390493603569' or ncessch = '390493103558' or ncessch = '390493903578' 
+	or ncessch = '390474302893' or ncessch = '391003000263' or ncessch = '390453104398' or ncessch = '390457802341' 
+	or ncessch = '390457902345' or ncessch = '390507704051' or ncessch = '390447201585' or ncessch = '390449801904'
+	or ncessch = '390480803106' or ncessch = '390498103699' or ncessch = '390459702393' or ncessch = '390507004037' 
+	or ncessch = '391000102900' or ncessch = '390474502898' or ncessch = '390457702339' or ncessch = '390436300186' 
+	or ncessch = '390489903467' or ncessch = '390474402895' or ncessch = '390497003676' or ncessch = '390474302893' 
+	or ncessch = '390452101366' or ncessch = '390448901762' or ncessch = '390455702283' or ncessch = '390455702284' or ncessch = '390457502331'
+	or ncessch = '390500503815' or ncessch = '390448901764' or ncessch = '390448901767' or ncessch = '390448901766';
+
+update fabric.master3
+set email = 2
+where ncessch = '370231000997' or ncessch = '370231000987' or ncessch = '370117002853' or ncessch = '370117000485'
+	or ncessch = '370117002516' or ncessch = '370117000486' or ncessch = '370117000487' or ncessch = '370117002065'
+	or ncessch = '370117000489' or ncessch = '370117000490' or ncessch = '370117002066' or ncessch = '370117002816'
+	or ncessch = '370117000491';
+
+update fabric.master3
+set email = 2
+where ncessch = '190444000118' or ncessch = '190444000087' or ncessch = '191069002048' or ncessch = '190004000132'
+	or ncessch = '190006000182';
+
+update fabric.master3
+set email = 2
+where leaid = '4702790';
+
+update fabric.master3
+set email = 2
+where ncessch = '460002800014' or ncessch = '460002800874' or ncessch = '460002800013' or ncessch = '46048000036'
+	or ncessch = '46048000986' or ncessch = '46048000035' or ncessch = '460795000071' or ncessch = '460795000072' 
+	or ncessch = '460795000414' or ncessch = '460795001237' or ncessch = '460795000073' or ncessch = '462637000224' 
+	or ncessch = '462637000843' or ncessch = '462637000223' or ncessch = '271404000727' or ncessch = '460002500305' 
+	or ncessch = '460002500913' or ncessch = '460002500304' or ncessch = '460102701027' or ncessch = '460102701035'
+	or ncessch = '460102701030' or ncessch = '460102701030' or ncessch = '460102701112' or ncessch = '466627000606' 
+	or ncessch = '464494000405' or ncessch = '464494000406' or ncessch = '193102001807' or ncessch = '193102001808' 
+	or ncessch = '193102001806';
+
+update fabric.master3
+set email = 2
+where ncessch = '482031002006' or ncessch = '482031002007' or ncessch = '482031012317' or ncessch = '484281004881'
+	or ncessch = '484281004882' or ncessch = '484281009599' or ncessch = '484281004883' or ncessch = '484281004884'
+	or ncessch = '482835021546' or ncessch = '482835003167' or ncessch = '482835011929';
+
+update fabric.master3
+set email = 2
+where ncessch = '080615001082' or ncessch = '080615001074' or ncessch = '080615001081' or ncessch = '310007200188' 
+	or ncessch = '310014001421';
+update fabric.master3
+set email = -2
+where ncessch = '080384000503' or ncessch = '080384000622' or ncessch = '080384000502' or ncessch = '080384001695'
+	or ncessch = '310007201879' or ncessch = '317581001914' or ncessch = '317581001533';
+
+update fabric.master3
+set email = 2
+where leaid = '3619260' or leaid = '3626100';
+
+update fabric.master3
+set email = 2
+where ncessch = '171394001738' or ncessch = '171394001737';
+
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
 alter table fabric.master3
@@ -552,7 +631,7 @@ select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coal
 	+ coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(mt_ind,0)
 	+ coalesce(sunesys,0) + coalesce(oh_ind,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0)
 	+ coalesce(navajo,0) + coalesce(bie_ind,0) + coalesce(az_ind,0) + coalesce(tx_ind,0)
-	+ coalesce(pr_ind,0) + coalesce(email,0)
+	+ coalesce(pr_ind,0) + coalesce(dc_ind,0) + coalesce(email,0)
 	as row_score
 from fabric.master3
 )
@@ -588,6 +667,14 @@ from fabric.master3
 group by score_map
 order by score_map;
 
+drop table if exists fabric.publicmap;
+create table fabric.publicmap as(
+select ncessch, leaid, ulocal, member, geom, score_map, fiber_map
+from fabric.master3
+);
+
+copy(select * from fabric.publicmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/public_map_fiber.csv' with delimiter '|' CSV header;
+
 drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
 select master3.ncessch, master3.schnam, master3.leaid, master3.leanm, master3.lcity, master3.lstate, master3.ulocal, master3.member, 
@@ -601,4 +688,4 @@ left join fabric.master2
 on master3.ncessch = master2.ncessch
 );
 
-copy(select * from fabric.map_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/map_fiber.csv' with delimiter '|' CSV header;
+copy(select * from fabric.map_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/public_map_fiber_publish.csv' with delimiter '|' CSV header;
