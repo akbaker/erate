@@ -501,7 +501,10 @@ alter table fabric.master4
 	drop column if exists arlington,
 	drop column if exists dobson,
 	drop column if exists s&a,
-	drop column if exists west_carolina_tel;
+	drop column if exists west_carolina_tel
+	drop column if exists butler_bremer,
+	drop column if exists manawa,
+	drop column if exists srtc;
 alter table fabric.master4
 	add column revere int,
 	add column citizens int,
@@ -539,7 +542,10 @@ alter table fabric.master4
 	add column arlington int,
 	add column dobson int,
 	add column s&a int,
-	add column west_carolina_tel;
+	add column west_carolina_tel int,
+	add column butler_bremer int,
+	add column manawa int,
+	add column srtc int;
 
 update fabric.master4
 set revere = 2
@@ -738,6 +744,23 @@ where ncessch = '450069001188' or ncessch = '450069000011' or ncessch = '4503901
 	or ncessch = '450069001379' or ncessch = '450069000010' or ncessch = '450390301563' or ncessch = '450000101414'
 	or ncessch = '450300000800' or ncessch = '450300000804' or ncessch = '450300000803' or ncessch = '450084000089'
 	or ncessch = '450084000086' or ncessch = '450084000087' or ncessch = '450084000088';
+
+update fabric.master4
+set butler_bremer = 2
+where ncessch = '190744000354' or ncessch = '190744000355' or ncessch = '192019001360' or ncessch = '192805001637'
+	or ncessch = '192805001638' or ncessch = '193054001746';
+
+update fabric.master4
+set manawa = 2
+where ncessch = '550855000969';
+
+update fabric.master4
+set srtc = 2
+where ncessch = '480000600274' or ncessch = '480000600275' or ncessch = '480998000468' or ncessch = '481587001152'
+	or ncessch = '481587001153' or ncessch = '482262002298' or ncessch = '482274002304' or ncessch = '482274002305'
+	or ncessch = '482340002374' or ncessch = '482340002375' or ncessch = '482340006118' or ncessch = '482587005525'
+	or ncessch = '482587005526' or ncessch = '483197003552' or ncessch = '483197003553' or ncessch = '482587005527'
+	or ncessch = '483396003777' or ncessch = '482274011279' or ncessch = '483828004270' or leaid = '4004350';
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE

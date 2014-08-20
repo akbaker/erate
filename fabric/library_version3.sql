@@ -187,7 +187,10 @@ alter table fabric.lib_master4
 	drop column if exists heart_iowa,
 	drop column if exists dc,
 	drop column if exists blue_ridge,
-	drop column if exists dobson;
+	drop column if exists dobson,
+	drop column if exists west_carolina_tel,
+	drop column if exists manawa,
+	drop column if exists srtc;
 alter table fabric.lib_master4
 	add column grantsburg int,
 	add column toledotel int,
@@ -201,7 +204,10 @@ alter table fabric.lib_master4
 	add column heart_iowa int,
 	add column dc int,
 	add column blue_ridge int,
-	add column dobson int;
+	add column dobson int,
+	add column west_carolina_tel int,
+	add column manawa int,
+	add column srtc int;
 
 update fabric.lib_master4
 set grantsburg = 2
@@ -261,6 +267,18 @@ update fabric.lib_master4
 set dobson = 2
 where libid = 'OK0070-010';
 
+update fabric.lib_master4
+set west_carolina_tel = 2
+where libid = 'SC0004-009' or libid = 'SC8003-001' or libid = 'SC8003-002' 
+	or libid = 'SC8003-003' or libid = 'SC0028-002';
+
+update fabric.lib_master4
+set manawa = 2
+where fscskey = 'WI0177';
+
+update fabric.lib_master4
+set srtc = 2
+where libid = 'TX0086-002' or libid = 'TX0192-002' or libid = 'TX0078-002';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
