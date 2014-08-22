@@ -11,9 +11,15 @@ select *
 from fabric.master4;
 
 --CAI 
-select ncessch, caiid, fiber
+update analysis.cai_dec2013
+set caiid = '0' || caiid
+where length(caiid) = 11;
+
+select fiber, count(*)
 from fabric.master4, analysis.cai_dec2013
-where cai_dec2013.caiid = master4.ncessch;
+where cai_dec2013.caiid = master4.ncessch
+	and lstate = 'AK'
+group by fiber;
 
 alter table fabric.master4
 	drop column if exists cai1;
@@ -357,25 +363,18 @@ update fabric.master4
 		or leaid = '1602670';
 
 --GEORGIA
-select schnam, school_name, lcity, city, fiber
-from fabric.master4, fabric.ga_ind
-where master4.schnam = upper(ga_ind.school_name)
-	and master4.lcity = upper(ga_ind.city);
-
 alter table fabric.master4
 	drop column if exists ga_ind;
 alter table fabric.master4
 	add column ga_ind int;
 with new_values as(
-select school_name, city, fiber AS ga_fiber
-from fabric.ga_ind
+select ncesid, fiber AS ga_fiber
+from fabric.ga_ind_new
 )
 update fabric.master4
 set ga_ind = new_values.ga_fiber
 from new_values
-where master4.schnam = upper(new_values.school_name)
-	and lcity = upper(new_values.city)
-	and lstate = 'GA';
+where ncessch = ncesid;
 
 --BIE
 select school_code, seasch, fiber
@@ -495,16 +494,23 @@ alter table fabric.master4
 	drop column if exists marion,
 	drop column if exists snc,
 	drop column if exists mte,
-	drop column if exists dobson
+	drop column if exists dobson,
 	drop column if exists sacred_wind,
 	drop column if exists west_central,
 	drop column if exists arlington,
-	drop column if exists dobson,
-	drop column if exists s&a,
-	drop column if exists west_carolina_tel
+	drop column if exists s_and_a,
+	drop column if exists west_carolina_tel,
 	drop column if exists butler_bremer,
 	drop column if exists manawa,
-	drop column if exists srtc;
+	drop column if exists srtc,
+	drop column if exists southwest_texas,
+	drop column if exists totah_totel,
+	drop column if exists runestone,
+	drop column if exists golden_belt,
+	drop column if exists united,
+	drop column if exists tca,
+	drop column if exists midstate,
+	drop column if exists premier;
 alter table fabric.master4
 	add column revere int,
 	add column citizens int,
@@ -540,15 +546,22 @@ alter table fabric.master4
 	add column sacred_wind int,
 	add column west_central int,
 	add column arlington int,
-	add column dobson int,
-	add column s&a int,
+	add column s_and_a int,
 	add column west_carolina_tel int,
 	add column butler_bremer int,
 	add column manawa int,
-	add column srtc int;
+	add column srtc int,
+	add column southwest_texas int,
+	add column totah_totel int,
+	add column runestone int,
+	add column golden_belt int,
+	add column united int,
+	add column tca int,
+	add column midstate int,
+	add column premier int;
 
 update fabric.master4
-set revere = 2
+set ketchikan = 2
 where leaid = '0200150';
 
 update fabric.master4
@@ -572,7 +585,7 @@ where ncessch = '173441003526' or ncessch = '173441003527' or ncessch = '1734410
 	or ncessch = '173441003536' or ncessch = '173441005338' or ncessch = '173441003529';
 
 update fabric.master4
-set ketchikan = 2
+set revere = 2
 where ncessch = '171410004687' or ncessch = '171410001760' or ncessch = '171410001762' or ncessch = '171410005506' 
 	or ncessch = '171410001761';
 
@@ -709,9 +722,11 @@ update fabric.master4
 
 update fabric.master4
 set dobson = 2
-where ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
-	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
-	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
+where ncessch = '401956000931' or ncessch = '400750000299' or ncessch = '400750000300' or ncessch = '401104000525'
+	or ncessch = '401104029615' or ncessch = '401737000844' or ncessch = '401737000845' or ncessch = '401956000932'
+	or ncessch = '401956000933' or ncessch = '402580001370' or ncessch = '402580001371' or ncessch = '402931001538'
+	or ncessch = '402931001539' or ncessch = '402943001549' or ncessch = '402943001550' or ncessch = '403117001727'
+	or ncessch = '403117029664' or ncessch = '403264001804';
 
 update fabric.master4
 set sacred_wind = 2
@@ -726,15 +741,7 @@ set arlington = 2
 where leaid = '5100270';
 
 update fabric.master4
-set dobson = 2
-where ncessch = '401956000931' or ncessch = '400750000299' or ncessch = '400750000300' or ncessch = '401104000525'
-	or ncessch = '401104029615' or ncessch = '401737000844' or ncessch = '401737000845' or ncessch = '401956000932'
-	or ncessch = '401956000933' or ncessch = '402580001370' or ncessch = '402580001371' or ncessch = '402931001538'
-	or ncessch = '402931001539' or ncessch = '402943001549' or ncessch = '402943001550' or ncessch = '403117001727'
-	or ncessch = '403117029664' or ncessch = '403264001804';
-
-update fabric.master4
-set s&a = 2
+set s_and_a = 2
 where ncessch = '200321000211' or ncessch = '201041001058';
 
 update fabric.master4
@@ -762,6 +769,63 @@ where ncessch = '480000600274' or ncessch = '480000600275' or ncessch = '4809980
 	or ncessch = '482587005526' or ncessch = '483197003552' or ncessch = '483197003553' or ncessch = '482587005527'
 	or ncessch = '483396003777' or ncessch = '482274011279' or ncessch = '483828004270' or leaid = '4004350';
 
+update fabric.master4
+set southwest_texas = 2
+where ncessch = '480000304219' or ncessch = '480000304218' or ncessch = '483324003739' or ncessch = '483324003738'
+	or ncessch = '48161400195' or ncessch = '484368004965';
+
+update fabric.master4
+set totah_totel = 2
+where leaid = '4025470' or leaid = '4000021';
+
+update fabric.master4
+set runestone = 2
+where leaid = '2700104' or ncessch = '271389000714';
+
+update fabric.master4
+set golden_belt = 2
+where ncessch = '200585000868' or ncessch = '200822000890' or ncessch = '200870001479' or ncessch = '200906000713'
+	or ncessch = '200993000500' or ncessch = '200402000923' or ncessch = '201128002033' or ncessch = '201191000711'
+	or ncessch = '200002000498' or ncessch = '200002000501';
+	
+update fabric.master4
+set united = 2
+where ncessch = '200351000084' or ncessch = '200351000086' or ncessch = '200351001650' or ncessch = '200414001190'
+	or ncessch = '200414001191' or ncessch = '200480000009' or ncessch = '200480000010' or ncessch = '200504000491'
+	or ncessch = '200519001270' or ncessch = '200519001713' or ncessch = '200558000879' or ncessch = '200558001089'
+	or ncessch = '200558001743' or ncessch = '200558001095' or ncessch = '200558001094' or ncessch = '200558000887'
+	or ncessch = '200558001091' or ncessch = '200558001092' or ncessch = '200558001905' or ncessch = '200558000888'
+	or ncessch = '200558001093' or ncessch = '200558001096' or ncessch = '200621000103' or ncessch = '200621000104'
+	or ncessch = '200768001272' or ncessch = '200768001273' or ncessch = '200780000107' or ncessch = '200780000108'
+	or ncessch = '200942000105' or ncessch = '200942000106' or ncessch = '200960000082' or ncessch = '200960000083'
+	or ncessch = '200963000782' or ncessch = '200963000783' or ncessch = '200504000492' or ncessch = '200504000493'
+	or ncessch = '201182000836' or ncessch = '201182000837';
+
+update fabric.master4
+set tca = 2
+where ncessch = '080471000683' or ncessch = '080471000684' or ncessch = '080486006387' or ncessch = '080486000811'
+	or ncessch = '80486000813' or ncessch = '80600001020' or ncessch = '80600001021' or ncessch = '80456000673'
+	or ncessch = '80456000674' or ncessch = '80393000511' or ncessch = '80393000512';
+
+set fabric.master4
+set midstate = 2
+where ncessch = '466954000628' or ncessch = '466954000629' or ncessch = '466954001054' or ncessch = '468043801244'
+	or ncessch = '468043801248' or ncessch = '468043801250' or ncessch = '468043801267' or ncessch = '467851000745'
+	or ncessch = '467851000746' or ncessch = '467851000950' or ncessch = '463822000354' or ncessch = '463822000355'
+	or ncessch = '463822000142' or ncessch = '461200000118' or ncessch = '461200000119' or ncessch = '461200000889';
+
+set fabric.master4
+set premier = 2
+where ncessch = '190002102002' or ncessch = '190002102004' or ncessch = '190322001937' or ncessch = '190322001938'
+	or ncessch = '190322001939' or ncessch = '190519000166' or ncessch = '190519000167' or ncessch = '190696000306'
+	or ncessch = '190696000307' or ncessch = '190696000308' or ncessch = '191248000757' or ncessch = '191248000758'
+	or ncessch = '191248001010' or ncessch = '191248001011' or ncessch = '191416000843' or ncessch = '191416000844'
+	or ncessch = '191416000845' or ncessch = '191653000983' or ncessch = '191653000984' or ncessch = '191653000985'
+	or ncessch = '191653000987' or ncessch = '191653000988' or ncessch = '191653001101' or ncessch = '191884000710'
+	or ncessch = '191884001112' or ncessch = '192466001414' or ncessch = '192466001415' or ncessch = '192637001495'
+	or ncessch = '192637001496' or ncessch = '192637001497' or ncessch = '193129001820' or ncessch = '193129001822';
+
+
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
 alter table fabric.master4
@@ -781,7 +845,9 @@ select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coal
 	+ coalesce(mtc,0) + coalesce(clear_lake,0) + coalesce(peoples_telecom,0) + coalesce(west_texas_rural,0)
 	+ coalesce(com_net,0) + coalesce(yadtel,0) + coalesce(heart_iowa,0) + coalesce(mckenzie,0)
 	+ coalesce(alliance,0) + coalesce(ganado,0) + coalesce(us_connect,0) + coalesce(middleburgh,0)
-	+ coalesce(dupage,0)
+	+ coalesce(dupage,0) + coalesce(snc,0) + coalesce(mte,0) + coalesce(dobson,0) + coalesce(sacred_wind,0)
+	+ coalesce(west_central,0) + coalesce(arlington,0) + coalesce(s_and_a,0) + coalesce(west_carolina_tel,0)
+	+ coalesce(butler_bremer,0) + coalesce(manawa,0) + coalesce(srtc,0) + coalesce(southwest_texas,0)	
 	as row_score
 from fabric.master4
 )
