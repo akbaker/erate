@@ -194,7 +194,9 @@ alter table fabric.lib_master4
 	drop column if exists premier,
 	drop column if exists fibercomm,
 	drop column if exists h_and_b,
-	drop column if exists golden_belt;
+	drop column if exists golden_belt,
+	drop column if exists united,
+	drop column if exists fontana;
 alter table fabric.lib_master4
 	add column grantsburg int,
 	add column toledotel int,
@@ -215,7 +217,9 @@ alter table fabric.lib_master4
 	add column premier int,
 	add column fibercomm int,
 	add column h_and_b int,
-	add column golden_belt int;
+	add column golden_belt int,
+	add column united int,
+	add column fontana int;
 
 update fabric.lib_master4
 set grantsburg = 2
@@ -308,6 +312,14 @@ where fscskey = 'KS0010' or fscskey = 'KS0041' or fscskey = 'KS0290' or fscskey 
 update fabric.lib_master4
 set golden_belt = -2
 where fscskey = 'KS0036' or fscskey = 'KS0280' or fscskey = 'KS0170';
+
+update fabric.lib_master4
+set united = 2
+where fscskey = 'KS0299' or fscskey = 'KS0292';
+
+update fabric.lib_master4
+set fontana = 2
+where libid = 'NC0008-005' or libid = 'NC0008-002' or libid = 'NC0008-008' or libid = 'NC0008-003' or libid = 'NC0008-004';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
