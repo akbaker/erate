@@ -190,7 +190,11 @@ alter table fabric.lib_master4
 	drop column if exists dobson,
 	drop column if exists west_carolina_tel,
 	drop column if exists manawa,
-	drop column if exists srtc;
+	drop column if exists srtc,
+	drop column if exists premier,
+	drop column if exists fibercomm,
+	drop column if exists h_and_b,
+	drop column if exists golden_belt;
 alter table fabric.lib_master4
 	add column grantsburg int,
 	add column toledotel int,
@@ -207,7 +211,11 @@ alter table fabric.lib_master4
 	add column dobson int,
 	add column west_carolina_tel int,
 	add column manawa int,
-	add column srtc int;
+	add column srtc int,
+	add column premier int,
+	add column fibercomm int,
+	add column h_and_b int,
+	add column golden_belt int;
 
 update fabric.lib_master4
 set grantsburg = 2
@@ -279,6 +287,27 @@ where fscskey = 'WI0177';
 update fabric.lib_master4
 set srtc = 2
 where libid = 'TX0086-002' or libid = 'TX0192-002' or libid = 'TX0078-002';
+
+update fabric.lib_master4
+set premier = 2
+where fscskey = 'IA0184' or fscskey = 'IA0126' or fscskey = 'IA0424' or fscskey = 'IA0530';
+
+update fabric.lib_master4
+set fibercomm = 2
+where fscskey = 'IA0225';
+
+update fabric.lib_master4
+set h_and_b = 2
+where fscskey = 'KS0147' or fscskey = 'KS0091' or fscskey = 'KS0079';
+
+update fabric.lib_master4
+set golden_belt = 2
+where fscskey = 'KS0010' or fscskey = 'KS0041' or fscskey = 'KS0290' or fscskey = 'KS0007'
+	or fscskey = 'KS0306' or fscskey = 'KS0019' or fscskey = 'KS0287' or fscskey = 'KS0195'
+	or fscskey = 'KS0284';
+update fabric.lib_master4
+set golden_belt = -2
+where fscskey = 'KS0036' or fscskey = 'KS0280' or fscskey = 'KS0170';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

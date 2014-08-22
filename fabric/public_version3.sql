@@ -510,7 +510,16 @@ alter table fabric.master4
 	drop column if exists united,
 	drop column if exists tca,
 	drop column if exists midstate,
-	drop column if exists premier;
+	drop column if exists premier,
+	drop column if exists fibercomm,
+	drop column if exists h_and_b,
+	drop column if exists ftc,
+	drop column if exists marne_elk,
+	drop column if exists yelcot,
+	drop column if exists alpine,
+	drop column if exists laporte,
+	drop column if exists nextech,
+	drop column if exists newton;
 alter table fabric.master4
 	add column revere int,
 	add column citizens int,
@@ -558,7 +567,16 @@ alter table fabric.master4
 	add column united int,
 	add column tca int,
 	add column midstate int,
-	add column premier int;
+	add column premier int,
+	add column fibercomm int,
+	add column h_and_b int,
+	add column ftc int,
+	add column marne_elk int,
+	add column yelcot int,
+	add column alpine int,
+	add column laporte int,
+	add column nextech int
+	add column newton int;
 
 update fabric.master4
 set ketchikan = 2
@@ -807,14 +825,14 @@ where ncessch = '080471000683' or ncessch = '080471000684' or ncessch = '0804860
 	or ncessch = '80486000813' or ncessch = '80600001020' or ncessch = '80600001021' or ncessch = '80456000673'
 	or ncessch = '80456000674' or ncessch = '80393000511' or ncessch = '80393000512';
 
-set fabric.master4
+update fabric.master4
 set midstate = 2
 where ncessch = '466954000628' or ncessch = '466954000629' or ncessch = '466954001054' or ncessch = '468043801244'
 	or ncessch = '468043801248' or ncessch = '468043801250' or ncessch = '468043801267' or ncessch = '467851000745'
 	or ncessch = '467851000746' or ncessch = '467851000950' or ncessch = '463822000354' or ncessch = '463822000355'
 	or ncessch = '463822000142' or ncessch = '461200000118' or ncessch = '461200000119' or ncessch = '461200000889';
 
-set fabric.master4
+update fabric.master4
 set premier = 2
 where ncessch = '190002102002' or ncessch = '190002102004' or ncessch = '190322001937' or ncessch = '190322001938'
 	or ncessch = '190322001939' or ncessch = '190519000166' or ncessch = '190519000167' or ncessch = '190696000306'
@@ -825,6 +843,76 @@ where ncessch = '190002102002' or ncessch = '190002102004' or ncessch = '1903220
 	or ncessch = '191884001112' or ncessch = '192466001414' or ncessch = '192466001415' or ncessch = '192637001495'
 	or ncessch = '192637001496' or ncessch = '192637001497' or ncessch = '193129001820' or ncessch = '193129001822';
 
+update fabric.master4
+set fibercomm = 2
+where ncessch = '192640001498' or ncessch = '192640001500' or ncessch = '192640001502' or ncessch = '192640001504'
+	or ncessch = '192640001505' or ncessch = '192640001506' or ncessch = '192640001513' or ncessch = '192640001514'
+	or ncessch = '192640002080' or ncessch = '192640001515' or ncessch = '192640001934' or ncessch = '192640002165'
+	or ncessch = '192640001517' or ncessch = '192640001518' or ncessch = '192640001521' or ncessch = '192640001522'
+	or ncessch = '192640001287' or ncessch = '192640001526' or ncessch = '192640001527' or ncessch = '192640001530'
+	or ncessch = '192640002089' or ncessch = '192640001531' or ncessch = '192640001533' or ncessch = '192640001534'
+	or ncessch = '192640001535';
+
+update fabric.master4
+set h_and_b = 2
+where ncessch = '200465000912' or ncessch = '200465000914' or ncessch = '200465000913' or ncessch = '200034902044'
+	or ncessch = '200034902042' or ncessch = '200034902043';
+
+update fabric.master4
+set ftc = 2
+where ncessch = '4580267000712' or ncessch = '450390201453'  or ncessch = '450390201452' or ncessch = '450390201388'
+	or ncessch = '450390201317' or ncessch = '450390201080' or ncessch = '450390201079' or ncessch = '450390201078'
+	or ncessch = '450390201077' or ncessch = '450390201073' or ncessch = '450390201071' or ncessch = '450390201069'
+	or ncessch = '450390201068' or ncessch = '450390201067' or ncessch = '450390201066' or ncessch = '450390201065'
+	or ncessch = '450390201064' or ncessch = '450390201062' or ncessch = '450390201061' or ncessch = '450390201060'
+	or ncessch = '450390201059' or ncessch = '450390201057' or ncessch = '450390201057' or ncessch = '450390200511'
+	or ncessch = '450390200223' or ncessch = '450390200217' or ncessch = '450390101543' or ncessch = '450378001584'
+	or ncessch = '450378001371' or ncessch = '450378001112' or ncessch = '450378001111' or ncessch = '450378001107'
+	or ncessch = '450378001099' or ncessch = '450378001096' or ncessch = '450378001094' or ncessch = '450267001540'
+	or ncessch = '450267000711' or ncessch = '450267000709' or ncessch = '450267000559' or ncessch = '450219001502'
+	or ncessch = '450219001237' or ncessch = '450219000457' or ncessch = '450219000456' or ncessch = '450219000454'
+	or ncessch = '450219000453' or ncessch = '450219000452' or ncessch = '450219000451' or ncessch = '450180000331'
+	or ncessch = '450180000329' or ncessch = '450177000431' or ncessch = '450160000328' or leaid = '4503902' or leaid = '4502190';
+	
+update fabric.master4
+set marne_elk = 2
+where ncessch = '191125002142' or ncessch = '191071000674' or ncessch = '191071002143';
+
+update fabric.master4
+set yelcot = 2
+where leaid = '0514490' or leaid = '0504680' or leaid = '0510200' or leaid = '0512540';
+
+update fabric.master4
+set alpine = 2
+where ncessch = '190684000292' or ncessch = '190684000293' or ncessch = '191335000751' or ncessch = '192871002058'
+	or ncessch = '192871001664' or ncessch = '191335000807' or ncessch = '191335000806' or ncessch = '191812001484'
+	or ncessch = '191812001068';
+
+update fabric.master4
+set laporte = 2
+where ncessch = '190002200956' or ncessch = '190002200957';
+
+update fabric.master4
+set nextech = 2
+where ncessch = '201131000942' or ncessch = '201047000397' or ncessch = '201002000058' or ncessch = '201104000576'
+	or ncessch = '200726000429' or ncessch = '200753000965' or ncessch = '200702001680' or ncessch = '200447000405'
+	or ncessch = '200702001318' or ncessch = '200891000607' or ncessch = '200985000904' or ncessch = '200327000061'
+	or ncessch = '201008000475' or ncessch = '201029000881' or ncessch = '201065000604' or ncessch = '200531001018'
+	or ncessch = '201074000399' or ncessch = '201095000472' or ncessch = '200702001324' or ncessch = '201131000943'
+	or ncessch = '200000700155' or ncessch = '201206000401' or ncessch = '200034601903' or ncessch = '201263000050'
+	or ncessch = '201260002018' or ncessch = '200702001319' or ncessch = '200663001873' or ncessch = '200702001320'
+	or ncessch = '200702001321' or ncessch = '201104000574' or ncessch = '200327000063' or ncessch = '201002000059'
+	or ncessch = '201047000396' or ncessch = '201065000605' or ncessch = '200531001586' or ncessch = '201131000944'
+	or ncessch = '200034601900' or ncessch = '201008000477' or ncessch = '201104000575' or ncessch = '200702001322'
+	or ncessch = '200726001954' or ncessch = '200753000966' or ncessch = '200447000406' or ncessch = '200891000608'
+	or ncessch = '200985000905' or ncessch = '200327000062' or ncessch = '201002000060' or ncessch = '201029000882'
+	or ncessch = '201047000398' or ncessch = '201065000606' or ncessch = '201074000400' or ncessch = '201095000473'
+	or ncessch = '201131000945' or ncessch = '200000700156' or ncessch = '201206000402' or ncessch = '200034601922'
+	or ncessch = '201263000051' or ncessch = '201260001999' or ncessch = '200663001891';
+
+update fabric.master4
+set newton = 2
+where leaid = '2803180';
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
