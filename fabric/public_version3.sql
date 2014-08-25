@@ -103,9 +103,8 @@ select st_cd, cds_code, fiber
 	and lstate = 'CA';
 
 alter table fabric.master4
-	drop column if exists ca_ind;
+	drop column if exists california;
 alter table fabric.master4
-	add column ca_ind int;
 	add column california int;
 with new_values as(
 select cds_code, fiber as ca_fiber
@@ -113,7 +112,7 @@ select cds_code, fiber as ca_fiber
 	order by cds_code
 )
 update fabric.master4
-	set ca_ind = new_values.ca_fiber
+	set california = new_values.ca_fiber
 	from new_values
 	where new_values.cds_code=master4.st_cd
 		and lstate = 'CA';
@@ -160,142 +159,118 @@ update fabric.master4
 	set scd_fl = stid_fl || ' ' || sea_fl
 	where lstate = 'FL';
 
-select scd_fl, school_code, fiber
-	from fabric.master4, fabric.fl_ind
-	where master4.scd_fl = fl_ind.school_code
-		and lstate = 'FL';
-
 alter table fabric.master4
-	drop column if exists fl_ind;
+	drop column if exists florida;
 alter table fabric.master4
-	add column fl_ind int;
+	add column florida int;
 with new_values as(
 select school_code, fiber as fl_fiber
 	from fabric.fl_ind
 	order by school_code
 )
 update fabric.master4
-	set fl_ind=new_values.fl_fiber
+	set florida=new_values.fl_fiber
 	from new_values
 	where master4.scd_fl=new_values.school_code
 		and lstate = 'FL';
 
 --WEST VIRGINIA
-select wv_school_id, seasch
-	from fabric.master4, fabric.wv_ind
-	where master4.seasch=wv_ind.wv_school_id
-		and lstate = 'WV';
-
 alter table fabric.master4
-	drop column if exists wv_ind;
+	drop column if exists west_virginia;
 alter table fabric.master4
-	add column wv_ind int;
+	add column west_virginia int;
 with new_values as(
 select wv_school_id, fiber as wv_fiber
 	from fabric.wv_ind
 	order by wv_school_id
 )
 update fabric.master4
-	set wv_ind=new_values.wv_fiber
+	set west_virginia=new_values.wv_fiber
 	from new_values
 	where master4.seasch=new_values.wv_school_id
 		and lstate = 'WV';
 
 --NORTH CAROLINA
 alter table fabric.master4
-	drop column if exists nc_ind;
+	drop column if exists north_carolina;
 alter table fabric.master4
-	add column nc_ind int;
+	add column north_carolina int;
 update fabric.master4
-	set nc_ind = -2
+	set north_carolina = -2
 	where (schnam = 'STANFIELD ELEMENTARY' or schnam = 'CHARLES E PERRY ELEMENTARY'
 		or coname = 'NASH COUNTY' or coname = 'DAVIDSON COUNTY' or coname = 'FRANKLIN COUNTY'
 		or coname = 'WARREN COUNTY' or coname = 'IREDELL COUNTY' or coname = 'CASEWELL COUNTY')
 		and lstate = 'NC';
 update fabric.master4
-	set nc_ind = 2
-	where nc_ind is null and lstate = 'NC';
+	set north_carolina = 2
+	where north_carolina is null and lstate = 'NC';
 
 --NEW MEXICO
-select master4.ncessch, nm_ind.nces_id
-	from fabric.master4, fabric.nm_ind
-	where master4.ncessch=nm_ind.nces_id
-		and lstate = 'NM';
-
 alter table fabric.master4
-	drop column if exists nm_ind;
+	drop column if exists new_mexico;
 alter table fabric.master4
-	add column nm_ind int;
+	add column new_mexico int;
 with new_values as(
 select nces_id, fiber as nm_fiber
 	from fabric.nm_ind
 	order by nces_id
 )
 update fabric.master4
-	set nm_ind=new_values.nm_fiber
+	set new_mexico=new_values.nm_fiber
 	from new_values
 	where master4.ncessch=new_values.nces_id
 		and lstate = 'NM';
 
 --MAINE
-select master4.ncessch, me_ind.nces_id
-	from fabric.master4, fabric.me_ind
-	where master4.ncessch=me_ind.nces_id
-		and lstate = 'ME';
-
 alter table fabric.master4
-	drop column if exists me_ind;
+	drop column if exists maine;
 alter table fabric.master4
-	add column me_ind int;
+	add column maine int;
 with new_values as(
 select nces_id, fiber as me_fiber
 	from fabric.me_ind
 	order by nces_id
 )
 update fabric.master4
-	set me_ind=new_values.me_fiber
+	set maine=new_values.me_fiber
 	from new_values
 	where master4.ncessch=new_values.nces_id
 		and lstate = 'ME';
 
 --TEXAS
 alter table fabric.master4
-	drop column if exists tx_ind;
+	drop column if exists round_rock,
+	drop column if exists palestine;
 alter table fabric.master4
-	add column tx_ind int;
+	add column round_rock int,
+	add column palestine int;
 update fabric.master4
-	set tx_ind = 2
+	set round_rock = 2
 	where leanm = 'ROUND ROCK ISD'
 		and lstate = 'TX';
 update fabric.master4
-	set tx_ind = 2
+	set palestine = 2
 	where leanm = 'PALESTINE ISD'
 		and lstate = 'TX';
 
 --MONTANA
-select master4.schnam, mt_ind.school_name
-	from fabric.master4, fabric.mt_ind
-	where master4.schnam = upper(mt_ind.school_name)
-		and master4.leanm = upper(mt_ind.district_name)
-		and lstate='MT';
-
 alter table fabric.master4
-	drop column if exists mt_ind;
+	drop column if exists montana;
 alter table fabric.master4
-	add column mt_ind int;
+	add column montana int;
 with new_values as(
 select school_name, district_name, fiber as mt_fiber
 	from fabric.mt_ind
 )
 update fabric.master4
-	set mt_ind=new_values.mt_fiber
+	set montana=new_values.mt_fiber
 	from new_values
 	where master4.schnam = upper(new_values.school_name)
 		and master4.leanm = upper(new_values.district_name)
 		and lstate = 'MT';
 
 update fabric.master4
-	set mt_ind = -1
+	set montana = -1
 	where lstate = 'MT' and (schnam = 'POLARIS SCHOOL' or schnam = 'PLENTY COUPS HIGH SCHOOL' 
 		or schnam = 'LUTHER SCHOOL' or schnam = 'HAMMOND SCHOOL' or schnam = 'HAWKS HOME SCHOOL' 
 		or schnam = 'BENTON LAKE SCHOOL' or schnam = 'KINSEY SCHOOL' or ncessch = '302088000624' 
@@ -331,22 +306,16 @@ update fabric.master4
 		and apptype = 'District';
 
 --OHIO
-select schnam, building_name, fiber, lcity, building_city
-from fabric.master4, fabric.oh_ind
-where master4.schnam = upper(oh_ind.building_name)
-	and master4.lcity = upper(oh_ind.building_city)
-	and lstate = 'OH';
-
 alter table fabric.master4
-	drop column if exists oh_ind;
+	drop column if exists ohio;
 alter table fabric.master4
-	add column oh_ind int;
+	add column ohio int;
 with new_values as(
 select building_name, building_city, fiber as oh_fiber
 from fabric.oh_ind
 )
 update fabric.master4
-	set oh_ind = new_values.oh_fiber
+	set ohio = new_values.oh_fiber
 	from new_values
 	where master4.schnam = upper(new_values.building_name)
 	and master4.lcity = upper(new_values.building_city)
@@ -365,41 +334,33 @@ update fabric.master4
 
 --GEORGIA
 alter table fabric.master4
-	drop column if exists ga_ind;
+	drop column if exists georgia;
 alter table fabric.master4
-	add column ga_ind int;
+	add column georgia int;
 with new_values as(
 select ncesid, fiber AS ga_fiber
 from fabric.ga_ind_new
 )
 update fabric.master4
-set ga_ind = new_values.ga_fiber
+set georgia = new_values.ga_fiber
 from new_values
 where ncessch = ncesid;
 
 --BIE
-select school_code, seasch, fiber
-from fabric.master4, fabric.bie_ind
-where seasch = school_code;
-
 alter table fabric.master4
-	drop column if exists bie_ind;
+	drop column if exists bie;
 alter table fabric.master4
-	add column bie_ind int;
+	add column bie int;
 with new_values as(
 select school_code, fiber AS bie_fiber
 from fabric.bie_ind
 )
 update fabric.master4
-set bie_ind = new_values.bie_fiber
+set bie = new_values.bie_fiber
 from new_values
 where master4.seasch = new_values.school_code;
 
 --NAVAJO
-select ncessch, nces_id, fiber
-from fabric.master4, fabric.navajo_schools
-where master4.ncessch=navajo_schools.nces_id;
-
 alter table fabric.master4
 	drop column if exists navajo;
 alter table fabric.master4
@@ -416,58 +377,43 @@ update fabric.master4
 
 --ARIZONA
 alter table fabric.master4
-	drop column if exists az_ind;
+	drop column if exists az_ind,
+	drop column if exists nogales;
 alter table fabric.master4
-	add column az_ind int;
+	add column nogales int;
 update fabric.master4
-	set az_ind = 2
+	set nogales = 2
 	where leanm = 'NOGALES UNIFIED DISTRICT'
 		and lstate = 'AZ';
 
---TEXAS
-alter table fabric.master4
-	drop column if exists round_rock,
-	drop column if exists palestine;
-alter table fabric.master4
-	add column round_rock int,
-	add column palestine int;
-update fabric.master4
-	set round_rock = 2
-	where leanm = 'ROUND ROCK ISD'
-		and lstate = 'TX';
-update fabric.master4
-	set palestine = 2
-	where leanm = 'PALESTINE ISD'
-		and lstate = 'TX';
-
 --PUERTO RICO
 alter table fabric.master4
-	drop column if exists pr_ind;
+	drop column if exists puerto_rico;
 alter table fabric.master4
-	add column pr_ind int;
+	add column puerto_rico int;
 
 with new_values as(
 select school_code, fiber
 from fabric.pr_ind
 )
 update fabric.master4
-set pr_ind = new_values.fiber
+set puerto_rico = new_values.fiber
 from new_values
 where seasch = school_code
 	and lstate = 'PR';
 
 --DC
 alter table fabric.master4
-	drop column if exists dc_ind;
+	drop column if exists dc;
 alter table fabric.master4
-	add column dc_ind int;
+	add column dc int;
 
 with new_values as(
 select nces_code, fiber
 from fabric.dc_ind
 )
 update fabric.master4
-set dc_ind = new_values.fiber
+set dc = new_values.fiber
 from new_values
 where ncessch = nces_code;
 
@@ -538,7 +484,8 @@ alter table fabric.master4
 	drop column if exists dumont, 
 	drop column if exists pioneer,
 	drop column if exists paul_bunyan,
-	drop column if exists ortelco;
+	drop column if exists ortelco,
+	drop column if exists waldron;
 alter table fabric.master4
 	add column revere int,
 	add column citizens int,
@@ -605,7 +552,8 @@ alter table fabric.master4
 	add column dumont int,
 	add column pioneer int,
 	add column paul_bunyan int,
-	add column ortelco int;
+	add column ortelco int,
+	add column waldron int;
 
 update fabric.master4
 set ketchikan = 2
@@ -989,18 +937,28 @@ where ncessch = '410216000641' or ncessch = '410750000657' or ncessch = '4107500
 	or ncessch = '410960000020' or ncessch = '410960001481' or ncessch = '410960000021' or ncessch = '410960000022'
 	or ncessch = '410960000024' or ncessch = '410960000023';
 
---update fabric.master4
---set paul_bunyan = 2
---where leaid = '2704440' or ncessch = '271827000847' or ncessch = '271827000848' or ncessch = '270573000212'
---	or ncessch = '270573000213' or ncessch = '271014000433' or ncessch = '271317000935' or ncessch = '271317000939'
---	or ncessch = '271317000661' or ncessch = '271317000915' or ncessch = '271317000662' or ncessch = ''
---	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
+update fabric.master4
+set paul_bunyan = 2
+where ncessch = '270444000190' or ncessch = '270444002031' or ncessch = '270444000191' or ncessch = '270444000193'
+	or ncessch = '270444000196' or ncessch = '270444000192' or ncessch = '270444000194' or ncessch = '270444004454'
+	or ncessch = '270444000197' or ncessch = '270444004159' or ncessch = '270444000313' or ncessch = '271827000847'
+	or ncessch = '271827000848' or ncessch = '270573000212' or ncessch = '270573000213' or ncessch = '271014000433'
+	or ncessch = '271014000434' or ncessch = '271317000662' or ncessch = '271317000935' or ncessch = '271317003073'
+	or ncessch = '271317000940' or ncessch = '271317000907' or ncessch = '271317002655' or ncessch = '271317000939'
+	or ncessch = '271317000915' or ncessch = '270948002786' or ncessch = '270948000394' or ncessch = '271392000715'
+	or ncessch = '271392002143' or ncessch = '271392000716' or ncessch = '273270001945' or ncessch = '273270001413'
+	or ncessch = '271500000761' or ncessch = '272331001136' or ncessch = '271701000786' or ncessch = '271701000787'
+	or ncessch = '272331001138' or ncessch = '273270001946' or ncessch = '273270001416' or ncessch = '273051001302'
+	or ncessch = '273051002427' or ncessch = '273051001303' or ncessch = '273051003303';
 
 
 update fabric.master4
 set ortelco = 2
 where leaid = '4110110' or leaid = '4104020' or leaid = '4106780' or leaid = '4101740' or leaid = '4106120';
 
+update fabric.master4
+set waldron = 2
+where leaid = '2635040';
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
@@ -1010,27 +968,23 @@ alter table fabric.master4
 	add column score_map int;
 
 with new_values as(
-select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coalesce(wv_ind,0) 
-	+ coalesce(nc_ind,0) + coalesce(nm_ind,0) + coalesce(me_ind,0) + coalesce(mt_ind,0)
-	+ coalesce(sunesys,0) + coalesce(oh_ind,0) + coalesce(fatbeam,0) + coalesce(ga_ind,0)
-	+ coalesce(navajo,0) + coalesce(bie_ind,0) + coalesce(az_ind,0) + coalesce(round_rock,0)
-	+ coalesce(palestine,0) + coalesce(pr_ind,0) + coalesce(dc,0) + coalesce(revere,0)
-	+ coalesce(citizens,0) + coalesce(hudson,0) + coalesce(rock_island,0) + coalesce(elmwood,0)
-	+ coalesce(ketchikan,0) + coalesce(galena,0) + coalesce(farmers,0) + coalesce(toledotel,0)
-	+ coalesce(wabash,0) + coalesce(peoples_rural,0) + coalesce(south_central,0) + coalesce(garden_valley,0)
-	+ coalesce(mtc,0) + coalesce(clear_lake,0) + coalesce(peoples_telecom,0) + coalesce(west_texas_rural,0)
-	+ coalesce(com_net,0) + coalesce(yadtel,0) + coalesce(heart_iowa,0) + coalesce(mckenzie,0)
-	+ coalesce(alliance,0) + coalesce(ganado,0) + coalesce(us_connect,0) + coalesce(middleburgh,0)
-	+ coalesce(dupage,0) + coalesce(snc,0) + coalesce(mte,0) + coalesce(dobson,0) + coalesce(sacred_wind,0)
-	+ coalesce(west_central,0) + coalesce(arlington,0) + coalesce(s_and_a,0) + coalesce(west_carolina_tel,0)
-	+ coalesce(butler_bremer,0) + coalesce(manawa,0) + coalesce(srtc,0) + coalesce(southwest_texas,0)	
-	+ coalesce(totah_totel,0) + coalesce(runestone,0) + coalesce(golden_belt,0) + coalesce(united,0)
-	+ coalesce(tca,0) + coalesce(midstate,0) + coalesce(premier,0) + coalesce(fibercomm,0)
-	+ coalesce(h_and_b,0) + coalesce(ftc,0) + coalesce(marne_elk,0) + coalesce(yelcot,0)
-	+ coalesce(alpine,0) + coalesce(laporte,0) + coalesce(nextech,0) + coalesce(newton,0)
-	+ coalesce(nemr,0) + coalesce(otelco,0) + coalesce(wilson,0) + coalesce(pmt,0)
-	+ coalesce(alenco_comm,0) + coalesce(wikstrom,0) + coalesce(van_horne,0) + coalesce(dumont,0)
-	+ coalesce(pioneer,0) + coalesce(paul_bunyan,0) + coalesce(ortelco,0)
+select ncessch, coalesce(alenco_comm,0) + coalesce(alliance,0) + coalesce(alpine,0) + coalesce(arlington,0)
+	+ coalesce(bie,0) + coalesce(butler_bremer,0) + coalesce(california,0) + coalesce(citizens,0) + coalesce(clear_lake,0)
+	+ coalesce(com_net,0) + coalesce(cai,0) + coalesce(dc,0) + coalesce(dobson,0) + coalesce(dupage,0)
+	+ coalesce(elmwood,0) + coalesce(farmers,0) + coalesce(fatbeam,0) + coalesce(fibercomm,0) + coalesce(florida,0)
+	+ coalesce(ftc,0) + coalesce(galena,0) + coalesce(ganado,0) + coalesce(garden_valley,0) + coalesce(georgia,0)
+	+ coalesce(golden_belt,0) + coalesce(h_and_b,0) + coalesce(heart_iowa,0) + coalesce(hudson,0) + coalesce(ketchikan,0)
+	+ coalesce(laporte,0) + coalesce(maine,0) + coalesce(manawa,0) + coalesce(marion,0) + coalesce(marne_elk,0)
+	+ coalesce(mckenzie,0) + coalesce(midstate,0) + coalesce(montana,0) + coalesce(mtc,0) + coalesce(navajo,0)
+	+ coalesce(new_mexico,0) + coalesce(newton,0) + coalesce(nextech,0) + coalesce(nogales,0) + coalesce(north_carolina,0)
+	+ coalesce(nemr,0) + coalesce(ohio,0) + coalesce(ortelco,0) + coalesce(otelco,0) + coalesce(palestine,0)
+	+ coalesce(peoples_rural,0) + coalesce(peoples_telecom,0) + coalesce(premier,0) + coalesce(pmt,0) + coalesce(puerto_rico,0)
+	+ coalesce(revere,0) + coalesce(rock_island,0) + coalesce(round_rock,0) + coalesce(runestone,0) + coalesce(s_and_a,0)
+	+ coalesce(sacred_wind,0) + coalesce(srtc,0) + coalesce(south_central,0) + coalesce(snc,0) + coalesce(southwest_texas,0)
+	+ coalesce(sunesys,0) + coalesce(tca,0) + coalesce(middleburgh,0) + coalesce(toledotel,0) + coalesce(totah_totel,0)
+	+ coalesce(united,0) + coalesce(us_connect,0) + coalesce(van_horne,0) + coalesce(wabash,0) + coalesce(waldron,0) + coalesce(west_carolina_tel,0)
+	+ coalesce(west_central,0) + coalesce(west_texas_rural,0) + coalesce(west_virginia,0) + coalesce(wikstrom,0) + coalesce(wilson,0)
+	+ coalesce(yadtel,0) + coalesce(yelcot,0)
 	as row_score
 from fabric.master4
 )
@@ -1077,12 +1031,12 @@ copy(select * from fabric.publicmap) to '/Users/FCC/Documents/allison/E-rate ana
 drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
 select master4.ncessch, master4.schnam, master4.leaid, master4.leanm, master4.lcity, master4.lstate, master4.ulocal, master4.member, 
-	master4.geom, master4.fiber_map AS fiber_v2, master2.fiber_map AS fiber_v1,  master4.score_map AS score, alliance, master4.bie_ind AS bie, master4.ca_ind AS california, 
-	citizens, clear_lake, com_net, master4.cai, dc, dupage, elmwood, farmers, master4.fatbeam, master4.fl_ind AS florida, galena, ganado,
-	garden_valley, master4.ga_ind AS georgia, heart_iowa, hudson, ketchikan, master4.me_ind AS maine, master4.mt_ind AS montana, mtc,
-	master4.navajo, master4.nm_ind AS new_mexico, master4.az_ind AS nogales, master4.nc_ind AS north_carolina, master4.oh_ind AS ohio, 
-	palestine, peoples_rural, peoples_telecom, master4.pr_ind AS puerto_rico, revere, rock_island, round_rock, south_central,
-	master4.sunesys, middleburgh, toledotel, us_connect, wabash, west_texas_rural, master4.wv_ind AS west_virginia, yadtel
+	master4.geom, master4.fiber_map AS fiber_v2, master2.fiber_map AS fiber_v1,  master4.score_map AS score, alliance, master4.bie AS bie, master4.california AS california, 
+	citizens, clear_lake, com_net, master4.cai, dc, dupage, elmwood, farmers, master4.fatbeam, master4.florida AS florida, galena, ganado,
+	garden_valley, master4.georgia AS georgia, heart_iowa, hudson, ketchikan, master4.maine AS maine, master4.montana AS montana, mtc,
+	master4.navajo, master4.new_mexico AS new_mexico, master4.az_ind AS nogales, master4.north_carolina AS north_carolina, master4.ohio AS ohio, 
+	palestine, peoples_rural, peoples_telecom, master4.puerto_rico AS puerto_rico, revere, rock_island, round_rock, south_central,
+	master4.sunesys, middleburgh, toledotel, us_connect, wabash, west_texas_rural, master4.west_virginia AS west_virginia, yadtel
 from fabric.master4
 left join fabric.master2
 on master4.ncessch = master2.ncessch
