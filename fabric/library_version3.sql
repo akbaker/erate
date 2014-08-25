@@ -202,7 +202,9 @@ alter table fabric.lib_master4
 	drop column if exists wilson,
 	drop column if exists premier,
 	drop column if exists fibercomm,
-	drop column if exists van_horne;
+	drop column if exists van_horne,
+	drop column if exists dumont,
+	drop column if exists pioneer;
 alter table fabric.lib_master4
 	add column grantsburg int,
 	add column toledotel int,
@@ -231,7 +233,9 @@ alter table fabric.lib_master4
 	add column wilson int,
 	add column premier int,
 	add column fibercomm int,
-	add column van_horne int;
+	add column van_horne int,
+	add column dumont int,
+	add column pioneer int;
 
 update fabric.lib_master4
 set grantsburg = 2
@@ -366,6 +370,14 @@ where fscskey = 'IA0225';
 update fabric.lib_master4
 set van_horne = 2
 where fscskey = 'IA0365';
+
+update fabric.lib_master4
+set dumont = 2
+where fscskey = 'IA0509' or fscskey = 'IA0344';
+
+update fabric.lib_master4
+set pioneer = 2
+where libid = 'OR0119-005';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

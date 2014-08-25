@@ -533,7 +533,10 @@ alter table fabric.master4
 	drop column if exists pmt,
 	drop column if exists alenco_comm,
 	drop column if exists wikstrom,
-	drop column if exists van_horne;
+	drop column if exists van_horne,
+	drop column if exists dumont, 
+	drop column if exists pioneer,
+	drop column if exists paul_bunyan;
 alter table fabric.master4
 	add column revere int,
 	add column citizens int,
@@ -596,7 +599,10 @@ alter table fabric.master4
 	add column pmt int,
 	add column alenco_comm int,
 	add column wikstrom int,
-	add column van_horne int;
+	add column van_horne int,
+	add column dumont int,
+	add column pioneer int,
+	add column paul_bunyan int;
 
 update fabric.master4
 set ketchikan = 2
@@ -970,6 +976,23 @@ update fabric.master4
 set van_horne = 2
 where ncessch = '190483000137' or ncessch = '190483001987';
 
+update fabric.master4
+set dumont = 2
+where ncessch = '190345000043' or ncessch = '190345000042';
+
+update fabric.master4
+set pioneer = 2
+where ncessch = '410216000641' or ncessch = '410750000657' or ncessch = '410750001582' or ncessch = '410750000667'
+	or ncessch = '410960000020' or ncessch = '410960001481' or ncessch = '410960000021' or ncessch = '410960000022'
+	or ncessch = '410960000024' or ncessch = '410960000023';
+
+update fabric.master4
+set paul_bunyan = 2
+where leaid = '2704440' or ncessch = '271827000847' or ncessch = '271827000848' or ncessch = '270573000212'
+	or ncessch = '270573000213' or ncessch = '271014000433' or ncessch = '271317000935' or ncessch = '271317000939'
+	or ncessch = '271317000661' or ncessch = '271317000915' or ncessch = '271317000662' or ncessch = ''
+	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
+
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
 alter table fabric.master4
@@ -992,6 +1015,13 @@ select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coal
 	+ coalesce(dupage,0) + coalesce(snc,0) + coalesce(mte,0) + coalesce(dobson,0) + coalesce(sacred_wind,0)
 	+ coalesce(west_central,0) + coalesce(arlington,0) + coalesce(s_and_a,0) + coalesce(west_carolina_tel,0)
 	+ coalesce(butler_bremer,0) + coalesce(manawa,0) + coalesce(srtc,0) + coalesce(southwest_texas,0)	
+	+ coalesce(totah_totel,0) + coalesce(runestone,0) + coalesce(golden_belt,0) + coalesce(united,0)
+	+ coalesce(tca,0) + coalesce(midstate,0) + coalesce(premier,0) + coalesce(fibercomm,0)
+	+ coalesce(h_and_b,0) + coalesce(ftc,0) + coalesce(marne_elk,0) + coalesce(yelcot,0)
+	+ coalesce(alpine,0) + coalesce(laporte,0) + coalesce(nextech,0) + coalesce(newton,0)
+	+ coalesce(nemr,0) + coalesce(otelco,0) + coalesce(wilson,0) + coalesce(pmt,0)
+	+ coalesce(alenco_comm,0) + coalesce(wikstrom,0) + coalesce(van_horne,0) + coalesce(dumont,0)
+	+ coalesce(pioneer,0) + coalesce(paul_bunyan,0)
 	as row_score
 from fabric.master4
 )
