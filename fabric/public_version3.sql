@@ -536,7 +536,8 @@ alter table fabric.master4
 	drop column if exists van_horne,
 	drop column if exists dumont, 
 	drop column if exists pioneer,
-	drop column if exists paul_bunyan;
+	drop column if exists paul_bunyan,
+	drop column if exists ortelco;
 alter table fabric.master4
 	add column revere int,
 	add column citizens int,
@@ -602,7 +603,8 @@ alter table fabric.master4
 	add column van_horne int,
 	add column dumont int,
 	add column pioneer int,
-	add column paul_bunyan int;
+	add column paul_bunyan int,
+	add column ortelco int;
 
 update fabric.master4
 set ketchikan = 2
@@ -993,6 +995,12 @@ where ncessch = '410216000641' or ncessch = '410750000657' or ncessch = '4107500
 --	or ncessch = '271317000661' or ncessch = '271317000915' or ncessch = '271317000662' or ncessch = ''
 --	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
 
+
+update fabric.master4
+set ortelco = 2
+where leaid = '4110110' or leaid = '4104020' or leaid = '4106780' or leaid = '4101740' or leaid = '4106120';
+
+
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
 alter table fabric.master4
@@ -1021,7 +1029,7 @@ select ncessch, coalesce(cai,0) + coalesce(ca_ind,0) + coalesce(fl_ind,0) + coal
 	+ coalesce(alpine,0) + coalesce(laporte,0) + coalesce(nextech,0) + coalesce(newton,0)
 	+ coalesce(nemr,0) + coalesce(otelco,0) + coalesce(wilson,0) + coalesce(pmt,0)
 	+ coalesce(alenco_comm,0) + coalesce(wikstrom,0) + coalesce(van_horne,0) + coalesce(dumont,0)
-	+ coalesce(pioneer,0) + coalesce(paul_bunyan,0)
+	+ coalesce(pioneer,0) + coalesce(paul_bunyan,0) + coalesce(ortelco,0)
 	as row_score
 from fabric.master4
 )
