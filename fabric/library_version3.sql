@@ -196,7 +196,13 @@ alter table fabric.lib_master4
 	drop column if exists h_and_b,
 	drop column if exists golden_belt,
 	drop column if exists united,
-	drop column if exists fontana;
+	drop column if exists fontana,
+	drop column if exists nextech,
+	drop column if exists nemr,
+	drop column if exists wilson,
+	drop column if exists premier,
+	drop column if exists fibercomm,
+	drop column if exists van_horne;
 alter table fabric.lib_master4
 	add column grantsburg int,
 	add column toledotel int,
@@ -219,7 +225,13 @@ alter table fabric.lib_master4
 	add column h_and_b int,
 	add column golden_belt int,
 	add column united int,
-	add column fontana int;
+	add column fontana int,
+	add column nextech int,
+	add column nemr int,
+	add column wilson int,
+	add column premier int,
+	add column fibercomm int,
+	add column van_horne int;
 
 update fabric.lib_master4
 set grantsburg = 2
@@ -320,6 +332,40 @@ where fscskey = 'KS0299' or fscskey = 'KS0292';
 update fabric.lib_master4
 set fontana = 2
 where libid = 'NC0008-005' or libid = 'NC0008-002' or libid = 'NC0008-008' or libid = 'NC0008-003' or libid = 'NC0008-004';
+
+update fabric.lib_master4
+set nextech = 2
+where libid = 'KS0144-002' or libid = 'KS0011-002' or libid = 'KS0034-002' or libid = 'KS0136-002'
+	or libid = 'KS0153-002' or libid = 'KS0141-002' or libid = 'KS0053-002' or libid = 'KS0145-002'
+	or libid = 'KS0025-002' or libid = 'KS0015-002' or libid = 'KS0142-002' or libid = 'KS0029-002'
+	or libid = 'KS0138-002' or libid = 'KS0150-002' or libid = 'KS0038-002' or libid = 'KS0012-002'
+	or libid = 'KS0046-002' or libid = 'KS0042-002' or libid = 'KS0005-002' or libid = 'KS0049-002'
+	or libid = 'KS0151-002' or libid = 'KS0040-002' or libid = 'KS0037-002' or libid = 'KS0002-002'
+	or libid = 'KS0154-002' or libid = 'KS0004-002' or libid = 'KS0016-002' or fscskey = 'KS0150';
+update fabric.lib_master4
+set nextech = -2
+where libid = 'KS0014-002' or libid = 'KS0006-002' or libid = 'KS0137-002' or libid = 'KS0321-002' 
+	or libid = 'KS0047-002' or libid = 'KS0009-002' or libid = 'KS0152-002';
+	
+update fabric.lib_master4
+set nemr = 2
+where libid = 'MO0061-002' or libid = 'MO0066-002';
+
+update fabric.lib_master4
+set wilson = 2
+where fscskey = 'KS0021' or fscskey = 'KS0031';
+
+update fabric.lib_master4
+set premier = 2
+where fscskey = 'IA0126' or fscskey = 'IA0184' or fscskey = 'IA0424' or fscskey = 'IA0530';
+
+update fabric.lib_master4
+set fibercomm = 2
+where fscskey = 'IA0225';
+
+update fabric.lib_master4
+set van_horne = 2
+where fscskey = 'IA0365';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

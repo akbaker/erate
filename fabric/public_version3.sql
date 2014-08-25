@@ -482,6 +482,13 @@ alter table fabric.master4
 	drop column if exists farmers,
 	drop column if exists toledotel,
 	drop column if exists wabash,
+	drop column if exists peoples_rural,
+	drop column if exists south_central,
+	drop column if exists garden_valley,
+	drop column if exists mtc,
+	drop column if exists clear_lake,
+	drop column if exists peoples_telecom,
+	drop column if exists west_texas_rural,	
 	drop column if exists com_net,
 	drop column if exists yadtel,
 	drop column if exists heart_iowa,
@@ -519,7 +526,14 @@ alter table fabric.master4
 	drop column if exists alpine,
 	drop column if exists laporte,
 	drop column if exists nextech,
-	drop column if exists newton;
+	drop column if exists newton,
+	drop column if exists nemr,
+	drop column if exists otelco,
+	drop column if exists wilson,
+	drop column if exists pmt,
+	drop column if exists alenco_comm,
+	drop column if exists wikstrom,
+	drop column if exists van_horne;
 alter table fabric.master4
 	add column revere int,
 	add column citizens int,
@@ -543,7 +557,6 @@ alter table fabric.master4
 	add column heart_iowa int,
 	add column mckenzie int,
 	add column alliance int,
-	add column dc int,
 	add column ganado int,
 	add column us_connect int,
 	add column middleburgh int,
@@ -575,8 +588,15 @@ alter table fabric.master4
 	add column yelcot int,
 	add column alpine int,
 	add column laporte int,
-	add column nextech int
-	add column newton int;
+	add column nextech int,
+	add column newton int,
+	add column nemr int,
+	add column otelco int,
+	add column wilson int,
+	add column pmt int,
+	add column alenco_comm int,
+	add column wikstrom int,
+	add column van_horne int;
 
 update fabric.master4
 set ketchikan = 2
@@ -913,6 +933,42 @@ where ncessch = '201131000942' or ncessch = '201047000397' or ncessch = '2010020
 update fabric.master4
 set newton = 2
 where leaid = '2803180';
+
+update fabric.master4
+set nemr = 2
+where leaid = '2922980' or ncessch = '291638000797' or leaid = '2913230' or leaid = '2925640'
+	or leaid = '2927660' or leaid = '2920700';
+update fabric.master4
+set nemr = -2
+where leaid = '2919320';
+
+update fabric.master4
+set otelco = 2
+where ncessch = '10042000670' or ncessch = '10042000203' or ncessch = '10042000682' or ncessch = '10042000205'
+	or ncessch = '10042000206' or ncessch = '10042000101' or ncessch = '10042000208' or ncessch = '10042001870'
+	or ncessch = '10042000207' or ncessch = '10042000209' or ncessch = '10042000210' or ncessch = '10042000211'
+	or ncessch = '10010000028' or ncessch = '10255001064' or ncessch = '10042000213';
+
+update fabric.master4
+set wilson = 2
+where ncessch = '200034902022' or ncessch = '200034902022' or ncessch = '201212001976' or ncessch = '201212002008';
+
+update fabric.master4
+set pmt = 2
+where leaid = '1602190';
+
+update fabric.master4
+set alenco_comm = 2
+where ncessch = '482580002911';
+
+update fabric.master4
+set wikstrom = 2
+where ncessch = '270012700131' or ncessch = '270354000162' or ncessch = '270354000163' or ncessch = ''
+	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
+
+update fabric.master4
+set van_horne = 2
+where ncessch = '190483000137' or ncessch = '190483001987';
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
