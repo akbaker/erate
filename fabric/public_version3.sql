@@ -603,27 +603,27 @@ set ketchikan = 2
 where leaid = '0200150';
 
 update fabric.master4
-set citizens = 2 
+set revere = 2 
 where leaid = '2510050';
 
 update fabric.master4
-set hudson = 2
+set citizens = 2
 where ncessch = '551044001363';
 
 update fabric.master4
-set rock_island = 2
+set hudson = 2
 where ncessch = '390500203801' or ncessch = '390500203802' or ncessch = '390500203803' or ncessch = '390500203804'
 	or ncessch = '390500200199' or ncessch = '390500203805';
 
 update fabric.master4
-set elmwood = 2
+set rock_island = 2
 where ncessch = '173441003526' or ncessch = '173441003527' or ncessch = '173441003538' or ncessch = '173441003528' 
 	or ncessch = '173441003530' or ncessch = '173441006107' or ncessch = '173441003534' or ncessch = '170020406200' 
 	or ncessch = '173441006155' or ncessch = '173441003535' or ncessch = '173441005967' or ncessch = '173441003540' 
 	or ncessch = '173441003536' or ncessch = '173441005338' or ncessch = '173441003529';
 
 update fabric.master4
-set revere = 2
+set elmwood = 2
 where ncessch = '171410004687' or ncessch = '171410001760' or ncessch = '171410001762' or ncessch = '171410005506' 
 	or ncessch = '171410001761';
 
