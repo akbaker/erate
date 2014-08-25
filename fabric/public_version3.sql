@@ -967,10 +967,10 @@ update fabric.master4
 set alenco_comm = 2
 where ncessch = '482580002911';
 
-update fabric.master4
-set wikstrom = 2
-where ncessch = '270012700131' or ncessch = '270354000162' or ncessch = '270354000163' or ncessch = ''
-	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
+--update fabric.master4
+--set wikstrom = 2
+--where ncessch = '270012700131' or ncessch = '270354000162' or ncessch = '270354000163' or ncessch = ''
+--	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
 
 update fabric.master4
 set van_horne = 2
@@ -986,12 +986,12 @@ where ncessch = '410216000641' or ncessch = '410750000657' or ncessch = '4107500
 	or ncessch = '410960000020' or ncessch = '410960001481' or ncessch = '410960000021' or ncessch = '410960000022'
 	or ncessch = '410960000024' or ncessch = '410960000023';
 
-update fabric.master4
-set paul_bunyan = 2
-where leaid = '2704440' or ncessch = '271827000847' or ncessch = '271827000848' or ncessch = '270573000212'
-	or ncessch = '270573000213' or ncessch = '271014000433' or ncessch = '271317000935' or ncessch = '271317000939'
-	or ncessch = '271317000661' or ncessch = '271317000915' or ncessch = '271317000662' or ncessch = ''
-	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
+--update fabric.master4
+--set paul_bunyan = 2
+--where leaid = '2704440' or ncessch = '271827000847' or ncessch = '271827000848' or ncessch = '270573000212'
+--	or ncessch = '270573000213' or ncessch = '271014000433' or ncessch = '271317000935' or ncessch = '271317000939'
+--	or ncessch = '271317000661' or ncessch = '271317000915' or ncessch = '271317000662' or ncessch = ''
+--	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
