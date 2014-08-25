@@ -106,6 +106,7 @@ alter table fabric.master4
 	drop column if exists ca_ind;
 alter table fabric.master4
 	add column ca_ind int;
+	add column california int;
 with new_values as(
 select cds_code, fiber as ca_fiber
 	from fabric.cenic
