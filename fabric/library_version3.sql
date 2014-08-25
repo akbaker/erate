@@ -204,7 +204,8 @@ alter table fabric.lib_master4
 	drop column if exists fibercomm,
 	drop column if exists van_horne,
 	drop column if exists dumont,
-	drop column if exists pioneer;
+	drop column if exists pioneer,
+	drop column if exists webster_calhoun;
 alter table fabric.lib_master4
 	add column grantsburg int,
 	add column toledotel int,
@@ -235,7 +236,8 @@ alter table fabric.lib_master4
 	add column fibercomm int,
 	add column van_horne int,
 	add column dumont int,
-	add column pioneer int;
+	add column pioneer int,
+	add column webster_calhoun int;
 
 update fabric.lib_master4
 set grantsburg = 2
@@ -379,6 +381,11 @@ update fabric.lib_master4
 set pioneer = 2
 where libid = 'OR0119-005';
 
+update fabric.lib_master4
+set webster_calhoun = 2
+where libid = 'IA0556-002' or libid = 'IA0290-002' or libid = 'IA0377-002' or libid = 'IA0263-002'
+	or libid = 'IA0310-002' or libid = 'IA0313-002' or libid = 'IA0522-002' or libid = 'IA0185-002';
+
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
 alter table fabric.lib_master4
@@ -392,7 +399,12 @@ select libid, coalesce(cai,0) + coalesce(ks_lib,0) + coalesce(me_lib,0)
 	+ coalesce(alliance,0) + coalesce(clear_lake,0) + coalesce(com_net,0)
 	+ coalesce(grantsburg,0) + coalesce(peoples_rural,0) + coalesce(peoples_telecom,0)
 	+ coalesce(toledotel,0) + coalesce(us_connect,0) + coalesce(wabash,0) 
-	+ coalesce(heart_iowa,0) + coalesce(dc,0)
+	+ coalesce(heart_iowa,0) + coalesce(dc,0) + coalesce(blue_ridge,0) + coalesce(dobson,0)
+	+ coalesce(west_carolina_tel,0) + coalesce(manawa,0) + coalesce(srtc,0) + coalesce(premier,0)
+	+ coalesce(fibercomm,0) + coalesce(h_and_b,0) + coalesce(golden_belt,0) + coalesce(united,0)
+	+ coalesce(fontana,0) + coalesce(nextech,0) + coalesce(nemr,0) + coalesce(wilson,0)
+	+ coalesce(premier,0) + coalesce(fibercomm,0) + coalesce(van_horne,0) + coalesce(dumont,0)
+	+ coalesce(pioneer,0) + coalesce(webster_calhoun,0)	
 	as row_score
 from fabric.lib_master4
 )
