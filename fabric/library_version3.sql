@@ -205,7 +205,9 @@ alter table fabric.lib_master4
 	drop column if exists van_horne,
 	drop column if exists dumont,
 	drop column if exists pioneer,
-	drop column if exists webster_calhoun;
+	drop column if exists webster_calhoun,
+	drop column if exists gervais_datavision,
+	drop column if exists paul_bunyan;
 alter table fabric.lib_master4
 	add column grantsburg int,
 	add column toledotel int,
@@ -237,7 +239,9 @@ alter table fabric.lib_master4
 	add column van_horne int,
 	add column dumont int,
 	add column pioneer int,
-	add column webster_calhoun int;
+	add column webster_calhoun int,
+	add column gervais_datavision int,
+	add column paul_bunyan int;
 
 update fabric.lib_master4
 set grantsburg = 2
@@ -385,6 +389,14 @@ update fabric.lib_master4
 set webster_calhoun = 2
 where libid = 'IA0556-002' or libid = 'IA0290-002' or libid = 'IA0377-002' or libid = 'IA0263-002'
 	or libid = 'IA0310-002' or libid = 'IA0313-002' or libid = 'IA0522-002' or libid = 'IA0185-002';
+
+update fabric.lib_master4
+set gervais_datavision = 2
+where fscskey = 'OR0104' or fscskey = 'OR0083' or fscskey = 'OR0047' or fscskey = 'OR0036';
+
+update fabric.lib_master4
+set paul_bunyan = 2
+where libid = 'MN0145-002' or libid = 'MN0145-003' or libid = 'MN0145-005';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

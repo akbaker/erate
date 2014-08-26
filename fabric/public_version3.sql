@@ -485,7 +485,22 @@ alter table fabric.master4
 	drop column if exists pioneer,
 	drop column if exists paul_bunyan,
 	drop column if exists ortelco,
-	drop column if exists waldron;
+	drop column if exists waldron,
+	drop column if exists gervais_datavision,
+	drop column if exists mcleod,
+	drop column if exists htc,
+	drop column if exists franklin,
+	drop column if exists phoenixville,
+	drop column if exists mifflin,
+	drop column if exists blue_mountain,
+	drop column if exists in_shore,
+	drop column if exists dubois,
+	drop column if exists spring_grove,
+	drop column if exists kane,
+	drop column if exists hempfield,
+	drop column if exists octorara,
+	drop column if exists lebanon,
+	drop column if exists souderton;
 alter table fabric.master4
 	add column revere int,
 	add column citizens int,
@@ -553,7 +568,22 @@ alter table fabric.master4
 	add column pioneer int,
 	add column paul_bunyan int,
 	add column ortelco int,
-	add column waldron int;
+	add column waldron int,
+	add column gervais_datavision int,
+	add column mcleod int,
+	add column htc int,
+	add column franklin int,
+	add column phoenixville int,
+	add column mifflin int,
+	add column blue_mountain int,
+	add column in_shore int,
+	add column dubois int,
+	add column spring_grove int,
+	add column kane int,
+	add column hempfield int,
+	add column octorara int,
+	add column lebanon int,
+	add column souderton int;
 
 update fabric.master4
 set ketchikan = 2
@@ -949,7 +979,8 @@ where ncessch = '270444000190' or ncessch = '270444002031' or ncessch = '2704440
 	or ncessch = '271392002143' or ncessch = '271392000716' or ncessch = '273270001945' or ncessch = '273270001413'
 	or ncessch = '271500000761' or ncessch = '272331001136' or ncessch = '271701000786' or ncessch = '271701000787'
 	or ncessch = '272331001138' or ncessch = '273270001946' or ncessch = '273270001416' or ncessch = '273051001302'
-	or ncessch = '273051002427' or ncessch = '273051001303' or ncessch = '273051003303';
+	or ncessch = '273051002427' or ncessch = '273051001303' or ncessch = '273051003303' or ncessch = '271794000825'
+	or ncessch = '271794000826';
 
 
 update fabric.master4
@@ -959,6 +990,84 @@ where leaid = '4110110' or leaid = '4104020' or leaid = '4106780' or leaid = '41
 update fabric.master4
 set waldron = 2
 where leaid = '2635040';
+
+update fabric.master4
+set gervais_datavision = 2
+where ncessch = '411353001714' or ncessch = '411353001713' or ncessch = '411353001723' or ncessch = '411353001731'
+	or ncessch = '411353001715' or ncessch = '411353001546' or ncessch = '411353000844' or ncessch = '411353001051'
+	or ncessch = '411353000843' or ncessch = '411353000841' or ncessch = '411353001052' or ncessch = '411353000842'
+	or ncessch = '410004300494' or ncessch = '410001500853' or ncessch = '410001500831' or ncessch = '410001501034'
+	or ncessch = '410001500821' or ncessch = '411176000824' or ncessch = '411176000823' or ncessch = '410327000109'
+	or ncessch = '410327000110' or ncessch = '410327001343';
+
+update fabric.master4
+set mcleod = -2
+where leaid = '4829910';
+
+update fabric.master4
+set htc = 2
+where ncessch = '190001501486' or ncessch = '190001501487' or ncessch = '190001501485' or ncessch = '192598001473'
+	or ncessch = '192598001474' or ncessch = '192598001475' or ncessch = '191884001114';
+
+update fabric.master4
+set franklin = 2
+where ncessch = '428023007067';
+
+update fabric.master4
+set phoenixville = 2
+where ncessch = '421905001426' or ncessch = '421905001430' or ncessch = '421905001396' or ncessch = '421905007296'
+	or ncessch = '421905001425' or ncessch = '421905004841';
+
+update fabric.master4
+set mifflin = 2
+where ncessch = '421529006261' or ncessch = '421529007396' or ncessch = '421529007391' or ncessch = '421529007397'
+	or ncessch = '421529007398' or ncessch = '421529007399' or ncessch = '421529000784' or ncessch = '421529007392'
+	or ncessch = '421529003196';
+
+update fabric.master4
+set blue_mountain = 2
+where ncessch = '420387003891' or ncessch = '420387005263' or ncessch = '420387004659' or ncessch = '420387000138'
+	or ncessch = '420387003887';
+
+update fabric.master4
+set in_shore = 2
+where ncessch = '421095001251' or ncessch = '421095001252' or ncessch = '421095007120' or ncessch = '421095001250'
+	or leaid = '4209750';
+
+update fabric.master4
+set dubois = 2
+where leaid = '4207830';
+
+update fabric.master4
+set spring_grove = 2
+where ncessch = '422259004623' or ncessch = '422259006725' or ncessch = '422259004622' or ncessch = '422259004618'
+	or ncessch = '422259004617' or ncessch = '422259004620';
+
+update fabric.master4
+set kane = 2
+where ncessch = '421266005244' or ncessch = '421266003100' or ncessch = '421266005245';
+
+update fabric.master4
+set hempfield = 2
+where ncessch = '421179002578' or ncessch = '421179000118' or ncessch = '421179006294' or ncessch = '421179000160'
+	or ncessch = '421179005055' or ncessch = '421179005236' or ncessch = '421179002574' or ncessch = '421179002577'
+	or ncessch = '421179002576' or ncessch = '421179002575';
+
+update fabric.master4
+set octorara = 2
+where leaid = '4218030';
+
+update fabric.master4
+set lebanon = 2
+where ncessch = '421764002760' or ncessch = '421764000098' or ncessch = '421764002755' or ncessch = '421764002757'
+	or ncessch = '421764002756' or ncessch = '421764002758';
+
+update fabric.master4
+set souderton = 2
+where ncessch = '422187003357' or ncessch = '422187004900' or ncessch = '422187003266' or ncessch = '422187009965'
+	or ncessch = '422187003350' or ncessch = '422187000697' or ncessch = '422187004721' or ncessch = '422187004722'
+	or ncessch = '422187003354';
+
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
