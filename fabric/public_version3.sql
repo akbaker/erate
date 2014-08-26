@@ -1077,20 +1077,21 @@ alter table fabric.master4
 	add column score_map int;
 
 with new_values as(
-select ncessch, coalesce(alenco_comm,0) + coalesce(alliance,0) + coalesce(alpine,0) + coalesce(arlington,0)
+select ncessch, coalesce(alenco_comm,0) + coalesce(alliance,0) + coalesce(alpine,0) + coalesce(arlington,0) + coalesce(blue_mountain,0)
 	+ coalesce(bie,0) + coalesce(butler_bremer,0) + coalesce(california,0) + coalesce(citizens,0) + coalesce(clear_lake,0)
-	+ coalesce(com_net,0) + coalesce(cai,0) + coalesce(dc,0) + coalesce(dobson,0) + coalesce(dupage,0)
-	+ coalesce(elmwood,0) + coalesce(farmers,0) + coalesce(fatbeam,0) + coalesce(fibercomm,0) + coalesce(florida,0)
-	+ coalesce(ftc,0) + coalesce(galena,0) + coalesce(ganado,0) + coalesce(garden_valley,0) + coalesce(georgia,0)
-	+ coalesce(golden_belt,0) + coalesce(h_and_b,0) + coalesce(heart_iowa,0) + coalesce(hudson,0) + coalesce(ketchikan,0)
-	+ coalesce(laporte,0) + coalesce(maine,0) + coalesce(manawa,0) + coalesce(marion,0) + coalesce(marne_elk,0)
-	+ coalesce(mckenzie,0) + coalesce(midstate,0) + coalesce(montana,0) + coalesce(mtc,0) + coalesce(navajo,0)
+	+ coalesce(com_net,0) + coalesce(cai,0) + coalesce(dc,0) + coalesce(dobson,0) + coalesce(dubois,0) + coalesce(dupage,0) + coalesce(dumont,0)
+	+ coalesce(elmwood,0) + coalesce(farmers,0) + coalesce(fatbeam,0) + coalesce(fibercomm,0) + coalesce(florida,0) + coalesce(franklin,0)
+	+ coalesce(ftc,0) + coalesce(galena,0) + coalesce(ganado,0) + coalesce(garden_valley,0) + coalesce(georgia,0) + coalesce(gervais_datavision,0)
+	+ coalesce(golden_belt,0) + coalesce(h_and_b,0) + coalesce(heart_iowa,0) + coalesce(hempfield,0) + coalesce(htc,0) 
+	+ coalesce(hudson,0) + coalesce(in_shore,0) + coalesce(kane,0) + coalesce(ketchikan,0)
+	+ coalesce(laporte,0) + coalesce (lebanon,0) + coalesce(maine,0) + coalesce(manawa,0) + coalesce(marion,0) + coalesce(marne_elk,0)
+	+ coalesce(mckenzie,0) + coalesce(mcleod,0) + coalesce(middleburgh,0) + coalesce(midstate,0) + coalesce(mifflin,0) + coalesce(montana,0) + coalesce(mtc,0) + coalesce(navajo,0)
 	+ coalesce(new_mexico,0) + coalesce(newton,0) + coalesce(nextech,0) + coalesce(nogales,0) + coalesce(north_carolina,0)
-	+ coalesce(nemr,0) + coalesce(ohio,0) + coalesce(ortelco,0) + coalesce(otelco,0) + coalesce(palestine,0)
-	+ coalesce(peoples_rural,0) + coalesce(peoples_telecom,0) + coalesce(premier,0) + coalesce(pmt,0) + coalesce(puerto_rico,0)
+	+ coalesce(nemr,0) + coalesce(octorara,0) + coalesce(ohio,0) + coalesce(ortelco,0) + coalesce(otelco,0) + coalesce(palestine,0) + coalesce(paul_bunyan,0)
+	+ coalesce(peoples_rural,0) + coalesce(peoples_telecom,0) + coalesce(pioneer,0) + coalesce(phoenixville,0) + coalesce(premier,0) + coalesce(pmt,0) + coalesce(puerto_rico,0)
 	+ coalesce(revere,0) + coalesce(rock_island,0) + coalesce(round_rock,0) + coalesce(runestone,0) + coalesce(s_and_a,0)
-	+ coalesce(sacred_wind,0) + coalesce(srtc,0) + coalesce(south_central,0) + coalesce(snc,0) + coalesce(southwest_texas,0)
-	+ coalesce(sunesys,0) + coalesce(tca,0) + coalesce(middleburgh,0) + coalesce(toledotel,0) + coalesce(totah_totel,0)
+	+ coalesce(sacred_wind,0) + coalesce(spring_grove,0) + coalesce(srtc,0) + coalesce(south_central,0) + coalesce(snc,0) + coalesce(souderton,0) + coalesce(southwest_texas,0)
+	+ coalesce(sunesys,0) + coalesce(tca,0) + coalesce(toledotel,0) + coalesce(totah_totel,0)
 	+ coalesce(united,0) + coalesce(us_connect,0) + coalesce(van_horne,0) + coalesce(wabash,0) + coalesce(waldron,0) + coalesce(west_carolina_tel,0)
 	+ coalesce(west_central,0) + coalesce(west_texas_rural,0) + coalesce(west_virginia,0) + coalesce(wikstrom,0) + coalesce(wilson,0)
 	+ coalesce(yadtel,0) + coalesce(yelcot,0)
@@ -1137,18 +1138,43 @@ from fabric.master4
 
 copy(select * from fabric.publicmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/public_map_fiber.csv' with delimiter '|' CSV header;
 
+alter table fabric.master4
+	drop column if exists fiber_v2,
+	drop column if exists fiber_v1;
+alter table fabric.master4
+	add column fiber_v2 int,
+	add column fiber_v1 int;
+
+with new_values as(
+select ncessch, fiber_map
+from fabric.master3
+)
+update fabric.master4
+set fiber_v2 = new_values.fiber_map
+from new_values
+where master4.ncessch = new_values.ncessch;
+
+with new_values as(
+select ncessch, fiber_map
+from fabric.master2
+)
+update fabric.master4
+set fiber_v1 = new_values.fiber_map
+from new_values
+where master4.ncessch = new_values.ncessch;
+
 drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
-select master4.ncessch, master4.schnam, master4.leaid, master4.leanm, master4.lcity, master4.lstate, master4.ulocal, master4.member, 
-	master4.geom, master4.fiber_map AS fiber_v2, master2.fiber_map AS fiber_v1,  master4.score_map AS score, alliance, master4.bie AS bie, master4.california AS california, 
-	citizens, clear_lake, com_net, master4.cai, dc, dupage, elmwood, farmers, master4.fatbeam, master4.florida AS florida, galena, ganado,
-	garden_valley, master4.georgia AS georgia, heart_iowa, hudson, ketchikan, master4.maine AS maine, master4.montana AS montana, mtc,
-	master4.navajo, master4.new_mexico AS new_mexico, master4.az_ind AS nogales, master4.north_carolina AS north_carolina, master4.ohio AS ohio, 
-	palestine, peoples_rural, peoples_telecom, master4.puerto_rico AS puerto_rico, revere, rock_island, round_rock, south_central,
-	master4.sunesys, middleburgh, toledotel, us_connect, wabash, west_texas_rural, master4.west_virginia AS west_virginia, yadtel
+select ncessch, schnam, leaid, leanm, lcity, lstate, ulocal, member, geom, fiber_map AS fiber_v3, fiber_v2, fiber_v1, score_map AS score,
+	alenco_comm, alliance, alpine, arlington, blue_mountain, bie, butler_bremer, california, citizens, clear_lake, com_net, cai, dc,
+	dobson, dubois, dumont, dupage, elmwood, farmers, fatbeam, fibercomm, florida, franklin, ftc, galena, ganado, garden_valley, georgia,
+	gervais_datavision, golden_belt, h_and_b, heart_iowa, hempfield, htc, hudson, in_shore, kane, ketchikan, laporte, maine, manawa,
+	marion, marne_elk, mckenzie, mcleod, middleburgh, midstate, mifflin, montana, mtc, mte, navajo, new_mexico, newton, nextech, nogales,
+	north_carolina, nemr, lebanon, octorara, ohio, ortelco, otelco, palestine, paul_bunyan, peoples_rural, peoples_telecom, phoenixville,
+	pioneer, premier, pmt, puerto_rico, revere, rock_island, round_rock, runestone, s_and_a, sacred_wind, srtc, souderton, south_central,
+	snc, southwest_texas, spring_grove, sunesys, tca, toledotel, totah_totel, united, us_connect, van_horne, wabash, waldron,
+	west_carolina_tel, west_central, west_texas_rural, west_virginia, wikstrom, wilson, yadtel, yelcot
 from fabric.master4
-left join fabric.master2
-on master4.ncessch = master2.ncessch
 );
 
 copy(select * from fabric.map_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/public_map_fiber_publish.csv' with delimiter '|' CSV header;

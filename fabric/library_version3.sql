@@ -78,14 +78,14 @@ where lib_master4.libname = upper(ks_lib.library_name)
 	and stabr = 'KS';
 
 alter table fabric.lib_master4
-add column ks_lib int;
+add column kansas int;
 
 with new_values as(
 select library_name, fiber AS ks_fiber
 from fabric.ks_lib
 )
 update fabric.lib_master4
-set ks_lib = new_values.ks_fiber
+set kansas = new_values.ks_fiber
 from new_values
 where libname = upper(new_values.library_name)
 	and stabr = 'KS';
@@ -103,7 +103,7 @@ from fabric.lib_master4
 where stabr = 'ME';
 
 alter table fabric.lib_master4
-add column me_lib int;
+add column maine int;
 
 with new_values as(
 select fscs_id, fiber AS me_fiber
@@ -111,7 +111,7 @@ from fabric.me_ind
 where cai_type = 'LIB'
 )
 update fabric.lib_master4
-set me_lib = new_values.me_fiber
+set maine = new_values.me_fiber
 from new_values
 where lib_master4.me_fscskey = new_values.fscs_id;
 
@@ -122,7 +122,7 @@ where lib_master4.libname = upper(mo_lib.site_name)
 	and stabr = 'MO';
 
 alter table fabric.lib_master4
-add column mo_lib int;
+add column missouri int;
 
 with new_values as(
 select site_name, fiber as mo_fiber
@@ -130,7 +130,7 @@ from fabric.mo_lib
 where loc_type = 'LIBRARY'
 )
 update fabric.lib_master4
-set mo_lib = new_values.mo_fiber
+set missouri = new_values.mo_fiber
 from new_values
 where lib_master4.libname = upper(new_values.site_name)
 	and stabr = 'MO';
@@ -142,14 +142,14 @@ where lib_master4.libid = vt_lib.library_id
 	and stabr = 'VT';
 
 alter table fabric.lib_master4
-add column vt_lib int;
+add column vermont int;
 
 with new_values as(
 select library_id, fiber as vt_fiber
 from fabric.vt_lib
 )
 update fabric.lib_master4
-set vt_lib = new_values.vt_fiber
+set vermont = new_values.vt_fiber
 from new_values
 where lib_master4.libid = new_values.library_id
 	and stabr = 'VT';
@@ -161,14 +161,14 @@ where lib_master4.fscskey = oh_lib.fscs
 	and lib_master4.libname = oh_lib.library_name;
 
 alter table fabric.lib_master4
-add column oh_lib int;
+add column ohio int;
 
 with new_values as(
 select fscs, library_name, fiber as oh_fiber
 from fabric.oh_lib
 )
 update fabric.lib_master4
-set oh_lib = new_values.oh_fiber
+set ohio = new_values.oh_fiber
 from new_values
 where lib_master4.fscskey = new_values.fscs
 	and lib_master4.libname = new_values.library_name;
@@ -201,7 +201,6 @@ alter table fabric.lib_master4
 	drop column if exists nemr,
 	drop column if exists wilson,
 	drop column if exists premier,
-	drop column if exists fibercomm,
 	drop column if exists van_horne,
 	drop column if exists dumont,
 	drop column if exists pioneer,
@@ -234,8 +233,6 @@ alter table fabric.lib_master4
 	add column nextech int,
 	add column nemr int,
 	add column wilson int,
-	add column premier int,
-	add column fibercomm int,
 	add column van_horne int,
 	add column dumont int,
 	add column pioneer int,
@@ -366,14 +363,6 @@ set wilson = 2
 where fscskey = 'KS0021' or fscskey = 'KS0031';
 
 update fabric.lib_master4
-set premier = 2
-where fscskey = 'IA0126' or fscskey = 'IA0184' or fscskey = 'IA0424' or fscskey = 'IA0530';
-
-update fabric.lib_master4
-set fibercomm = 2
-where fscskey = 'IA0225';
-
-update fabric.lib_master4
 set van_horne = 2
 where fscskey = 'IA0365';
 
@@ -406,8 +395,8 @@ alter table fabric.lib_master4
 	add column score_map int;
 
 with new_values as(
-select libid, coalesce(cai,0) + coalesce(ks_lib,0) + coalesce(me_lib,0)
-	+ coalesce(mo_lib,0) + coalesce(vt_lib,0) + coalesce(oh_lib,0)
+select libid, coalesce(cai,0) + coalesce(kansas,0) + coalesce(maine,0)
+	+ coalesce(missouri,0) + coalesce(vermont,0) + coalesce(ohio,0)
 	+ coalesce(alliance,0) + coalesce(clear_lake,0) + coalesce(com_net,0)
 	+ coalesce(grantsburg,0) + coalesce(peoples_rural,0) + coalesce(peoples_telecom,0)
 	+ coalesce(toledotel,0) + coalesce(us_connect,0) + coalesce(wabash,0) 
@@ -416,7 +405,7 @@ select libid, coalesce(cai,0) + coalesce(ks_lib,0) + coalesce(me_lib,0)
 	+ coalesce(fibercomm,0) + coalesce(h_and_b,0) + coalesce(golden_belt,0) + coalesce(united,0)
 	+ coalesce(fontana,0) + coalesce(nextech,0) + coalesce(nemr,0) + coalesce(wilson,0)
 	+ coalesce(premier,0) + coalesce(fibercomm,0) + coalesce(van_horne,0) + coalesce(dumont,0)
-	+ coalesce(pioneer,0) + coalesce(webster_calhoun,0)	
+	+ coalesce(pioneer,0) + coalesce(webster_calhoun,0) + coalesce(gervais_datavision,0) + coalesce(paul_bunyan,0)
 	as row_score
 from fabric.lib_master4
 )
@@ -424,10 +413,6 @@ update fabric.lib_master4
 set score_map = new_values.row_score
 from new_values
 where lib_master4.libid = new_values.libid;
-
-update fabric.lib_master4 
-set score_map =  0
-where score_map IS NULL;
 
 alter table fabric.lib_master4
 	drop column if exists fiber_map;
@@ -466,16 +451,39 @@ from fabric.lib_master4
 );
 copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
 
+alter table fabric.lib_master4
+	drop column if exists fiber_v2,
+	drop column if exists fiber_v1;
+alter table fabric.lib_master4
+	add column fiber_v2 int,
+	add column fiber_v1 int;
+
+with new_values as(
+select libid, fiber_map
+from fabric.lib_master3
+)
+update fabric.lib_master4
+set fiber_v2 = new_values.fiber_map
+from new_values
+where lib_master4.libid = new_values.libid;
+
+with new_values as(
+select libid, fiber_map
+from fabric.lib_master2
+)
+update fabric.lib_master4
+set fiber_v1 = new_values.fiber_map
+from new_values
+where lib_master4.libid = new_values.libid;
+
 drop table if exists fabric.libmap_fiber;
 create table fabric.libmap_fiber as(
-select lib_master4.fscskey, lib_master4.system_name, lib_master4.libid, lib_master4.libname, lib_master4.c_out_ty AS lib_type, 
-	lib_master4.geom, lib_master4.visits, lib_master2.fiber_map AS fiber_v1, lib_master4.fiber_map AS fiber_v2, lib_master4.score_map AS score, 
-	alliance, clear_lake, com_net, lib_master4.cai, dc, grantsburg, heart_iowa, lib_master4.ks_lib AS kansas, lib_master4.me_lib AS maine, 
-	lib_master4.mo_lib AS missouri, lib_master4.oh_lib AS ohio, peoples_rural, peoples_telecom, toledotel, us_connect,
-	lib_master4.vt_lib AS vermont, wabash
+select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, fiber_map AS fiber_v3, fiber_v2, fiber_v1,
+	score_map AS score, alliance, blue_ridge, clear_lake, com_net, cai, dc, dobson, fibercomm, fontana, gervais_datavision,
+	golden_belt, grantsburg, h_and_b, heart_iowa, kansas, maine, manawa, missouri, nextech, nemr, ohio, paul_bunyan, peoples_rural,
+	peoples_telecom, premier, srtc, toledotel, united, us_connect, van_horne, vermont, wabash, webster_calhoun, west_carolina_tel,
+	wilson
 from fabric.lib_master4
-left join fabric.lib_master2
-on lib_master4.libid = lib_master2.libid
 );
 
 copy(select * from fabric.libmap_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber_publish.csv' with delimiter '|' CSV header;
