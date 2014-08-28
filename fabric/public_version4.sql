@@ -522,7 +522,19 @@ alter table fabric.master5
 	drop column if exists bellwood_antis,
 	drop column if exists fort_laboeuf,
 	drop column if exists harrisonville,
-	drop column if exists eastex;
+	drop column if exists eastex,
+	drop column if exists redbank,
+	drop column if exists wayne_highlands,
+	drop column if exists rt_comm,
+	drop column if exists dubois_telephone,
+	drop column if exists advanced,
+	drop column if exists range_telephone,
+	drop column if exists red_river,
+	drop column if exists upper_dauphin,
+	drop column if exists huntsville,
+	drop column if exists glen_rose,
+	drop column if exists ritter,
+	drop column if exists van_buren;
 alter table fabric.master5
 	add column revere int,
 	add column citizens int,
@@ -613,7 +625,17 @@ alter table fabric.master5
 	add column bellwood_antis int,
 	add column fort_laboeuf int,
 	add column harrisonville int,
-	add column eastex int;
+	add column eastex int,
+	add column redbank int,
+	add column wayne_highlands int,
+	add column rt_comm int,
+	add column dubois_telephone int,
+	add column advanced int,
+	add column range_telephone int,
+	add column red_river int,
+	add column upper_dauphin int,
+	add column huntsville int,
+	add column glen_rose int;
 
 update fabric.master5
 set ketchikan = 2
@@ -978,10 +1000,11 @@ update fabric.master5
 set alenco_comm = 2
 where ncessch = '482580002911';
 
---update fabric.master5
---set wikstrom = 2
---where ncessch = '270012700131' or ncessch = '270354000162' or ncessch = '270354000163' or ncessch = ''
---	or ncessch = '' or ncessch = '' or ncessch = '' or ncessch = ''
+update fabric.master5
+set wikstrom = 2
+where ncessch = '270012700131' or leaid = '2703540' or leaid = '2717570' or leaid = '2700107' or leaid = '2791447'
+	or leaid = '2791446' or leaid = '2717880' or ncessch = '270010702572' or leaid = '2723550' or leaid = '2732250'
+	or leaid = '2700127' or leaid = '2738850' or leaid = '2700024' or leaid = '2741850';
 
 update fabric.master5
 set van_horne = 2
@@ -1062,7 +1085,10 @@ where ncessch = '420387003891' or ncessch = '420387005263' or ncessch = '4203870
 update fabric.master5
 set in_shore = 2
 where ncessch = '421095001251' or ncessch = '421095001252' or ncessch = '421095007120' or ncessch = '421095001250'
-	or leaid = '4209750';
+	or leaid = '4209750' or ncessch = '420534006646' or ncessch = '420534001208' or ncessch = '420534001202';
+update fabric.master5
+set in_shore = -2
+where ncessch = '420534001205';
 
 update fabric.master5
 set dubois = 2
@@ -1132,9 +1158,73 @@ update fabric.master5
 set harrisonville = 2
 where leaid = '1741070' or leaid = '1710740' or leaid = '1712720' or leaid = '1733300';
 
+--update fabric.master5
+--set eastex = 2
+--where leaid = 
+
 update fabric.master5
-set eastex = 2
-where leaid = 
+set redbank = 2
+where leaid = '4220130';
+
+update fabric.master5
+set wayne_highlands = 2
+where ncessch = '422497004295' or ncessch = '422497006865' or ncessch = '422497000226' or ncessch = '422497004291'
+	or ncessch = '422497006424' or ncessch = '422497006425';
+
+update fabric.master5
+set rt_comm = 2
+where ncessch = '560331000180' or ncessch = '560331000185' or ncessch = '560331000185' or ncessch = '560624000345'
+	or ncessch = '560624000346' or ncessch = '560624000346' or ncessch = '560624000346' or ncessch = '560624000344'
+	or ncessch = '560483000265' or ncessch = '560483000265' or ncessch = '560483000263' or ncessch = '560483000263'
+	or ncessch = '560570000362' or ncessch = '560570000323' or ncessch = '560570000510' or ncessch = '560377000449'
+	or ncessch = '560451000157' or ncessch = '560451000133' or ncessch = '560237000451' or ncessch = '560237000148'
+	or ncessch = '560237000398' or ncessch = '560412000208' or ncessch = '560412000504' or ncessch = '560412000209'
+	or ncessch = '560412000213' or ncessch = '560412000210' or ncessch = '560412000210' or ncessch = '560609000363'
+	or ncessch = '560609000401' or ncessch = '560609000401';
+update fabric.master5
+set rt_comm = 2
+where ncessch = '560570000510';
+
+update fabric.master5
+set dubois_telephone = 2
+where ncessch = '560267000151' or ncessch = '560283000159' or ncessch = '560103000124';
+
+update fabric.master5
+set advanced = 2
+where ncessch = '560451000254' or ncessch = '560283000159' or ncessch = '560445000441' or ncessch = '300708000194'
+	or ncessch = '560096000162';
+
+update fabric.master5
+set range_telephone = 2
+where ncessch = '560568000309' or ncessch = '560568000310' or ncessch = '560568000522' or ncessch = '560568000308';
+update fabric.master5
+set range_telephone = -2
+where  ncessch = '560237000405' or ncessch = '560237000150' or ncessch = '560237000530';
+
+update fabric.master5
+set red_river = 2
+where ncessch = '381902000666' or ncessch = '388066000722' or ncessch = '380669000190' or ncessch = '380669000191'
+	or ncessch = '380871000281' or ncessch = '380871000283' or ncessch = '381114000365' or ncessch = '381114000366'
+	or ncessch = '380003600552' or ncessch = '380003600553' or ncessch = '382031000712' or ncessch = '382031000713';
+
+update fabric.master5
+set upper_dauphin = 2
+where ncessch = '422436006340';
+update fabric.master5
+set upper_dauphin = -2
+where ncessch = '422436009967' or ncessch = '422436006339';
+
+--update fabric.master5
+--set huntsville = 2
+--where ncessch = 
+
+update fabric.master5
+set glen_rose = -2
+where leaid = '0506630';
+
+update fabric.master5
+set van_buren = 2
+where leaid = '0513410';
 
 
 --------------------------------CORROBORATION SCORING----------------------------------
