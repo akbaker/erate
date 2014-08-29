@@ -183,6 +183,23 @@ update fabric.lib_master5
 set c_spire = 2
 where fscskey = 'MS0025' or fscskey = 'MS0017';
 
+--IOWA
+alter table fabric.lib_master5
+	drop column if exists iowa;
+alter table fabric.lib_master5
+	add column iowa int;
+
+with new_values as(
+select part_iii_site, fiber
+from fabric.ia_ind
+where nces_school_id IS NULL
+)
+update fabric.lib_master5
+set iowa = new_values.fiber
+from new_values
+where libname = UPPER(part_iii_site)
+	and fipsst = '19';
+
 --EMAIL SUBMISSIONS
 alter table fabric.lib_master5
 	drop column if exists grantsburg,
@@ -248,7 +265,8 @@ alter table fabric.lib_master5
 	add column pioneer int,
 	add column webster_calhoun int,
 	add column gervais_datavision int,
-	add column paul_bunyan int;
+	add column paul_bunyan int,
+	add column stayton int;
 
 update fabric.lib_master5
 set grantsburg = 2
@@ -396,6 +414,10 @@ where fscskey = 'OR0104' or fscskey = 'OR0083' or fscskey = 'OR0047' or fscskey 
 update fabric.lib_master5
 set paul_bunyan = 2
 where libid = 'MN0145-002' or libid = 'MN0145-003' or libid = 'MN0145-005';
+
+update fabric.lib_master5
+set stayton = 2
+where fscskey = 'OR0083' or fscskey = 'OR0036';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

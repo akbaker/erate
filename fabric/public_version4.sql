@@ -431,110 +431,37 @@ where leaid = '2800600' or leaid = '2800820' or leaid = '2801050' or leaid = '28
 	or leaid = '2803570' or leaid = '2803530' or leaid = '2803600' or leaid = '2803720' or leaid = '2803780' or leaid = '2803830'
 	or leaid = '2804020' or leaid = '2804290' or leaid = '2804440' or leaid = '2804560';
 
---EMAIL SUBMISSIONS
+--IOWA
 alter table fabric.master5
-	drop column if exists revere,
-	drop column if exists citizens,
-	drop column if exists hudson,
-	drop column if exists rock_island,
-	drop column if exists elmwood,
-	drop column if exists ketchikan,
-	drop column if exists galena,
-	drop column if exists farmers,
-	drop column if exists toledotel,
-	drop column if exists wabash,
-	drop column if exists peoples_rural,
-	drop column if exists south_central,
-	drop column if exists garden_valley,
-	drop column if exists mtc,
-	drop column if exists clear_lake,
-	drop column if exists peoples_telecom,
-	drop column if exists west_texas_rural,	
-	drop column if exists com_net,
-	drop column if exists yadtel,
-	drop column if exists heart_iowa,
-	drop column if exists mckenzie,
-	drop column if exists alliance,
-	drop column if exists ganado,
-	drop column if exists us_connect,
-	drop column if exists middleburgh,
-	drop column if exists dupage,
-	drop column if exists marion,
-	drop column if exists snc,
-	drop column if exists mte,
-	drop column if exists dobson,
-	drop column if exists sacred_wind,
-	drop column if exists west_central,
-	drop column if exists arlington,
-	drop column if exists s_and_a,
-	drop column if exists west_carolina_tel,
-	drop column if exists butler_bremer,
-	drop column if exists manawa,
-	drop column if exists srtc,
-	drop column if exists southwest_texas,
-	drop column if exists totah_totel,
-	drop column if exists runestone,
-	drop column if exists golden_belt,
-	drop column if exists united,
-	drop column if exists tca,
-	drop column if exists midstate,
-	drop column if exists premier,
-	drop column if exists fibercomm,
-	drop column if exists h_and_b,
-	drop column if exists ftc,
-	drop column if exists marne_elk,
-	drop column if exists yelcot,
-	drop column if exists alpine,
-	drop column if exists laporte,
-	drop column if exists nextech,
-	drop column if exists newton,
-	drop column if exists nemr,
-	drop column if exists otelco,
-	drop column if exists wilson,
-	drop column if exists pmt,
-	drop column if exists alenco_comm,
-	drop column if exists wikstrom,
-	drop column if exists van_horne,
-	drop column if exists dumont, 
-	drop column if exists pioneer,
-	drop column if exists paul_bunyan,
-	drop column if exists ortelco,
-	drop column if exists waldron,
-	drop column if exists gervais_datavision,
-	drop column if exists mcleod,
-	drop column if exists htc,
-	drop column if exists franklin,
-	drop column if exists phoenixville,
-	drop column if exists mifflin,
-	drop column if exists blue_mountain,
-	drop column if exists in_shore,
-	drop column if exists dubois,
-	drop column if exists spring_grove,
-	drop column if exists kane,
-	drop column if exists hempfield,
-	drop column if exists octorara,
-	drop column if exists lebanon,
-	drop column if exists souderton,
-	drop column if exists atc,
-	drop column if exists monon,
-	drop column if exists south_middleton,
-	drop column if exists somerset,
-	drop column if exists bellwood_antis,
-	drop column if exists fort_laboeuf,
-	drop column if exists harrisonville,
-	drop column if exists eastex,
-	drop column if exists redbank,
-	drop column if exists wayne_highlands,
-	drop column if exists rt_comm,
-	drop column if exists dubois_telephone,
-	drop column if exists advanced,
-	drop column if exists range_telephone,
-	drop column if exists red_river,
-	drop column if exists upper_dauphin,
-	drop column if exists huntsville,
-	drop column if exists glen_rose,
-	drop column if exists ritter,
-	drop column if exists van_buren;
+	drop column if exists iowa;
+alter table fabric.master5
+	add column iowa int;
+
+with new_values as(
+select state_school_id, fiber
+from fabric.ia_ind
+)
+update fabric.master5
+set iowa = new_values.fiber
+from new_values
+where seasch = new_values.state_school_id;
+
+--RITTER
+alter table fabric.master5
+	drop column if exists ritter;
+alter table fabric.master5
+	add column ritter int;
+
+with new_values as(
+select nces_id, fiber
+from fabric.ritter
+)
+update fabric.master5
+set ritter = new_values.fiber
+from new_values
+where nces_id = ncessch;
+
+--EMAIL SUBMISSIONS
 alter table fabric.master5
 	add column revere int,
 	add column citizens int,
@@ -635,7 +562,8 @@ alter table fabric.master5
 	add column red_river int,
 	add column upper_dauphin int,
 	add column huntsville int,
-	add column glen_rose int;
+	add column glen_rose int,
+	add column stayton int;
 
 update fabric.master5
 set ketchikan = 2
@@ -1158,9 +1086,15 @@ update fabric.master5
 set harrisonville = 2
 where leaid = '1741070' or leaid = '1710740' or leaid = '1712720' or leaid = '1733300';
 
---update fabric.master5
---set eastex = 2
---where leaid = 
+update fabric.master5
+set eastex = 2
+where ncessch = '483165003530' or ncessch = '483165003531' or ncessch = '482670006577' or ncessch = '484467005086'
+	or ncessch = '484467005088' or ncessch = '484467005087' or ncessch = '484467007340' or ncessch = '481848001733'
+	or ncessch = '481848001735' or ncessch = '481848001734' or ncessch = '481452000942' or ncessch = '481452006233'
+	or ncessch = '481452000941' or ncessch = '481452000940' or ncessch = '483369003761' or ncessch = '483369009481'
+	or ncessch = '482109001873' or ncessch = '482109007709' or ncessch = '482109002104' or ncessch = '482778003118'
+	or ncessch = '481377000867' or ncessch = '481377000868' or ncessch = '481017000472';
+
 
 update fabric.master5
 set redbank = 2
@@ -1214,9 +1148,9 @@ update fabric.master5
 set upper_dauphin = -2
 where ncessch = '422436009967' or ncessch = '422436006339';
 
---update fabric.master5
---set huntsville = 2
---where ncessch = 
+update fabric.master5
+set huntsville = 2
+where leaid = '0508130';
 
 update fabric.master5
 set glen_rose = -2
@@ -1225,6 +1159,11 @@ where leaid = '0506630';
 update fabric.master5
 set van_buren = 2
 where leaid = '0513410';
+
+update fabric.master5
+set stayton = 2
+where ncessch = '410002000833' or ncessch = '410002000854' or ncessch = '410002000834' or ncessch = '410002000765'
+	or ncessch = '410002000693';
 
 
 --------------------------------CORROBORATION SCORING----------------------------------
