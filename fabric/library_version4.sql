@@ -202,39 +202,6 @@ where libname = UPPER(part_iii_site)
 
 --EMAIL SUBMISSIONS
 alter table fabric.lib_master5
-	drop column if exists grantsburg,
-	drop column if exists toledotel,
-	drop column if exists wabash,
-	drop column if exists peoples_telecom,
-	drop column if exists peoples_rural,
-	drop column if exists clear_lake,
-	drop column if exists com_net,
-	drop column if exists alliance,
-	drop column if exists us_connect,
-	drop column if exists heart_iowa,
-	drop column if exists dc,
-	drop column if exists blue_ridge,
-	drop column if exists dobson,
-	drop column if exists west_carolina_tel,
-	drop column if exists manawa,
-	drop column if exists srtc,
-	drop column if exists premier,
-	drop column if exists fibercomm,
-	drop column if exists h_and_b,
-	drop column if exists golden_belt,
-	drop column if exists united,
-	drop column if exists fontana,
-	drop column if exists nextech,
-	drop column if exists nemr,
-	drop column if exists wilson,
-	drop column if exists premier,
-	drop column if exists van_horne,
-	drop column if exists dumont,
-	drop column if exists pioneer,
-	drop column if exists webster_calhoun,
-	drop column if exists gervais_datavision,
-	drop column if exists paul_bunyan;
-alter table fabric.lib_master5
 	add column grantsburg int,
 	add column toledotel int,
 	add column wabash int,
@@ -266,7 +233,12 @@ alter table fabric.lib_master5
 	add column webster_calhoun int,
 	add column gervais_datavision int,
 	add column paul_bunyan int,
-	add column stayton int;
+	add column stayton int,
+	add column siskiyou int,
+	add column cascade int
+	add column rt_comm int,
+	add column dubois_telephone int,
+	add column range_telephone int;
 
 update fabric.lib_master5
 set grantsburg = 2
@@ -418,6 +390,34 @@ where libid = 'MN0145-002' or libid = 'MN0145-003' or libid = 'MN0145-005';
 update fabric.lib_master5
 set stayton = 2
 where fscskey = 'OR0083' or fscskey = 'OR0036';
+
+--update fabric.lib_master5
+--set siskiyou = -2
+--where libid = 'CA0135-011' or libid = '
+
+update fabric.lib_master5
+set cascade = 2
+where fscskey = 'IA0465';
+
+update fabric.lib_master5
+set rt_comm = -2
+where libid = 'WY0013-002' or libid = 'WY0013-004' or libid = 'WY0016-003' or libid = 'WY0004-002'
+	or libid = 'WY0004-003' or libid = 'WY0009-002' or libid = 'WY0023-003' or fscskey = 'WY0023';
+update fabric.lib_master5
+set rt_comm = 2
+where fscskey = 'WY0015' or fscskey = 'WY0022';
+
+update fabric.lib_master5
+set dubois_telephone = -2
+where libid = 'WY0011-009';
+update fabric.lib_master5
+set dubois_telephone = 2
+where libid = 'WY0003-005';
+
+update fabric.lib_master5
+set range_telephone = -2
+where libid = 'WY0007-002' or libid = 'WY0013-005';
+
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

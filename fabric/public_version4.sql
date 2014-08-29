@@ -563,7 +563,8 @@ alter table fabric.master5
 	add column upper_dauphin int,
 	add column huntsville int,
 	add column glen_rose int,
-	add column stayton int;
+	add column stayton int,
+	add column siskiyou int;
 
 update fabric.master5
 set ketchikan = 2
@@ -1164,6 +1165,17 @@ update fabric.master5
 set stayton = 2
 where ncessch = '410002000833' or ncessch = '410002000854' or ncessch = '410002000834' or ncessch = '410002000765'
 	or ncessch = '410002000693';
+
+update fabric.master5
+set siskiyou = 2
+where ncessch = '060015901474' or ncessch = '060015904089' or ncessch = '060015901473' or ncessch = '060015901615'
+	or ncessch = '060015908834' or ncessch = '063694006277' or ncessch = '061653002087';
+update fabric.master5
+set siskiyou = -2
+where ncessch = '060015910426' or ncessch = '063624006181' or ncessch = '061992002387' or ncessch = '061404001607'
+	 or ncessch = '061923002309';
+
+
 
 
 --------------------------------CORROBORATION SCORING----------------------------------
