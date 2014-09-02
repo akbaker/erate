@@ -238,7 +238,8 @@ alter table fabric.lib_master5
 	add column cascade int
 	add column rt_comm int,
 	add column dubois_telephone int,
-	add column range_telephone int;
+	add column range_telephone int,
+	add column westel int;
 
 update fabric.lib_master5
 set grantsburg = 2
@@ -417,6 +418,11 @@ where libid = 'WY0003-005';
 update fabric.lib_master5
 set range_telephone = -2
 where libid = 'WY0007-002' or libid = 'WY0013-005';
+
+update fabric.lib_master5
+set westel = 2
+where fscskey = 'IA0170' or fscskey = 'IA0418' or fscskey = 'IA0178' or fscskey = 'IA0419' or fscskey = 'IA0115';
+
 
 
 -------------------------CORROBORATION SCORE------------------------------
