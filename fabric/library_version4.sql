@@ -239,7 +239,12 @@ alter table fabric.lib_master5
 	add column rt_comm int,
 	add column dubois_telephone int,
 	add column range_telephone int,
-	add column westel int;
+	add column westel int,
+	add column einetwork int,
+	add column sunflower int,
+	add column carnegie int,
+	add column dixie int,
+	add column pearl_river int;
 
 update fabric.lib_master5
 set grantsburg = 2
@@ -392,9 +397,9 @@ update fabric.lib_master5
 set stayton = 2
 where fscskey = 'OR0083' or fscskey = 'OR0036';
 
---update fabric.lib_master5
---set siskiyou = -2
---where libid = 'CA0135-011' or libid = '
+update fabric.lib_master5
+set siskiyou = 2
+where libid = 'CA0135-011' or libid = 'CA0135-009' or libid = 'CA0135-011' or libid = 'CA0135-018';
 
 update fabric.lib_master5
 set cascade = 2
@@ -423,7 +428,30 @@ update fabric.lib_master5
 set westel = 2
 where fscskey = 'IA0170' or fscskey = 'IA0418' or fscskey = 'IA0178' or fscskey = 'IA0419' or fscskey = 'IA0115';
 
+update fabric.lib_master5
+set einetwork = 2
+where libid = 'PA0042-003' or fscskey = 'PA0051' or fscskey = 'PA0513' or libid = 'PA0050-003'
+	or libid = 'PA0034-005' or libid = 'PA0034-003'; 
 
+update fabric.lib_master5
+set sunflower = 2
+where libid = 'MS0044-004' or libid = 'MS0044-002' or libid = 'MS0044-003' or libid = 'MS0044-006';
+
+update fabric.lib_master5
+set carnegie = 2
+where fscskey = 'MS0005';
+
+update fabric.lib_master5
+set dixie = 2
+where libid = 'MS0009-002';
+update fabric.lib_master5
+set dixie = -2
+where libid = 'MS0009-003' or libid = 'MS0009-004' or libid = 'MS0009-005' or libid = 'MS0009-006'
+	or libid = 'MS0009-008' or libid = 'MS0009-009' or libid = 'MS0009-007';
+
+update fabric.lib_master5
+set pearl_river = 2
+where libid = 'MS0039-002' or libid = 'MS0039-003';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

@@ -461,6 +461,9 @@ set ritter = new_values.fiber
 from new_values
 where nces_id = ncessch;
 
+--ITS (ALABAMA)
+
+
 --EMAIL SUBMISSIONS
 alter table fabric.master5
 	add column revere int,
@@ -568,7 +571,10 @@ alter table fabric.master5
 	add column shade_central int,
 	add column portage int,
 	add column bps int,
-	add column van_buren int;
+	add column van_buren int,
+	add column lakeland int,
+	add column roome int,
+	add column green_hills int,;
 
 update fabric.master5
 set ketchikan = 2
@@ -1173,11 +1179,11 @@ where ncessch = '410002000833' or ncessch = '410002000854' or ncessch = '4100020
 update fabric.master5
 set siskiyou = 2
 where ncessch = '060015901474' or ncessch = '060015904089' or ncessch = '060015901473' or ncessch = '060015901615'
-	or ncessch = '060015908834' or ncessch = '063694006277' or ncessch = '061653002087';
+	or ncessch = '060015908834' or ncessch = '063694006277' or ncessch = '061653002087' or ncessch = '063624006181' 
+	or ncessch = '061404001607' or ncessch = '061923002309';
 update fabric.master5
 set siskiyou = -2
-where ncessch = '060015910426' or ncessch = '063624006181' or ncessch = '061992002387' or ncessch = '061404001607'
-	 or ncessch = '061923002309';
+where ncessch = '060015910426' or  ncessch = '061992002387';
 
 update fabric.master5
 set shade_central = -2
@@ -1191,6 +1197,21 @@ update fabric.master5
 set bps = 2
 where ncessch = '292853002670' or ncessch = '292853001764' or ncessch = '291014000325' or ncessch = '291014000326'
 	or ncessch = '290495000060' or ncessch = '290495000061';
+
+update fabric.master5
+set lakeland = 2
+where ncessch = '421305006403' or ncessch = '421305007171' or ncessch = '421305006404';
+
+update fabric.master5
+set roome = 2
+where ncessch = '410291000475' or ncessch = '410291000729';
+
+update fabric.master5
+set green_hills = 2
+where ncessch = '290585000128' or ncessch = '290585000129' or ncessch = '292262001237' or ncessch = '292262001238'
+	or ncessch = '292541000227' or ncessch = '292541001464' or ncessch = '292541001465' or ncessch = '292868001771'
+	or ncessch = '292868001772' or ncessch = '293030002070' or ncessch = '293030002071';
+
 
 
 --------------------------------CORROBORATION SCORING----------------------------------
