@@ -553,3 +553,12 @@ alter table fabric.ritter
 
 update fabric.ritter
 set fiber = 2;
+
+--ITS (ALABAMA)
+alter table fabric.its
+	drop column if exists fiber;
+alter table fabric.its
+	add column fiber int;
+
+update fabric.its
+set fiber = 2;

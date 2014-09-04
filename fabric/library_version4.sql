@@ -244,7 +244,14 @@ alter table fabric.lib_master5
 	add column sunflower int,
 	add column carnegie int,
 	add column dixie int,
-	add column pearl_river int;
+	add column pearl_river int,
+	add column jackson_george int,
+	add column bolivar int,
+	add column waynesboro_wayne int,
+	add column marks_quitman int,
+	add column corinth int,
+	add column tombigbee int,
+	add column yazoo int;
 
 update fabric.lib_master5
 set grantsburg = 2
@@ -452,6 +459,36 @@ where libid = 'MS0009-003' or libid = 'MS0009-004' or libid = 'MS0009-005' or li
 update fabric.lib_master5
 set pearl_river = 2
 where libid = 'MS0039-002' or libid = 'MS0039-003';
+
+update fabric.lib_master5
+set jackson_george = 2
+where libid = 'MS0020-003' or libid = 'MS0020-004' or libid = 'MS0020-005' or libid = 'MS0020-006' 
+	or libid = 'MS0020-007' or libid = 'MS0020-002' or libid = 'MS0020-008' or libid = 'MS0020-009';
+
+update fabric.lib_master5
+set bolivar = -2
+where libid = 'MS0003-002' or libid = 'MS0003-008' or libid = 'MS0003-004' or libid = 'MS0003-003'
+	or libid = 'MS0003-005' or libid = 'MS0003-010' or libid = 'MS0003-006';
+
+update fabric.lib_master5
+set waynesboro_wayne = -2
+where fscskey = 'MS8002';
+
+update fabric.lib_master5
+set marks_quitman = -2
+where libid = 'MS0030-002';
+
+update fabric.lib_master5
+set corinth = 2
+where libid = 'MS0035-002';
+
+update fabric.lib_master5
+set tombigbee = -2
+where fscskey = 'MS0046';
+
+update fabric.lib_master5
+set yazoo = 2
+where fscskey = 'MS0042';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

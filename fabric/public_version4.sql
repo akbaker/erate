@@ -462,7 +462,21 @@ from new_values
 where nces_id = ncessch;
 
 --ITS (ALABAMA)
+alter table fabric.master5
+drop column if exists its;
+alter table fabric.master5
+add column its int;
 
+with new_values as(
+select nces_id, MAX(fiber) AS fiber
+from fabric.its
+group by nces_id
+)
+update fabric.master5
+set its = new_values.fiber
+from new_values
+where (ncessch = nces_id or leaid = nces_id)
+	and lstate = 'AL';
 
 --EMAIL SUBMISSIONS
 alter table fabric.master5
@@ -574,7 +588,9 @@ alter table fabric.master5
 	add column van_buren int,
 	add column lakeland int,
 	add column roome int,
-	add column green_hills int,;
+	add column green_hills int,
+	add column moniteau int,
+	add column grm int;
 
 update fabric.master5
 set ketchikan = 2
@@ -1211,6 +1227,29 @@ set green_hills = 2
 where ncessch = '290585000128' or ncessch = '290585000129' or ncessch = '292262001237' or ncessch = '292262001238'
 	or ncessch = '292541000227' or ncessch = '292541001464' or ncessch = '292541001465' or ncessch = '292868001771'
 	or ncessch = '292868001772' or ncessch = '293030002070' or ncessch = '293030002071';
+
+update fabric.master5
+set moniteau = -2
+where ncessch = '421710001164' or ncessch = '421710006605';
+
+update fabric.master5
+set grm = 2
+where ncessch = '290645000163' or ncessch = '290645000164' or ncessch = '190690000816' or ncessch = '190690000297'
+	or ncessch = '190690000300' or ncessch = '193056001754' or ncessch = '291287000537' or ncessch = '291287000538'
+	or ncessch = '291269000532' or ncessch = '291620000759' or ncessch = '291620000762' or ncessch = '191632000974'
+	or ncessch = '191632000975' or ncessch = '191632002019' or ncessch = '291797000959' or ncessch = '291797000960'
+	or ncessch = '291797001684' or ncessch = '290600000142' or ncessch = '290600000143' or ncessch = '292064001107'
+	or ncessch = '292064001108' or ncessch = '290879000265' or ncessch = '192010001180' or ncessch = '192010001181'
+	or ncessch = '292247001230' or ncessch = '292247001231' or ncessch = '292256001234' or ncessch = '292277001256'
+	or ncessch = '292277001257' or ncessch = '292075001128' or ncessch = '292075001129' or ncessch = '292166001190'
+	or ncessch = '292166001191' or ncessch = '292559002299' or ncessch = '292559002300' or ncessch = '292649001558'
+	or ncessch = '292649001559' or ncessch = '290000202400' or ncessch = '290000200922' or ncessch = '290000201641'
+	or ncessch = '290000201642' or ncessch = '292850001761' or ncessch = '292877001777' or ncessch = '293039002081'
+	or ncessch = '293039002082' or ncessch = '193056001755' or ncessch = '193056001754';
+update fabric.master5
+set grm = -2
+where ncessch = '291269000531' or ncessch = '291791000958' or ncessch = '290879000265';
+
 
 
 
