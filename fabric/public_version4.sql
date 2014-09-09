@@ -590,7 +590,18 @@ alter table fabric.master5
 	add column roome int,
 	add column green_hills int,
 	add column moniteau int,
-	add column grm int;
+	add column grm int,
+	add column mccormack int,
+	add column endeavor int,
+	add column ctc int,
+	add column karns_city int,
+	add column greenwood int,
+	add column cunningham int,
+	add column northampton int,
+	add column silver_star int,
+	add column manheim int,
+	add column hiawatha int,
+	add column xit int;
 
 update fabric.master5
 set ketchikan = 2
@@ -816,9 +827,7 @@ where leaid = '2700104' or ncessch = '271389000714';
 
 update fabric.master5
 set golden_belt = 2
-where ncessch = '200585000868' or ncessch = '200822000890' or ncessch = '200870001479' or ncessch = '200906000713'
-	or ncessch = '200993000500' or ncessch = '200402000923' or ncessch = '201128002033' or ncessch = '201191000711'
-	or ncessch = '200002000498' or ncessch = '200002000501';
+where leaid = '2008220' or leaid = '2009060' or leaid = '2009930' or leaid = '2004020' or leaid = '2000020';
 	
 update fabric.master5
 set united = 2
@@ -1250,6 +1259,68 @@ update fabric.master5
 set grm = -2
 where ncessch = '291269000531' or ncessch = '291791000958' or ncessch = '290879000265';
 
+update fabric.master5
+set mccormack = 2
+where ncessch = '292589001768' or ncessch = '292589001767';
+
+update fabric.master5
+set endeavor = 2
+where leaid = '1802220' or leaid = '1803330' or leaid = '1804140' or ncessch = '180084000160' or ncessch = '181095001792';
+
+update fabric.master5
+set ctc = 2
+where leaid = '2706090' or leaid = '2718240' or leaid = '2700191' or leaid = '2728350' or leaid = '2709750' 
+	or leaid = '2733900';
+
+update fabric.master5
+set karns_city = 2
+where ncessch = '420960001154' or ncessch = '420960001153' or ncessch = '420960000083';
+
+update fabric.master5
+set greenwood = 2
+where leaid = '0506990';
+
+update fabric.master5
+set cunningham = 2
+where ncessch = '200002901830' or ncessch = '200002901836' or ncessch = '200002901837' or ncessch = '200447000407'
+	or ncessch = '200447000403' or ncessch = '200047001801' or ncessch = '200387000410' or ncessch = '200387000409'
+	or ncessch = '200510000644' or ncessch = '200510000643' or ncessch = '200510000984' or ncessch = '200531001021'
+	or ncessch = '200003001834' or ncessch = '200003001958';
+
+update fabric.master5
+set northampton = 2
+where ncessch = '421737003499' or ncessch = '421737003500' or ncessch = '421737005062' or ncessch = '421737000166'
+	or ncessch = '421737005258' or ncessch = '421737003505';
+
+update fabric.master5
+set silver_star = 2
+where ncessch = '560406000202' or ncessch = '560406000204' or ncessch = '560406000203' or ncessch = '560406000193'
+	or ncessch = '560406000206' or ncessch = '560406000207' or ncessch = '160318000547' or ncessch = '160318000884'
+	or ncessch = '160318000544' or ncessch = '160318000754' or ncessch = '568025000048' or ncessch = '560583000289'
+	or ncessch = '560583000335' or ncessch = '560683000337' or ncessch = '560583000313' or ncessch = '560583000336'
+	or ncessch = '560583000339' or ncessch = '560583000512' or ncessch = '560583000340' or ncessch = '160318000543'
+	or ncessch = '160318001022';
+
+update fabric.master5
+set manheim = 2
+where ncessch = '421458002623' or ncessch = '421458005114' or ncessch = '421458007467' or ncessch = '421458006733'
+	or ncessch = '421458000505' or ncessch = '421458000214' or ncessch = '421458004708' or ncessch = '421458000097'
+	or ncessch = '421458000624';
+
+update fabric.master5
+set hiawatha = 2
+where leaid = '1721300';
+
+update fabric.master5
+set xit = 2
+where ncessch = '481620001202' or ncessch = '481620001203' or ncessch = '481620006238' or ncessch = '481620006237'
+	or ncessch = '481620007237' or ncessch = '482268002302' or ncessch = '484167004755' or ncessch = '484167004756'
+	or ncessch = '484167004757' or ncessch = '484257004868' or ncessch = '481362000857' or ncessch = '484398004990'
+	or ncessch = '484398004991';
+update fabric.master5
+set xit = -2
+where ncessch = '481104005141' or ncessch = '481104000571' or ncessch = '481104000570' or ncessch = '481104011914';
+
 
 
 
@@ -1264,29 +1335,38 @@ with new_values as(
 select ncessch, coalesce(advanced,0) + coalesce(alenco_comm,0) + coalesce(alliance,0) + coalesce(alpine,0) + coalesce(arlington,0) 
 	+ coalesce(atc,0) + coalesce(bellwood_antis,0) + coalesce(bie,0)  + coalesce(blue_mountain,0) + coalesce(bps,0) 
 	+ coalesce(butler_bremer,0) + coalesce(c_spire,0) + coalesce(cai,0) + coalesce(california,0) + coalesce(citizens,0) 
-	+ coalesce(clear_lake,0) + coalesce(com_net,0) + coalesce(dc,0) + coalesce(dobson,0) + coalesce(dubois,0) 
+	+ coalesce(clear_lake,0) + coalesce(com_net,0) + coalesce(ctc,0) + coalesce(cunningham,0) + coalesce(dc,0) + coalesce(dobson,0) + coalesce(dubois,0) 
 	+ coalesce(dubois_telephone,0) + coalesce(dumont,0) + coalesce(dupage,0) + coalesce(eastex,0) + coalesce(elmwood,0)
+	+ coalesce(endeavor,0)
 	+ coalesce(farmers,0) + coalesce(fatbeam,0) + coalesce(fibercomm,0) + coalesce(florida,0) + coalesce(fort_laboeuf,0) 
 	+ coalesce(franklin,0) + coalesce(ftc,0) + coalesce(galena,0) + coalesce(ganado,0) + coalesce(garden_valley,0) 
 	+ coalesce(georgia,0) + coalesce(gervais_datavision,0) + coalesce(glen_rose,0) + coalesce(golden_belt,0) 
-	+ coalesce(h_and_b,0) + coalesce(harrisonville,0) + coalesce(heart_iowa,0) + coalesce(hempfield,0) + coalesce(htc,0) 
-	+ coalesce(hudson,0) + coalesce(huntsville,0) + coalesce(in_shore,0) + coalesce(iowa,0) + coalesce(kane,0) + coalesce(ketchikan,0)
-	+ coalesce(laporte,0) + coalesce (lebanon,0) + coalesce(maine,0) + coalesce(manawa,0) + coalesce(marion,0) + coalesce(marne_elk,0)
+	+ coalesce(green_hills,0) + coalesce(greenwood,0) + coalesce(grm,0)
+	+ coalesce(h_and_b,0) + coalesce(harrisonville,0) + coalesce(heart_iowa,0) + coalesce(hempfield,0) + coalesce(hiawatha,0) 
+	+ coalesce(htc,0) 
+	+ coalesce(hudson,0) + coalesce(huntsville,0) + coalesce(in_shore,0) + coalesce(iowa,0) + coalesce(kane,0) 
+	+ coalesce(karns_city,0) + coalesce(ketchikan,0) + coalesce(lakeland,0)
+	+ coalesce(laporte,0) + coalesce (lebanon,0) + coalesce(maine,0) + coalesce(manawa,0) + coalsece(manheim,0)
+	+ coalesce(marion,0) + coalesce(marne_elk,0) + coalesce(mccormack,0)
 	+ coalesce(mckenzie,0) + coalesce(mcleod,0) + coalesce(middleburgh,0) + coalesce(midstate,0) + coalesce(mifflin,0) 
+	+ coalesce(moniteau,0)
 	+ coalesce(monon,0) + coalesce(montana,0) + coalesce(mtc,0) + coalesce(mte,0) + coalesce(navajo,0) + coalesce(nemr,0)
 	+ coalesce(new_mexico,0) + coalesce(newton,0) + coalesce(nextech,0) + coalesce(nogales,0) + coalesce(north_carolina,0)
+	+ coalesce(northampton,0)
 	+ coalesce(octorara,0) + coalesce(ohio,0) + coalesce(ortelco,0) + coalesce(otelco,0) + coalesce(palestine,0) 
 	+ coalesce(paul_bunyan,0) + coalesce(peoples_rural,0) + coalesce(peoples_telecom,0) + coalesce(phoenixville,0) 
 	+ coalesce(pioneer,0) + coalesce(pmt,0) + coalesce(portage,0) + coalesce(premier,0) + coalesce(puerto_rico,0) 
 	+ coalesce(range_telephone,0) + coalesce(red_river,0) + coalesce(redbank,0) + coalesce(revere,0) + coalesce(ritter,0) 
-	+ coalesce(rock_island,0) + coalesce(round_rock,0) + coalesce(rt_comm,0) + coalesce(runestone,0) + coalesce(s_and_a,0)
-	+ coalesce(sacred_wind,0) + coalesce(shade_central,0) + coalesce(siskiyou,0) + coalesce(snc,0) + coalesce(somerset,0) 
+	+ coalesce(rock_island,0) + coalesce(roome,0) + coalesce(round_rock,0) + coalesce(rt_comm,0) + coalesce(runestone,0) 
+	+ coalesce(s_and_a,0)
+	+ coalesce(sacred_wind,0) + coalesce(shade_central,0) + coalesce(silver_star,0) + coalesce(siskiyou,0) + coalesce(snc,0) 
+	+ coalesce(somerset,0) 
 	+ coalesce(souderton,0) + coalesce(south_central,0) + coalesce(south_middleton,0) + coalesce(southwest_texas,0) 
 	+ coalesce(spring_grove,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunesys,0) + coalesce(tca,0) 
 	+ coalesce(toledotel,0) + coalesce(totah_totel,0) + coalesce(united,0) + coalesce(upper_dauphin,0) 
 	+ coalesce(us_connect,0) + coalesce(van_buren,0) + coalesce(van_horne,0) + coalesce(wabash,0) + coalesce(waldron,0) 
 	+ coalesce(wayne_highlands,0) + coalesce(west_carolina_tel,0) + coalesce(west_central,0) + coalesce(west_texas_rural,0) 
-	+ coalesce(west_virginia,0) + coalesce(wikstrom,0) + coalesce(wilson,0) + coalesce(yadtel,0) + coalesce(yelcot,0)
+	+ coalesce(west_virginia,0) + coalesce(wikstrom,0) + coalesce(wilson,0) + coalesce(xit,0) + coalesce(yadtel,0) + coalesce(yelcot,0)
 	as row_score
 from fabric.master5
 )
@@ -1314,6 +1394,7 @@ where score_map < 0;
 
 select fiber_map, count(*)
 from fabric.master5
+where member > 0
 group by fiber_map
 order by fiber_map;
 

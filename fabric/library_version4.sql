@@ -235,7 +235,7 @@ alter table fabric.lib_master5
 	add column paul_bunyan int,
 	add column stayton int,
 	add column siskiyou int,
-	add column cascade int
+	add column cascade_com int,
 	add column rt_comm int,
 	add column dubois_telephone int,
 	add column range_telephone int,
@@ -251,7 +251,19 @@ alter table fabric.lib_master5
 	add column marks_quitman int,
 	add column corinth int,
 	add column tombigbee int,
-	add column yazoo int;
+	add column yazoo int,
+	add column madison int,
+	add column mccormack int,
+	add column endeavor int,
+	add column northwest int,
+	add column ayrshire int,
+	add column ctc int,
+	add column tallahatchie int,
+	add column triangle int,
+	add column mid_mississippi int,
+	add column cunningham int,
+	add column silver_star int,
+	add column xit int;
 
 update fabric.lib_master5
 set grantsburg = 2
@@ -409,7 +421,7 @@ set siskiyou = 2
 where libid = 'CA0135-011' or libid = 'CA0135-009' or libid = 'CA0135-011' or libid = 'CA0135-018';
 
 update fabric.lib_master5
-set cascade = 2
+set cascade_com = 2
 where fscskey = 'IA0465';
 
 update fabric.lib_master5
@@ -490,6 +502,74 @@ update fabric.lib_master5
 set yazoo = 2
 where fscskey = 'MS0042';
 
+update fabric.lib_master5
+set madison = 2
+where libid = 'MS0029-002' or libid = 'MS0029-004' or libid = 'MS0029-005'; 
+
+update fabric.lib_master5
+set mccormack = 2
+where libid = 'MO0137-004';
+
+update fabric.lib_master5
+set endeavor = 2
+where fscskey = 'IN0200' or libid = 'IN0212-005' or libid = 'IN0212-006';
+update fabric.lib_master5
+set endeavor = -2
+where libid = 'IN0196-005';
+
+update fabric.lib_master5
+set northwest = -2
+where fscskey = 'IA0258' or libid = 'IA0375-002' or libid = 'IA0173-002' or libid = 'IA1076-002' or libid = 'IA0122-002';
+
+update fabric.lib_master5
+set ayrshire = -2
+where libid = 'IA0259-002';
+
+update fabric.lib_master5
+set ctc = 2
+where libid = 'MN0145-004';
+
+update fabric.lib_master5
+set tallahatchie = 2
+where libid = 'MS0045-002';
+update fabric.lib_master5
+set tallahatchie = -2
+where libid = 'MS0045-005';
+
+update fabric.lib_master5
+set triangle = 2
+where fscskey = 'MT0014' or fscskey = 'MT0036' or fscskey = 'MT0048' or libid = 'MT0030-006' or libid = 'MT0030-009' 
+	or fscskey = 'MT0077';
+update fabric.lib_master5
+set triangle = -2
+where fscskey = 'MT0013' or libid = 'MT0030-007' or fscskey = 'MT0065' or fscskey = 'MT0022' or fscskey = 'MT0052'
+	or fscskey = 'MT0037' or fscskey = 'MT0005';
+
+update fabric.lib_master5
+set mid_mississippi = -2 
+where libid = 'MS0033-002' or libid = 'MS0033-003' or libid = 'MS0033-004' or libid = 'MS0033-005' or libid = 'MS0033-006'
+	or libid = 'MS0033-007' or libid = 'MS0033-008' or libid = 'MS0033-009' or libid = 'MS0033-010' or libid = 'MS0033-011'
+	or libid = 'MS0033-012' or libid = 'MS0033-013' or libid = 'MS0033-014';
+update fabric.lib_master5
+set mid_mississippi = 2
+where libid = 'MS0033-000';
+
+update fabric.lib_master5
+set cunningham = 2
+where fscskey = 'KS0003' or fscskey = 'KS0001';
+
+update fabric.lib_master5
+set silver_star = 2
+where libid = 'WY0017-008' or libid = 'WY0017-007' or fscskey = 'WY0020' or libid = 'WY0020-003';
+
+update fabric.lib_master5
+set xit = 2
+where fscskey = 'TX0457' or fscskey = 'TX0390';
+update fabric.lib_master5
+set xit = -2
+where fscskey = 'TX0295' or fscskey = 'TX0381';
+
+
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
 alter table fabric.lib_master5
@@ -498,17 +578,23 @@ alter table fabric.lib_master5
 	add column score_map int;
 
 with new_values as(
-select libid, coalesce(cai,0) + coalesce(kansas,0) + coalesce(maine,0)
-	+ coalesce(missouri,0) + coalesce(vermont,0) + coalesce(ohio,0)
-	+ coalesce(alliance,0) + coalesce(clear_lake,0) + coalesce(com_net,0)
-	+ coalesce(grantsburg,0) + coalesce(peoples_rural,0) + coalesce(peoples_telecom,0)
-	+ coalesce(toledotel,0) + coalesce(us_connect,0) + coalesce(wabash,0) 
-	+ coalesce(heart_iowa,0) + coalesce(dc,0) + coalesce(blue_ridge,0) + coalesce(dobson,0)
-	+ coalesce(west_carolina_tel,0) + coalesce(manawa,0) + coalesce(srtc,0) + coalesce(premier,0)
-	+ coalesce(fibercomm,0) + coalesce(h_and_b,0) + coalesce(golden_belt,0) + coalesce(united,0)
-	+ coalesce(fontana,0) + coalesce(nextech,0) + coalesce(nemr,0) + coalesce(wilson,0)
-	+ coalesce(premier,0) + coalesce(fibercomm,0) + coalesce(van_horne,0) + coalesce(dumont,0)
-	+ coalesce(pioneer,0) + coalesce(webster_calhoun,0) + coalesce(gervais_datavision,0) + coalesce(paul_bunyan,0)
+select libid, coalesce(alliance,0) + coalesce(ayrshire,0) + coalesce(blue_ridge,0) + coalesce(bolivar,0)
+	 + coalesce(c_spire,0) + coalesce(cai,0) + coalesce(carnegie,0) + coalesce(cascade_com,0) + coalesce(clear_lake,0)
+	 + coalesce(com_net,0) + coalesce(corinth,0) + coalesce (ctc,0) + coalesce(cunningham,0) + coalesce(dc,0) + coalesce(dixie,0) 
+	 + coalesce(dobson,0)
+	 + coalesce(dubois_telephone,0) + coalesce(dumont,0) + coalesce(einetwork,0) + coalesce(endeavor,0)
+	 + coalesce(fibercomm,0) + coalesce(fontana,0) + coalesce(gervais_datavision,0) + coalesce(golden_belt,0)
+	 + coalesce(grantsburg,0) + coalesce(h_and_b,0) + coalesce(heart_iowa,0) + coalesce(iowa,0)
+	 + coalesce(jackson_george,0) + coalesce(kansas,0) + coalesce(madison,0)  + coalesce(maine,0) + coalesce(manawa,0) 
+	 + coalesce(marks_quitman,0) + coalesce(mccormack,0) + coalesce(mid_mississippi,0) + coalesce(missouri,0) + coalesce(nemr,0) 
+	 + coalesce(nextech,0)
+	 + coalesce(northwest,0) + coalesce(ohio,0) + coalesce(paul_bunyan,0) + coalesce(pearl_river,0) + coalesce(peoples_rural,0)
+	 + coalesce(peoples_telecom,0) + coalesce(pioneer,0) + coalesce(premier,0) + coalesce(range_telephone,0)
+	 + coalesce(rt_comm,0) + coalesce(siskiyou,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunflower,0)
+	 + coalesce(tallahatchie,0) + coalesce(toledotel,0) + coalesce(tombigbee,0) + coalesce(triangle,0)
+	 + coalesce(united,0) + coalesce(us_connect,0) + coalesce(van_horne,0)
+	 + coalesce(vermont,0) + coalesce(wabash,0) + coalesce(waynesboro_wayne,0) + coalesce(webster_calhoun,0)
+	 + coalesce(west_carolina_tel,0) + coalesce(westel,0) + coalesce(wilson,0) + coalesce(xit,0) + coalesce(yazoo,0)
 	as row_score
 from fabric.lib_master5
 )
