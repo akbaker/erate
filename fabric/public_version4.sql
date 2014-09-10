@@ -196,13 +196,13 @@ alter table fabric.master5
 alter table fabric.master5
 	add column north_carolina int;
 update fabric.master5
-	set north_carolina = -2
+	set north_carolina = -9
 	where (schnam = 'STANFIELD ELEMENTARY' or schnam = 'CHARLES E PERRY ELEMENTARY'
 		or coname = 'NASH COUNTY' or coname = 'DAVIDSON COUNTY' or coname = 'FRANKLIN COUNTY'
 		or coname = 'WARREN COUNTY' or coname = 'IREDELL COUNTY' or coname = 'CASEWELL COUNTY')
 		and lstate = 'NC';
 update fabric.master5
-	set north_carolina = 2
+	set north_carolina = 9
 	where north_carolina is null and lstate = 'NC';
 
 --NEW MEXICO
@@ -245,11 +245,11 @@ alter table fabric.master5
 	add column round_rock int,
 	add column palestine int;
 update fabric.master5
-	set round_rock = 2
+	set round_rock = 9
 	where leanm = 'ROUND ROCK ISD'
 		and lstate = 'TX';
 update fabric.master5
-	set palestine = 2
+	set palestine = 9
 	where leanm = 'PALESTINE ISD'
 		and lstate = 'TX';
 
@@ -327,7 +327,7 @@ alter table fabric.master5
 alter table fabric.master5
 	add column fatbeam int;
 update fabric.master5
-	set fatbeam = 2
+	set fatbeam = 9
 	where leaid = '5301140' or leaid = '5303510' or leaid = '5304950' or leaid = '5308670' or leaid = '5310110'
 		or leaid = '3005280' or leaid = '3005310' or leaid = '1600780' or leaid = '5305370' or leaid = '5302940'
 		or leaid = '1602670';
@@ -382,7 +382,7 @@ alter table fabric.master5
 alter table fabric.master5
 	add column nogales int;
 update fabric.master5
-	set nogales = 2
+	set nogales = 9
 	where leanm = 'NOGALES UNIFIED DISTRICT'
 		and lstate = 'AZ';
 
@@ -424,7 +424,7 @@ alter table fabric.master5
 	add column c_spire int;
 
 update fabric.master5
-set c_spire = 2
+set c_spire = 9
 where leaid = '2800600' or leaid = '2800820' or leaid = '2801050' or leaid = '2801090' or leaid = '2801170' or leaid = '2801260'
 	or leaid = '2801320' or leaid = '2801490' or leaid = '2801800' or leaid = '2801860' or leaid = '2801950' or leaid = '2802190'
 	or leaid = '2802550' or leaid = '2802820' or leaid = '2802850' or leaid = '2802910' or leaid = '2802970' or leaid = '2803270'
@@ -604,79 +604,79 @@ alter table fabric.master5
 	add column xit int;
 
 update fabric.master5
-set ketchikan = 2
+set ketchikan = 9
 where leaid = '0200150';
 
 update fabric.master5
-set revere = 2 
+set revere = 9
 where leaid = '2510050';
 
 update fabric.master5
-set citizens = 2
+set citizens = 9
 where ncessch = '551044001363';
 
 update fabric.master5
-set hudson = 2
+set hudson = 9
 where ncessch = '390500203801' or ncessch = '390500203802' or ncessch = '390500203803' or ncessch = '390500203804'
 	or ncessch = '390500200199' or ncessch = '390500203805';
 
 update fabric.master5
-set rock_island = 2
+set rock_island = 9
 where ncessch = '173441003526' or ncessch = '173441003527' or ncessch = '173441003538' or ncessch = '173441003528' 
 	or ncessch = '173441003530' or ncessch = '173441006107' or ncessch = '173441003534' or ncessch = '170020406200' 
 	or ncessch = '173441006155' or ncessch = '173441003535' or ncessch = '173441005967' or ncessch = '173441003540' 
 	or ncessch = '173441003536' or ncessch = '173441005338' or ncessch = '173441003529';
 
 update fabric.master5
-set elmwood = 2
+set elmwood = 9
 where ncessch = '171410004687' or ncessch = '171410001760' or ncessch = '171410001762' or ncessch = '171410005506' 
 	or ncessch = '171410001761';
 
 update fabric.master5
-set galena = 2
+set galena = 9
 where ncessch = '171605001914' or ncessch = '171605001913' or ncessch = '171605001912';
 
 update fabric.master5
-set farmers = 2
+set farmers = 9
 where ncessch = '550567000601' or ncessch = '550567000602' or ncessch = '550567000603' or ncessch = '550567002704'
 	or ncessch = '550567000604';
 
 update fabric.master5
-set toledotel = 2
+set toledotel = 9
 where leaid = '5308910' or leaid = '5309930';
 
 update fabric.master5
-set wabash = 2
+set wabash = 9
 where leaid = '3904857' or leaid = '3910030' or leaid = '3904859' or leaid = '3904858';
 
 update fabric.master5
-set peoples_rural = 2
+set peoples_rural = 9
 where leaid = '2102940' or leaid = '2104620';
 
 update fabric.master5
-set south_central = 2 
+set south_central = 9
 where leaid = '2003570' or leaid = '2008130' or leaid = '2009450' or leaid = '2008310' or leaid = '2011430';
 
 update fabric.master5
-set garden_valley = 2
+set garden_valley = 9
 where leaid = '2703570' or leaid = '2700103' or leaid = '2711910' or leaid = '2712300' or leaid = '2713020'
 	or leaid = '2718920' or leaid = '2724030' or leaid = '2729070' or leaid = '2730450' or leaid = '2791449';
 
 update fabric.master5
-set mtc = 2
+set mtc = 9
 where leaid = '1918930';
 
 update fabric.master5
-set clear_lake = 2
+set clear_lake = 9
 where ncessch = '190762000363' or ncessch = '190762000364' or ncessch = '190762000362' or ncessch = '192910001673'
 	or ncessch = '192910001674';
 
 update fabric.master5
-set peoples_telecom = 2
+set peoples_telecom = 9
 where ncessch = '200825000755' or ncessch = '200825000754' or ncessch = '200825000752';
 
 update fabric.master5
-set west_texas_rural = 2
+set west_texas_rural = 9
 where ncessch = '484437005066' or ncessch = '483557005577' or ncessch = '483557010997' or ncessch = '483557007057'
 	or ncessch = '481998001952' or ncessch = '481998001953' or ncessch = '481998001954' or ncessch = '481998006704' 
 	or ncessch = '481095000558' or ncessch = '481035000559' or ncessch = '481095005161' or ncessch = '482301002333' 
@@ -684,7 +684,7 @@ where ncessch = '484437005066' or ncessch = '483557005577' or ncessch = '4835570
 	or ncessch = '482301002335' or ncessch = '482301002336' or ncessch = '482301002336' or ncessch = '482301006561';
 
 update fabric.master5
-set com_net = 2
+set com_net = 9
 where ncessch = '391003103298' or ncessch = '390493303563' or ncessch = '390493503567' or ncessch = '390493503568'
 	or ncessch = '390493403566' or ncessch = '390493803575'
 	or ncessch = '391002301885' or ncessch = '391002203926' or ncessch = '390493701065' or ncessch = '391001901250' 
@@ -699,23 +699,23 @@ where ncessch = '391003103298' or ncessch = '390493303563' or ncessch = '3904935
 	or ncessch = '390485903309' or ncessch = '390507404049';
 
 update fabric.master5
-set yadtel = 2
+set yadtel = 9
 where ncessch = '370231000997' or ncessch = '370231000987' or ncessch = '370117002853' or ncessch = '370117000485'
 	or ncessch = '370117002516' or ncessch = '370117000486' or ncessch = '370117000487' or ncessch = '370117002065'
 	or ncessch = '370117000489' or ncessch = '370117000490' or ncessch = '370117002066' or ncessch = '370117002816'
 	or ncessch = '370117000491';
 
 update fabric.master5
-set heart_iowa = 2
+set heart_iowa = 9
 where ncessch = '190444000118' or ncessch = '190444000087' or ncessch = '191069002048' or ncessch = '190004000132'
 	or ncessch = '190006000182';
 
 update fabric.master5
-set mckenzie = 2
+set mckenzie = 9
 where leaid = '4702790';
 
 update fabric.master5
-set alliance = 2
+set alliance = 9
 where ncessch = '460002800014' or ncessch = '460002800874' or ncessch = '460002800013' or ncessch = '46048000036'
 	or ncessch = '46048000986' or ncessch = '46048000035' or ncessch = '460795000071' or ncessch = '460795000072' 
 	or ncessch = '460795000414' or ncessch = '460795001237' or ncessch = '460795000073' or ncessch = '462637000224' 
@@ -726,45 +726,45 @@ where ncessch = '460002800014' or ncessch = '460002800874' or ncessch = '4600028
 	or ncessch = '193102001806';
 
 update fabric.master5
-set ganado = 2
+set ganado = 9
 where ncessch = '482031002006' or ncessch = '482031002007' or ncessch = '482031012317' or ncessch = '484281004881'
 	or ncessch = '484281004882' or ncessch = '484281009599' or ncessch = '484281004883' or ncessch = '484281004884'
 	or ncessch = '482835021546' or ncessch = '482835003167' or ncessch = '482835011929';
 
 update fabric.master5
-set us_connect = 2
+set us_connect = 9
 where ncessch = '080615001082' or ncessch = '080615001074' or ncessch = '080615001081' or ncessch = '310007200188' 
 	or ncessch = '310014001421';
 update fabric.master5
-set us_connect = -2
+set us_connect = -9
 where ncessch = '080384000503' or ncessch = '080384000622' or ncessch = '080384000502' or ncessch = '080384001695'
 	or ncessch = '310007201879' or ncessch = '317581001914' or ncessch = '317581001533';
 
 update fabric.master5
-set middleburgh = 2
+set middleburgh = 9
 where leaid = '3619260' or leaid = '3626100';
 
 update fabric.master5
-set dupage = 2
+set dupage = 9
 where ncessch = '171394001738' or ncessch = '171394001737';
 
 update fabric.master5
-set marion = 2
+set marion = 9
 where leaid = '0509390';
 
 update fabric.master5
-set snc = 2
+set snc = 9
 where leaid = '3170530';
 
 update fabric.master5
-	set mte = 2
+	set mte = 9
 	where ncessch = '160216000857';
 update fabric.master5
-	set mte = -2
+	set mte = -9
 	where ncessch = '160072000143' or leaid = '0409540';
 
 update fabric.master5
-set dobson = 2
+set dobson = 9
 where ncessch = '401956000931' or ncessch = '400750000299' or ncessch = '400750000300' or ncessch = '401104000525'
 	or ncessch = '401104029615' or ncessch = '401737000844' or ncessch = '401737000845' or ncessch = '401956000932'
 	or ncessch = '401956000933' or ncessch = '402580001370' or ncessch = '402580001371' or ncessch = '402931001538'
@@ -772,23 +772,23 @@ where ncessch = '401956000931' or ncessch = '400750000299' or ncessch = '4007500
 	or ncessch = '403117029664' or ncessch = '403264001804';
 
 update fabric.master5
-set sacred_wind = 2
+set sacred_wind = 9
 where ncessch = '350039000187';
 
 update fabric.master5
-set west_central = 2
+set west_central = 9
 where leaid = '2740920' or leaid = '2720580';
 
 update fabric.master5
-set arlington = 2
+set arlington = 9
 where leaid = '5100270';
 
 update fabric.master5
-set s_and_a = 2
+set s_and_a = 9
 where ncessch = '200321000211' or ncessch = '201041001058';
 
 update fabric.master5
-set west_carolina_tel = 2
+set west_carolina_tel = 9
 where ncessch = '450069001188' or ncessch = '450069000011' or ncessch = '450390101510' or ncessch = '450069000065'
 	or ncessch = '450069000066' or ncessch = '450069000012' or ncessch = '450069000002' or ncessch = '450069000071'
 	or ncessch = '450069001379' or ncessch = '450069000010' or ncessch = '450390301563' or ncessch = '450000101414'
@@ -796,16 +796,16 @@ where ncessch = '450069001188' or ncessch = '450069000011' or ncessch = '4503901
 	or ncessch = '450084000086' or ncessch = '450084000087' or ncessch = '450084000088';
 
 update fabric.master5
-set butler_bremer = 2
+set butler_bremer = 9
 where ncessch = '190744000354' or ncessch = '190744000355' or ncessch = '192019001360' or ncessch = '192805001637'
 	or ncessch = '192805001638' or ncessch = '193054001746';
 
 update fabric.master5
-set manawa = 2
+set manawa = 9
 where ncessch = '550855000969';
 
 update fabric.master5
-set srtc = 2
+set srtc = 9
 where ncessch = '480000600274' or ncessch = '480000600275' or ncessch = '480998000468' or ncessch = '481587001152'
 	or ncessch = '481587001153' or ncessch = '482262002298' or ncessch = '482274002304' or ncessch = '482274002305'
 	or ncessch = '482340002374' or ncessch = '482340002375' or ncessch = '482340006118' or ncessch = '482587005525'
@@ -813,24 +813,24 @@ where ncessch = '480000600274' or ncessch = '480000600275' or ncessch = '4809980
 	or ncessch = '483396003777' or ncessch = '482274011279' or ncessch = '483828004270' or leaid = '4004350';
 
 update fabric.master5
-set southwest_texas = 2
+set southwest_texas = 9
 where ncessch = '480000304219' or ncessch = '480000304218' or ncessch = '483324003739' or ncessch = '483324003738'
 	or ncessch = '48161400195' or ncessch = '484368004965';
 
 update fabric.master5
-set totah_totel = 2
+set totah_totel = 9
 where leaid = '4025470' or leaid = '4000021';
 
 update fabric.master5
-set runestone = 2
+set runestone = 9
 where leaid = '2700104' or ncessch = '271389000714';
 
 update fabric.master5
-set golden_belt = 2
+set golden_belt = 9
 where leaid = '2008220' or leaid = '2009060' or leaid = '2009930' or leaid = '2004020' or leaid = '2000020';
 	
 update fabric.master5
-set united = 2
+set united = 9
 where ncessch = '200351000084' or ncessch = '200351000086' or ncessch = '200351001650' or ncessch = '200414001190'
 	or ncessch = '200414001191' or ncessch = '200480000009' or ncessch = '200480000010' or ncessch = '200504000491'
 	or ncessch = '200519001270' or ncessch = '200519001713' or ncessch = '200558000879' or ncessch = '200558001089'
@@ -843,20 +843,20 @@ where ncessch = '200351000084' or ncessch = '200351000086' or ncessch = '2003510
 	or ncessch = '201182000836' or ncessch = '201182000837';
 
 update fabric.master5
-set tca = 2
+set tca = 9
 where ncessch = '080471000683' or ncessch = '080471000684' or ncessch = '080486006387' or ncessch = '080486000811'
 	or ncessch = '80486000813' or ncessch = '80600001020' or ncessch = '80600001021' or ncessch = '80456000673'
 	or ncessch = '80456000674' or ncessch = '80393000511' or ncessch = '80393000512';
 
 update fabric.master5
-set midstate = 2
+set midstate = 9
 where ncessch = '466954000628' or ncessch = '466954000629' or ncessch = '466954001054' or ncessch = '468043801244'
 	or ncessch = '468043801248' or ncessch = '468043801250' or ncessch = '468043801267' or ncessch = '467851000745'
 	or ncessch = '467851000746' or ncessch = '467851000950' or ncessch = '463822000354' or ncessch = '463822000355'
 	or ncessch = '463822000142' or ncessch = '461200000118' or ncessch = '461200000119' or ncessch = '461200000889';
 
 update fabric.master5
-set premier = 2
+set premier = 9
 where ncessch = '190002102002' or ncessch = '190002102004' or ncessch = '190322001937' or ncessch = '190322001938'
 	or ncessch = '190322001939' or ncessch = '190519000166' or ncessch = '190519000167' or ncessch = '190696000306'
 	or ncessch = '190696000307' or ncessch = '190696000308' or ncessch = '191248000757' or ncessch = '191248000758'
@@ -867,7 +867,7 @@ where ncessch = '190002102002' or ncessch = '190002102004' or ncessch = '1903220
 	or ncessch = '192637001496' or ncessch = '192637001497' or ncessch = '193129001820' or ncessch = '193129001822';
 
 update fabric.master5
-set fibercomm = 2
+set fibercomm = 9
 where ncessch = '192640001498' or ncessch = '192640001500' or ncessch = '192640001502' or ncessch = '192640001504'
 	or ncessch = '192640001505' or ncessch = '192640001506' or ncessch = '192640001513' or ncessch = '192640001514'
 	or ncessch = '192640002080' or ncessch = '192640001515' or ncessch = '192640001934' or ncessch = '192640002165'
@@ -877,12 +877,12 @@ where ncessch = '192640001498' or ncessch = '192640001500' or ncessch = '1926400
 	or ncessch = '192640001535';
 
 update fabric.master5
-set h_and_b = 2
+set h_and_b = 9
 where ncessch = '200465000912' or ncessch = '200465000914' or ncessch = '200465000913' or ncessch = '200034902044'
 	or ncessch = '200034902042' or ncessch = '200034902043';
 
 update fabric.master5
-set ftc = 2
+set ftc = 9
 where ncessch = '4580267000712' or ncessch = '450390201453'  or ncessch = '450390201452' or ncessch = '450390201388'
 	or ncessch = '450390201317' or ncessch = '450390201080' or ncessch = '450390201079' or ncessch = '450390201078'
 	or ncessch = '450390201077' or ncessch = '450390201073' or ncessch = '450390201071' or ncessch = '450390201069'
@@ -898,25 +898,25 @@ where ncessch = '4580267000712' or ncessch = '450390201453'  or ncessch = '45039
 	or ncessch = '450180000329' or ncessch = '450177000431' or ncessch = '450160000328' or leaid = '4503902' or leaid = '4502190';
 	
 update fabric.master5
-set marne_elk = 2
+set marne_elk = 9
 where ncessch = '191125002142' or ncessch = '191071000674' or ncessch = '191071002143';
 
 update fabric.master5
-set yelcot = 2
+set yelcot = 9
 where leaid = '0514490' or leaid = '0504680' or leaid = '0510200' or leaid = '0512540';
 
 update fabric.master5
-set alpine = 2
+set alpine = 9
 where ncessch = '190684000292' or ncessch = '190684000293' or ncessch = '191335000751' or ncessch = '192871002058'
 	or ncessch = '192871001664' or ncessch = '191335000807' or ncessch = '191335000806' or ncessch = '191812001484'
 	or ncessch = '191812001068';
 
 update fabric.master5
-set laporte = 2
+set laporte = 9
 where ncessch = '190002200956' or ncessch = '190002200957';
 
 update fabric.master5
-set nextech = 2
+set nextech = 9
 where ncessch = '201131000942' or ncessch = '201047000397' or ncessch = '201002000058' or ncessch = '201104000576'
 	or ncessch = '200726000429' or ncessch = '200753000965' or ncessch = '200702001680' or ncessch = '200447000405'
 	or ncessch = '200702001318' or ncessch = '200891000607' or ncessch = '200985000904' or ncessch = '200327000061'
@@ -934,58 +934,58 @@ where ncessch = '201131000942' or ncessch = '201047000397' or ncessch = '2010020
 	or ncessch = '201263000051' or ncessch = '201260001999' or ncessch = '200663001891';
 
 update fabric.master5
-set newton = 2
+set newton = 9
 where leaid = '2803180';
 
 update fabric.master5
-set nemr = 2
+set nemr = 9
 where leaid = '2922980' or ncessch = '291638000797' or leaid = '2913230' or leaid = '2925640'
 	or leaid = '2927660' or leaid = '2920700';
 update fabric.master5
-set nemr = -2
+set nemr = -9
 where leaid = '2919320';
 
 update fabric.master5
-set otelco = 2
+set otelco = 9
 where ncessch = '10042000670' or ncessch = '10042000203' or ncessch = '10042000682' or ncessch = '10042000205'
 	or ncessch = '10042000206' or ncessch = '10042000101' or ncessch = '10042000208' or ncessch = '10042001870'
 	or ncessch = '10042000207' or ncessch = '10042000209' or ncessch = '10042000210' or ncessch = '10042000211'
 	or ncessch = '10010000028' or ncessch = '10255001064' or ncessch = '10042000213';
 
 update fabric.master5
-set wilson = 2
+set wilson = 9
 where ncessch = '200034902022' or ncessch = '200034902022' or ncessch = '201212001976' or ncessch = '201212002008';
 
 update fabric.master5
-set pmt = 2
+set pmt = 9
 where leaid = '1602190';
 
 update fabric.master5
-set alenco_comm = 2
+set alenco_comm = 9
 where ncessch = '482580002911';
 
 update fabric.master5
-set wikstrom = 2
+set wikstrom = 9
 where ncessch = '270012700131' or leaid = '2703540' or leaid = '2717570' or leaid = '2700107' or leaid = '2791447'
 	or leaid = '2791446' or leaid = '2717880' or ncessch = '270010702572' or leaid = '2723550' or leaid = '2732250'
 	or leaid = '2700127' or leaid = '2738850' or leaid = '2700024' or leaid = '2741850';
 
 update fabric.master5
-set van_horne = 2
+set van_horne = 9
 where ncessch = '190483000137' or ncessch = '190483001987';
 
 update fabric.master5
-set dumont = 2
+set dumont = 9
 where ncessch = '190345000043' or ncessch = '190345000042';
 
 update fabric.master5
-set pioneer = 2
+set pioneer = 9
 where ncessch = '410216000641' or ncessch = '410750000657' or ncessch = '410750001582' or ncessch = '410750000667'
 	or ncessch = '410960000020' or ncessch = '410960001481' or ncessch = '410960000021' or ncessch = '410960000022'
 	or ncessch = '410960000024' or ncessch = '410960000023';
 
 update fabric.master5
-set paul_bunyan = 2
+set paul_bunyan = 9
 where ncessch = '270444000190' or ncessch = '270444002031' or ncessch = '270444000191' or ncessch = '270444000193'
 	or ncessch = '270444000196' or ncessch = '270444000192' or ncessch = '270444000194' or ncessch = '270444004454'
 	or ncessch = '270444000197' or ncessch = '270444004159' or ncessch = '270444000313' or ncessch = '271827000847'
@@ -1001,15 +1001,15 @@ where ncessch = '270444000190' or ncessch = '270444002031' or ncessch = '2704440
 
 
 update fabric.master5
-set ortelco = 2
+set ortelco = 9
 where leaid = '4110110' or leaid = '4104020' or leaid = '4106780' or leaid = '4101740' or leaid = '4106120';
 
 update fabric.master5
-set waldron = 2
+set waldron = 9
 where leaid = '2635040';
 
 update fabric.master5
-set gervais_datavision = 2
+set gervais_datavision = 9
 where ncessch = '411353001714' or ncessch = '411353001713' or ncessch = '411353001723' or ncessch = '411353001731'
 	or ncessch = '411353001715' or ncessch = '411353001546' or ncessch = '411353000844' or ncessch = '411353001051'
 	or ncessch = '411353000843' or ncessch = '411353000841' or ncessch = '411353001052' or ncessch = '411353000842'
@@ -1018,112 +1018,112 @@ where ncessch = '411353001714' or ncessch = '411353001713' or ncessch = '4113530
 	or ncessch = '410327000110' or ncessch = '410327001343';
 
 update fabric.master5
-set mcleod = -2
+set mcleod = -9
 where leaid = '4829910';
 
 update fabric.master5
-set htc = 2
+set htc = 9
 where ncessch = '190001501486' or ncessch = '190001501487' or ncessch = '190001501485' or ncessch = '192598001473'
 	or ncessch = '192598001474' or ncessch = '192598001475' or ncessch = '191884001114';
 
 update fabric.master5
-set franklin = 2
+set franklin = 9
 where ncessch = '428023007067';
 
 update fabric.master5
-set phoenixville = 2
+set phoenixville = 9
 where ncessch = '421905001426' or ncessch = '421905001430' or ncessch = '421905001396' or ncessch = '421905007296'
 	or ncessch = '421905001425' or ncessch = '421905004841';
 
 update fabric.master5
-set mifflin = 2
+set mifflin = 9
 where ncessch = '421529006261' or ncessch = '421529007396' or ncessch = '421529007391' or ncessch = '421529007397'
 	or ncessch = '421529007398' or ncessch = '421529007399' or ncessch = '421529000784' or ncessch = '421529007392'
 	or ncessch = '421529003196';
 
 update fabric.master5
-set blue_mountain = 2
+set blue_mountain = 9
 where ncessch = '420387003891' or ncessch = '420387005263' or ncessch = '420387004659' or ncessch = '420387000138'
 	or ncessch = '420387003887';
 
 update fabric.master5
-set in_shore = 2
+set in_shore = 9
 where ncessch = '421095001251' or ncessch = '421095001252' or ncessch = '421095007120' or ncessch = '421095001250'
 	or leaid = '4209750' or ncessch = '420534006646' or ncessch = '420534001208' or ncessch = '420534001202';
 update fabric.master5
-set in_shore = -2
+set in_shore = -9
 where ncessch = '420534001205';
 
 update fabric.master5
-set dubois = 2
+set dubois = 9
 where leaid = '4207830';
 
 update fabric.master5
-set spring_grove = 2
+set spring_grove = 9
 where ncessch = '422259004623' or ncessch = '422259006725' or ncessch = '422259004622' or ncessch = '422259004618'
 	or ncessch = '422259004617' or ncessch = '422259004620';
 
 update fabric.master5
-set kane = 2
+set kane = 9
 where ncessch = '421266005244' or ncessch = '421266003100' or ncessch = '421266005245';
 
 update fabric.master5
-set hempfield = 2
+set hempfield = 9
 where ncessch = '421179002578' or ncessch = '421179000118' or ncessch = '421179006294' or ncessch = '421179000160'
 	or ncessch = '421179005055' or ncessch = '421179005236' or ncessch = '421179002574' or ncessch = '421179002577'
 	or ncessch = '421179002576' or ncessch = '421179002575';
 
 update fabric.master5
-set octorara = 2
+set octorara = 9
 where leaid = '4218030';
 
 update fabric.master5
-set lebanon = 2
+set lebanon = 9
 where ncessch = '421764002760' or ncessch = '421764000098' or ncessch = '421764002755' or ncessch = '421764002757'
 	or ncessch = '421764002756' or ncessch = '421764002758';
 
 update fabric.master5
-set souderton = 2
+set souderton = 9
 where ncessch = '422187003357' or ncessch = '422187004900' or ncessch = '422187003266' or ncessch = '422187009965'
 	or ncessch = '422187003350' or ncessch = '422187000697' or ncessch = '422187004721' or ncessch = '422187004722'
 	or ncessch = '422187003354';
 
 update fabric.master5
-set atc = 2
+set atc = 9
 where ncessch = '160249000433' or ncessch = '160249000432' or ncessch = '160249000629' or ncessch = '160249000434'
 	or ncessch = '160249000856' or ncessch = '160066000122' or ncessch = '160066000123' or ncessch = '160066000129'
 	or ncessch = '160066000134' or ncessch = '160049000007' or ncessch = '160049000008' or ncessch = '160049000662'
 	or ncessch = '160190000331' or ncessch = '160190000332';
 
 update fabric.master5
-set monon = 2
+set monon = 9
 where ncessch = '180813001396' or ncessch = '180813002522' or ncessch = '180813002500';
 
 update fabric.master5
-set south_middleton = 2
+set south_middleton = 9
 where ncessch = '422205001730' or ncessch = '422205006853' or ncessch = '422205000455' or ncessch = '422205006328';
 
 update fabric.master5
-set somerset = -2
+set somerset = -9
 where ncessch = '428040007085';
 
 update fabric.master5
-set bellwood_antis = 2
+set bellwood_antis = 9
 where ncessch = '420330000914' or ncessch = '420330007170' or ncessch = '420330000917';
 
 update fabric.master5
-set fort_laboeuf = 2
+set fort_laboeuf = 9
 where ncessch = '420999002037' or ncessch = '420999005328' or ncessch = '420999002036' or ncessch = '420999002035';
 update fabric.master5
-set fort_laboeuf = -2
+set fort_laboeuf = -9
 where ncessch = '420999005226';
 
 update fabric.master5
-set harrisonville = 2
+set harrisonville = 9
 where leaid = '1741070' or leaid = '1710740' or leaid = '1712720' or leaid = '1733300';
 
 update fabric.master5
-set eastex = 2
+set eastex = 9
 where ncessch = '483165003530' or ncessch = '483165003531' or ncessch = '482670006577' or ncessch = '484467005086'
 	or ncessch = '484467005088' or ncessch = '484467005087' or ncessch = '484467007340' or ncessch = '481848001733'
 	or ncessch = '481848001735' or ncessch = '481848001734' or ncessch = '481452000942' or ncessch = '481452006233'
@@ -1133,16 +1133,16 @@ where ncessch = '483165003530' or ncessch = '483165003531' or ncessch = '4826700
 
 
 update fabric.master5
-set redbank = 2
+set redbank = 9
 where leaid = '4220130';
 
 update fabric.master5
-set wayne_highlands = 2
+set wayne_highlands = 9
 where ncessch = '422497004295' or ncessch = '422497006865' or ncessch = '422497000226' or ncessch = '422497004291'
 	or ncessch = '422497006424' or ncessch = '422497006425';
 
 update fabric.master5
-set rt_comm = 2
+set rt_comm = 9
 where ncessch = '560331000180' or ncessch = '560331000185' or ncessch = '560331000185' or ncessch = '560624000345'
 	or ncessch = '560624000346' or ncessch = '560624000346' or ncessch = '560624000346' or ncessch = '560624000344'
 	or ncessch = '560483000265' or ncessch = '560483000265' or ncessch = '560483000263' or ncessch = '560483000263'
@@ -1152,57 +1152,57 @@ where ncessch = '560331000180' or ncessch = '560331000185' or ncessch = '5603310
 	or ncessch = '560412000213' or ncessch = '560412000210' or ncessch = '560412000210' or ncessch = '560609000363'
 	or ncessch = '560609000401' or ncessch = '560609000401';
 update fabric.master5
-set rt_comm = 2
+set rt_comm = 9
 where ncessch = '560570000510';
 
 update fabric.master5
-set dubois_telephone = 2
+set dubois_telephone = 9
 where ncessch = '560267000151' or ncessch = '560283000159' or ncessch = '560103000124';
 
 update fabric.master5
-set advanced = 2
+set advanced = 9
 where ncessch = '560451000254' or ncessch = '560283000159' or ncessch = '560445000441' or ncessch = '300708000194'
 	or ncessch = '560096000162';
 
 update fabric.master5
-set range_telephone = 2
+set range_telephone = 9
 where ncessch = '560568000309' or ncessch = '560568000310' or ncessch = '560568000522' or ncessch = '560568000308';
 update fabric.master5
-set range_telephone = -2
+set range_telephone = -9
 where  ncessch = '560237000405' or ncessch = '560237000150' or ncessch = '560237000530';
 
 update fabric.master5
-set red_river = 2
+set red_river = 9
 where ncessch = '381902000666' or ncessch = '388066000722' or ncessch = '380669000190' or ncessch = '380669000191'
 	or ncessch = '380871000281' or ncessch = '380871000283' or ncessch = '381114000365' or ncessch = '381114000366'
 	or ncessch = '380003600552' or ncessch = '380003600553' or ncessch = '382031000712' or ncessch = '382031000713';
 
 update fabric.master5
-set upper_dauphin = 2
+set upper_dauphin = 9
 where ncessch = '422436006340';
 update fabric.master5
-set upper_dauphin = -2
+set upper_dauphin = -9
 where ncessch = '422436009967' or ncessch = '422436006339';
 
 update fabric.master5
-set huntsville = 2
+set huntsville = 9
 where leaid = '0508130';
 
 update fabric.master5
-set glen_rose = -2
+set glen_rose = -9
 where leaid = '0506630';
 
 update fabric.master5
-set van_buren = 2
+set van_buren = 9
 where leaid = '0513410';
 
 update fabric.master5
-set stayton = 2
+set stayton = 9
 where ncessch = '410002000833' or ncessch = '410002000854' or ncessch = '410002000834' or ncessch = '410002000765'
 	or ncessch = '410002000693';
 
 update fabric.master5
-set siskiyou = 2
+set siskiyou = 9
 where ncessch = '060015901474' or ncessch = '060015904089' or ncessch = '060015901473' or ncessch = '060015901615'
 	or ncessch = '060015908834' or ncessch = '063694006277' or ncessch = '061653002087' or ncessch = '063624006181' 
 	or ncessch = '061404001607' or ncessch = '061923002309';
@@ -1211,38 +1211,38 @@ set siskiyou = -2
 where ncessch = '060015910426' or  ncessch = '061992002387';
 
 update fabric.master5
-set shade_central = -2
+set shade_central = -9
 where leaid = '4221180';
 
 update fabric.master5
-set portage = -2
+set portage = -9
 where leaid = '4219560';
 
 update fabric.master5
-set bps = 2
+set bps = 9
 where ncessch = '292853002670' or ncessch = '292853001764' or ncessch = '291014000325' or ncessch = '291014000326'
 	or ncessch = '290495000060' or ncessch = '290495000061';
 
 update fabric.master5
-set lakeland = 2
+set lakeland = 9
 where ncessch = '421305006403' or ncessch = '421305007171' or ncessch = '421305006404';
 
 update fabric.master5
-set roome = 2
+set roome = 9
 where ncessch = '410291000475' or ncessch = '410291000729';
 
 update fabric.master5
-set green_hills = 2
+set green_hills = 9
 where ncessch = '290585000128' or ncessch = '290585000129' or ncessch = '292262001237' or ncessch = '292262001238'
 	or ncessch = '292541000227' or ncessch = '292541001464' or ncessch = '292541001465' or ncessch = '292868001771'
 	or ncessch = '292868001772' or ncessch = '293030002070' or ncessch = '293030002071';
 
 update fabric.master5
-set moniteau = -2
+set moniteau = -9
 where ncessch = '421710001164' or ncessch = '421710006605';
 
 update fabric.master5
-set grm = 2
+set grm = 9
 where ncessch = '290645000163' or ncessch = '290645000164' or ncessch = '190690000816' or ncessch = '190690000297'
 	or ncessch = '190690000300' or ncessch = '193056001754' or ncessch = '291287000537' or ncessch = '291287000538'
 	or ncessch = '291269000532' or ncessch = '291620000759' or ncessch = '291620000762' or ncessch = '191632000974'
@@ -1256,44 +1256,44 @@ where ncessch = '290645000163' or ncessch = '290645000164' or ncessch = '1906900
 	or ncessch = '290000201642' or ncessch = '292850001761' or ncessch = '292877001777' or ncessch = '293039002081'
 	or ncessch = '293039002082' or ncessch = '193056001755' or ncessch = '193056001754';
 update fabric.master5
-set grm = -2
+set grm = -9
 where ncessch = '291269000531' or ncessch = '291791000958' or ncessch = '290879000265';
 
 update fabric.master5
-set mccormack = 2
+set mccormack = 9
 where ncessch = '292589001768' or ncessch = '292589001767';
 
 update fabric.master5
-set endeavor = 2
+set endeavor = 9
 where leaid = '1802220' or leaid = '1803330' or leaid = '1804140' or ncessch = '180084000160' or ncessch = '181095001792';
 
 update fabric.master5
-set ctc = 2
+set ctc = 9
 where leaid = '2706090' or leaid = '2718240' or leaid = '2700191' or leaid = '2728350' or leaid = '2709750' 
 	or leaid = '2733900';
 
 update fabric.master5
-set karns_city = 2
+set karns_city = 9
 where ncessch = '420960001154' or ncessch = '420960001153' or ncessch = '420960000083';
 
 update fabric.master5
-set greenwood = 2
+set greenwood = 9
 where leaid = '0506990';
 
 update fabric.master5
-set cunningham = 2
+set cunningham = 9
 where ncessch = '200002901830' or ncessch = '200002901836' or ncessch = '200002901837' or ncessch = '200447000407'
 	or ncessch = '200447000403' or ncessch = '200047001801' or ncessch = '200387000410' or ncessch = '200387000409'
 	or ncessch = '200510000644' or ncessch = '200510000643' or ncessch = '200510000984' or ncessch = '200531001021'
 	or ncessch = '200003001834' or ncessch = '200003001958';
 
 update fabric.master5
-set northampton = 2
+set northampton = 9
 where ncessch = '421737003499' or ncessch = '421737003500' or ncessch = '421737005062' or ncessch = '421737000166'
 	or ncessch = '421737005258' or ncessch = '421737003505';
 
 update fabric.master5
-set silver_star = 2
+set silver_star = 9
 where ncessch = '560406000202' or ncessch = '560406000204' or ncessch = '560406000203' or ncessch = '560406000193'
 	or ncessch = '560406000206' or ncessch = '560406000207' or ncessch = '160318000547' or ncessch = '160318000884'
 	or ncessch = '160318000544' or ncessch = '160318000754' or ncessch = '568025000048' or ncessch = '560583000289'
@@ -1302,27 +1302,24 @@ where ncessch = '560406000202' or ncessch = '560406000204' or ncessch = '5604060
 	or ncessch = '160318001022';
 
 update fabric.master5
-set manheim = 2
+set manheim = 9
 where ncessch = '421458002623' or ncessch = '421458005114' or ncessch = '421458007467' or ncessch = '421458006733'
 	or ncessch = '421458000505' or ncessch = '421458000214' or ncessch = '421458004708' or ncessch = '421458000097'
 	or ncessch = '421458000624';
 
 update fabric.master5
-set hiawatha = 2
+set hiawatha = 9
 where leaid = '1721300';
 
 update fabric.master5
-set xit = 2
+set xit = 9
 where ncessch = '481620001202' or ncessch = '481620001203' or ncessch = '481620006238' or ncessch = '481620006237'
 	or ncessch = '481620007237' or ncessch = '482268002302' or ncessch = '484167004755' or ncessch = '484167004756'
 	or ncessch = '484167004757' or ncessch = '484257004868' or ncessch = '481362000857' or ncessch = '484398004990'
 	or ncessch = '484398004991';
 update fabric.master5
-set xit = -2
+set xit = -9
 where ncessch = '481104005141' or ncessch = '481104000571' or ncessch = '481104000570' or ncessch = '481104011914';
-
-
-
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE

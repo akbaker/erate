@@ -2,6 +2,9 @@
 
 --CAI
 alter table fabric.imls_cai
+drop column if exists fiber;
+
+alter table fabric.imls_cai
 add column fiber int;
 
 update fabric.imls_cai
@@ -25,6 +28,9 @@ group by fiber;
 
 --KANSAS
 alter table fabric.ks_lib
+drop column if exists fiber;
+
+alter table fabric.ks_lib
 add column fiber int;
 
 update fabric.ks_lib
@@ -45,6 +51,9 @@ group by fiber;
 
 --MISSOURI
 alter table fabric.mo_lib
+drop column if exists fiber;
+
+alter table fabric.mo_lib
 add column fiber int;
 
 update fabric.mo_lib
@@ -57,12 +66,18 @@ where mb13_14 < 100;
 
 --VERMONT
 alter table fabric.vt_lib
+drop column if exists fiber;
+
+alter table fabric.vt_lib
 add column fiber int;
 
 update fabric.vt_lib
-set fiber = 2;
+set fiber = 9;
 
 --OHIO
+alter table fabric.oh_lib
+drop column if exists fiber;
+
 alter table fabric.oh_lib
 add column fiber int;
 

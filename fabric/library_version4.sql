@@ -180,7 +180,7 @@ alter table fabric.lib_master5
 	add column c_spire int;
 
 update fabric.lib_master5
-set c_spire = 2
+set c_spire = 9
 where fscskey = 'MS0025' or fscskey = 'MS0017';
 
 --IOWA
@@ -271,43 +271,43 @@ alter table fabric.lib_master5
 	add column kemper_newton int;
 
 update fabric.lib_master5
-set grantsburg = 2
+set grantsburg = 9
 where fscskey = 'WI0120';
 
 update fabric.lib_master5
-set toledotel = 2
+set toledotel = 9
 where libid = 'WA0069-027';
 
 update fabric.lib_master5
-set wabash = 2
+set wabash = 9
 where libid = 'OH0043-002' or libid = 'OH0043-005' or fscskey = 'OH0083' or fscskey = 'OH0055';
 
 update fabric.lib_master5
-set peoples_telecom = 2
+set peoples_telecom = 9
 where fscskey = 'KS0256';
 
 update fabric.lib_master5
-set peoples_rural = 2
+set peoples_rural = 9
 where fscskey = 'KY0052' or fscskey = 'KY0090';
 
 update fabric.lib_master5
-set clear_lake = 2
+set clear_lake = 9
 where fscskey = 'IA0077' or fscskey = 'IA0084';
 
 update fabric.lib_master5
-set com_net = 2
+set com_net = 9
 where libid = 'OH0176-002';
 
 update fabric.lib_master5
-set alliance = 2
+set alliance = 9
 where fscskey = 'IA0108';
 
 update fabric.lib_master5
-set heart_iowa = 2
+set heart_iowa = 9
 where fscskey = 'IA0200' or fscskey = 'IA0395' or fscskey = 'IA0506' or fscskey = 'IA0243';
 
 update fabric.lib_master5
-set dc = 2
+set dc = 9
 where libid = 'DC0001-003' or libid = 'DC0001-005' or libid = 'DC0001-006' or libid = 'DC0001-007'
 	or libid = 'DC0001-028' or libid = 'DC0001-004' or libid = 'DC0001-008' or libid = 'DC0001-009'
 	or libid = 'DC0001-015' or libid = 'DC0001-010' or libid = 'DC0001-002' or libid = 'DC0001-011'
@@ -317,61 +317,61 @@ where libid = 'DC0001-003' or libid = 'DC0001-005' or libid = 'DC0001-006' or li
 	or libid = 'DC0001-023';
 
 update fabric.lib_master5
-set us_connect = -2
+set us_connect = -9
 where fscskey = 'CO0094'; 
 
 update fabric.lib_master5
-set blue_ridge = 2
+set blue_ridge = 9
 where fscskey = 'VA0008';
 
 update fabric.lib_master5
-set dobson = 2
+set dobson = 9
 where libid = 'OK0070-010';
 
 update fabric.lib_master5
-set west_carolina_tel = 2
+set west_carolina_tel = 9
 where libid = 'SC0004-009' or libid = 'SC8003-001' or libid = 'SC8003-002' 
 	or libid = 'SC8003-003' or libid = 'SC0028-002';
 
 update fabric.lib_master5
-set manawa = 2
+set manawa = 9
 where fscskey = 'WI0177';
 
 update fabric.lib_master5
-set srtc = 2
+set srtc = 9
 where libid = 'TX0086-002' or libid = 'TX0192-002' or libid = 'TX0078-002';
 
 update fabric.lib_master5
-set premier = 2
+set premier = 9
 where fscskey = 'IA0184' or fscskey = 'IA0126' or fscskey = 'IA0424' or fscskey = 'IA0530';
 
 update fabric.lib_master5
-set fibercomm = 2
+set fibercomm = 9
 where fscskey = 'IA0225';
 
 update fabric.lib_master5
-set h_and_b = 2
+set h_and_b = 9
 where fscskey = 'KS0147' or fscskey = 'KS0091' or fscskey = 'KS0079';
 
 update fabric.lib_master5
-set golden_belt = 2
+set golden_belt = 9
 where fscskey = 'KS0010' or fscskey = 'KS0041' or fscskey = 'KS0290' or fscskey = 'KS0007'
 	or fscskey = 'KS0306' or fscskey = 'KS0019' or fscskey = 'KS0287' or fscskey = 'KS0195'
 	or fscskey = 'KS0284';
 update fabric.lib_master5
-set golden_belt = -2
+set golden_belt = -9
 where fscskey = 'KS0036' or fscskey = 'KS0280' or fscskey = 'KS0170';
 
 update fabric.lib_master5
-set united = 2
+set united = 9
 where fscskey = 'KS0299' or fscskey = 'KS0292';
 
 update fabric.lib_master5
-set fontana = 2
+set fontana = 9
 where libid = 'NC0008-005' or libid = 'NC0008-002' or libid = 'NC0008-008' or libid = 'NC0008-003' or libid = 'NC0008-004';
 
 update fabric.lib_master5
-set nextech = 2
+set nextech = 9
 where libid = 'KS0144-002' or libid = 'KS0011-002' or libid = 'KS0034-002' or libid = 'KS0136-002'
 	or libid = 'KS0153-002' or libid = 'KS0141-002' or libid = 'KS0053-002' or libid = 'KS0145-002'
 	or libid = 'KS0025-002' or libid = 'KS0015-002' or libid = 'KS0142-002' or libid = 'KS0029-002'
@@ -380,223 +380,223 @@ where libid = 'KS0144-002' or libid = 'KS0011-002' or libid = 'KS0034-002' or li
 	or libid = 'KS0151-002' or libid = 'KS0040-002' or libid = 'KS0037-002' or libid = 'KS0002-002'
 	or libid = 'KS0154-002' or libid = 'KS0004-002' or libid = 'KS0016-002' or fscskey = 'KS0150';
 update fabric.lib_master5
-set nextech = -2
+set nextech = -9
 where libid = 'KS0014-002' or libid = 'KS0006-002' or libid = 'KS0137-002' or libid = 'KS0321-002' 
 	or libid = 'KS0047-002' or libid = 'KS0009-002' or libid = 'KS0152-002';
 	
 update fabric.lib_master5
-set nemr = 2
+set nemr = 9
 where libid = 'MO0061-002' or libid = 'MO0066-002';
 
 update fabric.lib_master5
-set wilson = 2
+set wilson = 9
 where fscskey = 'KS0021' or fscskey = 'KS0031';
 
 update fabric.lib_master5
-set van_horne = 2
+set van_horne = 9
 where fscskey = 'IA0365';
 
 update fabric.lib_master5
-set dumont = 2
+set dumont = 9
 where fscskey = 'IA0509' or fscskey = 'IA0344';
 
 update fabric.lib_master5
-set pioneer = 2
+set pioneer = 9
 where libid = 'OR0119-005';
 
 update fabric.lib_master5
-set webster_calhoun = 2
+set webster_calhoun = 9
 where libid = 'IA0556-002' or libid = 'IA0290-002' or libid = 'IA0377-002' or libid = 'IA0263-002'
 	or libid = 'IA0310-002' or libid = 'IA0313-002' or libid = 'IA0522-002' or libid = 'IA0185-002';
 
 update fabric.lib_master5
-set gervais_datavision = 2
+set gervais_datavision = 9
 where fscskey = 'OR0104' or fscskey = 'OR0083' or fscskey = 'OR0047' or fscskey = 'OR0036';
 
 update fabric.lib_master5
-set paul_bunyan = 2
+set paul_bunyan = 9
 where libid = 'MN0145-002' or libid = 'MN0145-003' or libid = 'MN0145-005';
 
 update fabric.lib_master5
-set stayton = 2
+set stayton = 9
 where fscskey = 'OR0083' or fscskey = 'OR0036';
 
 update fabric.lib_master5
-set siskiyou = 2
+set siskiyou = 9
 where libid = 'CA0135-011' or libid = 'CA0135-009' or libid = 'CA0135-011' or libid = 'CA0135-018';
 
 update fabric.lib_master5
-set cascade_com = 2
+set cascade_com = 9
 where fscskey = 'IA0465';
 
 update fabric.lib_master5
-set rt_comm = -2
+set rt_comm = -9
 where libid = 'WY0013-002' or libid = 'WY0013-004' or libid = 'WY0016-003' or libid = 'WY0004-002'
 	or libid = 'WY0004-003' or libid = 'WY0009-002' or libid = 'WY0023-003' or fscskey = 'WY0023';
 update fabric.lib_master5
-set rt_comm = 2
+set rt_comm = 9
 where fscskey = 'WY0015' or fscskey = 'WY0022';
 
 update fabric.lib_master5
-set dubois_telephone = -2
+set dubois_telephone = -9
 where libid = 'WY0011-009';
 update fabric.lib_master5
-set dubois_telephone = 2
+set dubois_telephone = 9
 where libid = 'WY0003-005';
 
 update fabric.lib_master5
-set range_telephone = -2
+set range_telephone = -9
 where libid = 'WY0007-002' or libid = 'WY0013-005';
 
 update fabric.lib_master5
-set westel = 2
+set westel = 9
 where fscskey = 'IA0170' or fscskey = 'IA0418' or fscskey = 'IA0178' or fscskey = 'IA0419' or fscskey = 'IA0115';
 
 update fabric.lib_master5
-set einetwork = 2
+set einetwork = 9
 where libid = 'PA0042-003' or fscskey = 'PA0051' or fscskey = 'PA0513' or libid = 'PA0050-003'
 	or libid = 'PA0034-005' or libid = 'PA0034-003'; 
 
 update fabric.lib_master5
-set sunflower = 2
+set sunflower = 9
 where libid = 'MS0044-004' or libid = 'MS0044-002' or libid = 'MS0044-003' or libid = 'MS0044-006';
 
 update fabric.lib_master5
-set carnegie = 2
+set carnegie = 9
 where fscskey = 'MS0005';
 
 update fabric.lib_master5
-set dixie = 2
+set dixie = 9
 where libid = 'MS0009-002';
 update fabric.lib_master5
-set dixie = -2
+set dixie = -9
 where libid = 'MS0009-003' or libid = 'MS0009-004' or libid = 'MS0009-005' or libid = 'MS0009-006'
 	or libid = 'MS0009-008' or libid = 'MS0009-009' or libid = 'MS0009-007';
 
 update fabric.lib_master5
-set pearl_river = 2
+set pearl_river = 9
 where libid = 'MS0039-002' or libid = 'MS0039-003';
 
 update fabric.lib_master5
-set jackson_george = 2
+set jackson_george = 9
 where libid = 'MS0020-003' or libid = 'MS0020-004' or libid = 'MS0020-005' or libid = 'MS0020-006' 
 	or libid = 'MS0020-007' or libid = 'MS0020-002' or libid = 'MS0020-008' or libid = 'MS0020-009';
 
 update fabric.lib_master5
-set bolivar = -2
+set bolivar = -9
 where libid = 'MS0003-002' or libid = 'MS0003-008' or libid = 'MS0003-004' or libid = 'MS0003-003'
 	or libid = 'MS0003-005' or libid = 'MS0003-010' or libid = 'MS0003-006';
 
 update fabric.lib_master5
-set waynesboro_wayne = -2
+set waynesboro_wayne = -9
 where fscskey = 'MS8002';
 
 update fabric.lib_master5
-set marks_quitman = -2
+set marks_quitman = -9
 where libid = 'MS0030-002';
 
 update fabric.lib_master5
-set corinth = 2
+set corinth = 9
 where libid = 'MS0035-002';
 
 update fabric.lib_master5
-set tombigbee = -2
+set tombigbee = -9
 where fscskey = 'MS0046';
 
 update fabric.lib_master5
-set yazoo = 2
+set yazoo = 9
 where fscskey = 'MS0042';
 
 update fabric.lib_master5
-set madison = 2
+set madison = 9
 where libid = 'MS0029-002' or libid = 'MS0029-004' or libid = 'MS0029-005'; 
 
 update fabric.lib_master5
-set mccormack = 2
+set mccormack = 9
 where libid = 'MO0137-004';
 
 update fabric.lib_master5
-set endeavor = 2
+set endeavor = 9
 where fscskey = 'IN0200' or libid = 'IN0212-005' or libid = 'IN0212-006';
 update fabric.lib_master5
-set endeavor = -2
+set endeavor = -9
 where libid = 'IN0196-005';
 
 update fabric.lib_master5
-set northwest = -2
+set northwest = -9
 where fscskey = 'IA0258' or libid = 'IA0375-002' or libid = 'IA0173-002' or libid = 'IA1076-002' or libid = 'IA0122-002';
 
 update fabric.lib_master5
-set ayrshire = -2
+set ayrshire = -9
 where libid = 'IA0259-002';
 
 update fabric.lib_master5
-set ctc = 2
+set ctc = 9
 where libid = 'MN0145-004';
 
 update fabric.lib_master5
-set tallahatchie = 2
+set tallahatchie = 9
 where libid = 'MS0045-002';
 update fabric.lib_master5
-set tallahatchie = -2
+set tallahatchie = -9
 where libid = 'MS0045-005';
 
 update fabric.lib_master5
-set triangle = 2
+set triangle = 9
 where fscskey = 'MT0014' or fscskey = 'MT0036' or fscskey = 'MT0048' or libid = 'MT0030-006' or libid = 'MT0030-009' 
 	or fscskey = 'MT0077';
 update fabric.lib_master5
-set triangle = -2
+set triangle = -9
 where fscskey = 'MT0013' or libid = 'MT0030-007' or fscskey = 'MT0065' or fscskey = 'MT0022' or fscskey = 'MT0052'
 	or fscskey = 'MT0037' or fscskey = 'MT0005';
 
 update fabric.lib_master5
-set mid_mississippi = -2 
+set mid_mississippi = -9
 where libid = 'MS0033-002' or libid = 'MS0033-003' or libid = 'MS0033-004' or libid = 'MS0033-005' or libid = 'MS0033-006'
 	or libid = 'MS0033-007' or libid = 'MS0033-008' or libid = 'MS0033-009' or libid = 'MS0033-010' or libid = 'MS0033-011'
 	or libid = 'MS0033-012' or libid = 'MS0033-013' or libid = 'MS0033-014';
 update fabric.lib_master5
-set mid_mississippi = 2
+set mid_mississippi = 9
 where libid = 'MS0033-000';
 
 update fabric.lib_master5
-set cunningham = 2
+set cunningham = 9
 where fscskey = 'KS0003' or fscskey = 'KS0001';
 
 update fabric.lib_master5
-set silver_star = 2
+set silver_star = 9
 where libid = 'WY0017-008' or libid = 'WY0017-007' or fscskey = 'WY0020' or libid = 'WY0020-003';
 
 update fabric.lib_master5
-set xit = 2
+set xit = 9
 where fscskey = 'TX0457' or fscskey = 'TX0390';
 update fabric.lib_master5
-set xit = -2
+set xit = -9
 where fscskey = 'TX0295' or fscskey = 'TX0381';
 
 update fabric.lib_master5
-set smrl = 2
+set smrl = 9
 where libid = 'MS0043-002';
 update fabric.lib_master5
-set smrl = -2
+set smrl = -9
 where libid = 'MS0043-003' or libid = 'MS0043-004';
 
 update fabric.lib_master5
-set harrison = 2
+set harrison = 9
 where libid = 'MS0016-013' or libid = 'MS0016-010' or libid = 'MS0016-004' or libid = 'MS0016-008' 
 	or libid = 'MS0016-006' or libid = 'MS0016-007' or libid = 'MS0016-012' or libid = 'MS0016-009'
 	or libid = 'MS0016-014';
 
 update fabric.lib_master5
-set wilkinson = -2
+set wilkinson = -9
 where libid = 'MS 0052-001' or libid = 'MS 0052-002';
 
 update fabric.lib_master5
-set lamar = 2
+set lamar = 9
 where libid = 'MS8001-003' or libid = 'MS8001-002' or libid = 'MS8001-001' or libid = 'MS8001-004';
 
 update fabric.lib_master5
-set kemper_newton = -2
+set kemper_newton = -9
 where libid = 'MS0023-002' or libid = 'MS0023-004' or libid = 'MS0023-006' or libid = 'MS0023-004';
 
 -------------------------CORROBORATION SCORE------------------------------

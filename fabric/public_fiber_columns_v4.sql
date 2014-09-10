@@ -157,10 +157,10 @@ alter table fabric.wv_ind
 alter table fabric.wv_ind
 	add column fiber int;
 update fabric.wv_ind
-	set fiber = 2
+	set fiber = 9
 	where fiber_ind = 'Y';
 update fabric.wv_ind
-	set fiber = -2
+	set fiber = -9
 	where fiber_ind = 'N';
 update fabric.wv_ind
 	set fiber = 0
@@ -186,10 +186,10 @@ alter table fabric.me_ind
 alter table fabric.me_ind
 	add column fiber int;
 update fabric.me_ind
-	set fiber = 2
+	set fiber = 9
 	where cxn_type = 'FIBER' or cxn_type = 'DARK FIBER';
 update fabric.me_ind
-	set fiber = -2
+	set fiber = -9
 	where cxn_type <> 'FIBER' or cxn_type <> 'DARK FIBER';
 update fabric.me_ind
 	set fiber = 0
@@ -203,7 +203,7 @@ alter table fabric.navajo_schools
 alter table fabric.navajo_schools
 	add column fiber int;
 update fabric.navajo_schools
-	set fiber = -2;
+	set fiber = -9;
 
 --MONTANA
 alter table fabric.mt_ind
@@ -479,10 +479,10 @@ alter table fabric.ga_ind_new
 alter table fabric.ga_ind_new
 	add column fiber int;
 update fabric.ga_ind_new
-	set fiber = -2
+	set fiber = -9
 	where has_fiber = 'No' or has_fiber = 'no';
 update fabric.ga_ind_new
-	set fiber = 2
+	set fiber = 9
 	where has_fiber = 'Yes' or has_fiber = 'yes';
 
 --BIE
@@ -495,7 +495,7 @@ alter table fabric.bie_ind
 alter table fabric.bie_ind
 	add column fiber int;
 update fabric.bie_ind
-	set fiber = -2;
+	set fiber = -9;
 
 --Puerto Rico
 select *
@@ -507,11 +507,11 @@ alter table fabric.pr_ind
 	add column fiber int;
 
 update fabric.pr_ind
-set fiber = 2
+set fiber = 9
 where physical_cxn = 'x-Fiber';
 
 update fabric.pr_ind
-set fiber = -2
+set fiber = -9
 where physical_cxn = 'Copper' OR physical_cxn = 'Wireless';
 
 --DC
@@ -524,7 +524,7 @@ alter table fabric.dc_ind
 	add column fiber int;
 
 update fabric.dc_ind
-set fiber = 2
+set fiber = 9
 where technology = 'Fiber';
 
 --Iowa
@@ -539,7 +539,7 @@ alter table fabric.ia_ind
 	add column fiber int;
 
 update fabric.ia_ind
-set fiber = 2;
+set fiber = 9;
 
 --Ritter
 select *
@@ -552,7 +552,7 @@ alter table fabric.ritter
 	add column fiber int;
 
 update fabric.ritter
-set fiber = 2;
+set fiber = 9;
 
 --ITS (ALABAMA)
 alter table fabric.its
@@ -561,4 +561,4 @@ alter table fabric.its
 	add column fiber int;
 
 update fabric.its
-set fiber = 2;
+set fiber = 9;
