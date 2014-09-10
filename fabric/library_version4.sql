@@ -263,7 +263,12 @@ alter table fabric.lib_master5
 	add column mid_mississippi int,
 	add column cunningham int,
 	add column silver_star int,
-	add column xit int;
+	add column xit int,
+	add column smrl int,
+	add column harrison int,
+	add column wilkinson int,
+	add column lamar int,
+	add column kemper_newton int;
 
 update fabric.lib_master5
 set grantsburg = 2
@@ -569,6 +574,30 @@ update fabric.lib_master5
 set xit = -2
 where fscskey = 'TX0295' or fscskey = 'TX0381';
 
+update fabric.lib_master5
+set smrl = 2
+where libid = 'MS0043-002';
+update fabric.lib_master5
+set smrl = -2
+where libid = 'MS0043-003' or libid = 'MS0043-004';
+
+update fabric.lib_master5
+set harrison = 2
+where libid = 'MS0016-013' or libid = 'MS0016-010' or libid = 'MS0016-004' or libid = 'MS0016-008' 
+	or libid = 'MS0016-006' or libid = 'MS0016-007' or libid = 'MS0016-012' or libid = 'MS0016-009'
+	or libid = 'MS0016-014';
+
+update fabric.lib_master5
+set wilkinson = -2
+where libid = 'MS 0052-001' or libid = 'MS 0052-002';
+
+update fabric.lib_master5
+set lamar = 2
+where libid = 'MS8001-003' or libid = 'MS8001-002' or libid = 'MS8001-001' or libid = 'MS8001-004';
+
+update fabric.lib_master5
+set kemper_newton = -2
+where libid = 'MS0023-002' or libid = 'MS0023-004' or libid = 'MS0023-006' or libid = 'MS0023-004';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
@@ -584,17 +613,18 @@ select libid, coalesce(alliance,0) + coalesce(ayrshire,0) + coalesce(blue_ridge,
 	 + coalesce(dobson,0)
 	 + coalesce(dubois_telephone,0) + coalesce(dumont,0) + coalesce(einetwork,0) + coalesce(endeavor,0)
 	 + coalesce(fibercomm,0) + coalesce(fontana,0) + coalesce(gervais_datavision,0) + coalesce(golden_belt,0)
-	 + coalesce(grantsburg,0) + coalesce(h_and_b,0) + coalesce(heart_iowa,0) + coalesce(iowa,0)
-	 + coalesce(jackson_george,0) + coalesce(kansas,0) + coalesce(madison,0)  + coalesce(maine,0) + coalesce(manawa,0) 
+	 + coalesce(grantsburg,0) + coalesce(h_and_b,0) + coalesce(harrison,0) + coalesce(heart_iowa,0) + coalesce(iowa,0)
+	 + coalesce(jackson_george,0) + coalesce(kansas,0) + coalesce(kemper_newton,0) + coalesce(lamar,0) + coalesce(madison,0)  
+	 + coalesce(maine,0) + coalesce(manawa,0) 
 	 + coalesce(marks_quitman,0) + coalesce(mccormack,0) + coalesce(mid_mississippi,0) + coalesce(missouri,0) + coalesce(nemr,0) 
 	 + coalesce(nextech,0)
 	 + coalesce(northwest,0) + coalesce(ohio,0) + coalesce(paul_bunyan,0) + coalesce(pearl_river,0) + coalesce(peoples_rural,0)
 	 + coalesce(peoples_telecom,0) + coalesce(pioneer,0) + coalesce(premier,0) + coalesce(range_telephone,0)
-	 + coalesce(rt_comm,0) + coalesce(siskiyou,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunflower,0)
+	 + coalesce(rt_comm,0) + coalesce(siskiyou,0) + coalesce(smrl,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunflower,0)
 	 + coalesce(tallahatchie,0) + coalesce(toledotel,0) + coalesce(tombigbee,0) + coalesce(triangle,0)
 	 + coalesce(united,0) + coalesce(us_connect,0) + coalesce(van_horne,0)
 	 + coalesce(vermont,0) + coalesce(wabash,0) + coalesce(waynesboro_wayne,0) + coalesce(webster_calhoun,0)
-	 + coalesce(west_carolina_tel,0) + coalesce(westel,0) + coalesce(wilson,0) + coalesce(xit,0) + coalesce(yazoo,0)
+	 + coalesce(west_carolina_tel,0) + coalesce(westel,0) + coalesce(wilkinson,0) + coalesce(wilson,0) + coalesce(xit,0) + coalesce(yazoo,0)
 	as row_score
 from fabric.lib_master5
 )

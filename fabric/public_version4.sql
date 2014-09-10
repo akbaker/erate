@@ -1346,7 +1346,7 @@ select ncessch, coalesce(advanced,0) + coalesce(alenco_comm,0) + coalesce(allian
 	+ coalesce(htc,0) 
 	+ coalesce(hudson,0) + coalesce(huntsville,0) + coalesce(in_shore,0) + coalesce(iowa,0) + coalesce(kane,0) 
 	+ coalesce(karns_city,0) + coalesce(ketchikan,0) + coalesce(lakeland,0)
-	+ coalesce(laporte,0) + coalesce (lebanon,0) + coalesce(maine,0) + coalesce(manawa,0) + coalsece(manheim,0)
+	+ coalesce(laporte,0) + coalesce (lebanon,0) + coalesce(maine,0) + coalesce(manawa,0) + coalesce(manheim,0)
 	+ coalesce(marion,0) + coalesce(marne_elk,0) + coalesce(mccormack,0)
 	+ coalesce(mckenzie,0) + coalesce(mcleod,0) + coalesce(middleburgh,0) + coalesce(midstate,0) + coalesce(mifflin,0) 
 	+ coalesce(moniteau,0)
