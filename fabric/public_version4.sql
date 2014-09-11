@@ -601,7 +601,8 @@ alter table fabric.master5
 	add column silver_star int,
 	add column manheim int,
 	add column hiawatha int,
-	add column xit int;
+	add column xit int,
+	add column southwest_arkansas int;
 
 update fabric.master5
 set ketchikan = 9
@@ -1321,6 +1322,13 @@ update fabric.master5
 set xit = -9
 where ncessch = '481104005141' or ncessch = '481104000571' or ncessch = '481104000570' or ncessch = '481104011914';
 
+update fabric.master5
+set southwest_arkansas = 9
+where ncessch = '050411000151' or ncessch = '050411000286' or ncessch = '050411000152' or ncessch = '050636000379'
+	or ncessch = '050636000299' or ncessch = '050636000380' or ncessch = '050006800291' or ncessch = '050006800292'
+	or ncessch = '050006801062' or ncessch = '050006801063';
+
+
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
 alter table fabric.master5
@@ -1358,7 +1366,8 @@ select ncessch, coalesce(advanced,0) + coalesce(alenco_comm,0) + coalesce(allian
 	+ coalesce(s_and_a,0)
 	+ coalesce(sacred_wind,0) + coalesce(shade_central,0) + coalesce(silver_star,0) + coalesce(siskiyou,0) + coalesce(snc,0) 
 	+ coalesce(somerset,0) 
-	+ coalesce(souderton,0) + coalesce(south_central,0) + coalesce(south_middleton,0) + coalesce(southwest_texas,0) 
+	+ coalesce(souderton,0) + coalesce(south_central,0) + coalesce(south_middleton,0) + coalesce(southwest_arkansas,0)
+	+ coalesce(southwest_texas,0) 
 	+ coalesce(spring_grove,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunesys,0) + coalesce(tca,0) 
 	+ coalesce(toledotel,0) + coalesce(totah_totel,0) + coalesce(united,0) + coalesce(upper_dauphin,0) 
 	+ coalesce(us_connect,0) + coalesce(van_buren,0) + coalesce(van_horne,0) + coalesce(wabash,0) + coalesce(waldron,0) 
@@ -1404,16 +1413,28 @@ drop table if exists fabric.publicmap;
 create table fabric.publicmap as(
 select ncessch, leaid, ulocal, member, geom, score_map, fiber_map
 from fabric.master5
+order by score_map
 );
 
 copy(select * from fabric.publicmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/public_map_fiber.csv' with delimiter '|' CSV header;
 
 alter table fabric.master5
+	drop column if exists fiber_v3,
 	drop column if exists fiber_v2,
 	drop column if exists fiber_v1;
 alter table fabric.master5
+	add column fiber_v3 int,
 	add column fiber_v2 int,
 	add column fiber_v1 int;
+
+with new_values as(
+select ncessch, fiber_map
+from fabric.master4
+)
+update fabric.master5
+set fiber_v3 = new_values.fiber_map
+from new_values
+where master5.ncessch = new_values.ncessch;
 
 with new_values as(
 select ncessch, fiber_map

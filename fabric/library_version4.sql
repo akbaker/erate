@@ -268,7 +268,9 @@ alter table fabric.lib_master5
 	add column harrison int,
 	add column wilkinson int,
 	add column lamar int,
-	add column kemper_newton int;
+	add column kemper_newton int,
+	add column pike int,
+	add column columbus_lowndes int;
 
 update fabric.lib_master5
 set grantsburg = 9
@@ -599,6 +601,18 @@ update fabric.lib_master5
 set kemper_newton = -9
 where libid = 'MS0023-002' or libid = 'MS0023-004' or libid = 'MS0023-006' or libid = 'MS0023-004';
 
+update fabric.lib_master5
+set pike = 9
+where libid = 'MS0040-003' or libid = 'MS0040-005' or libid = 'MS0040-006' or libid = 'MS0040-007'
+	or libid = 'MS0040-002' or libid = 'MS0040-008' or libid = 'MS0040-009' or libid = 'MS0040-010';
+
+update fabric.lib_master5
+set columbus_lowndes = -9
+where libid = 'MS0028-003' or libid = 'MS0028-004' or libid = 'MS0028-005';
+update fabric.lib_master5
+set columbus_lowndes = 9
+where libid = 'MS0028-002';
+
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
 alter table fabric.lib_master5
@@ -609,8 +623,8 @@ alter table fabric.lib_master5
 with new_values as(
 select libid, coalesce(alliance,0) + coalesce(ayrshire,0) + coalesce(blue_ridge,0) + coalesce(bolivar,0)
 	 + coalesce(c_spire,0) + coalesce(cai,0) + coalesce(carnegie,0) + coalesce(cascade_com,0) + coalesce(clear_lake,0)
-	 + coalesce(com_net,0) + coalesce(corinth,0) + coalesce (ctc,0) + coalesce(cunningham,0) + coalesce(dc,0) + coalesce(dixie,0) 
-	 + coalesce(dobson,0)
+	 + coalesce(columbus_lowndes,0) + coalesce(com_net,0) + coalesce(corinth,0) + coalesce (ctc,0) + coalesce(cunningham,0) 
+	 + coalesce(dc,0) + coalesce(dixie,0) + coalesce(dobson,0)
 	 + coalesce(dubois_telephone,0) + coalesce(dumont,0) + coalesce(einetwork,0) + coalesce(endeavor,0)
 	 + coalesce(fibercomm,0) + coalesce(fontana,0) + coalesce(gervais_datavision,0) + coalesce(golden_belt,0)
 	 + coalesce(grantsburg,0) + coalesce(h_and_b,0) + coalesce(harrison,0) + coalesce(heart_iowa,0) + coalesce(iowa,0)
@@ -619,7 +633,7 @@ select libid, coalesce(alliance,0) + coalesce(ayrshire,0) + coalesce(blue_ridge,
 	 + coalesce(marks_quitman,0) + coalesce(mccormack,0) + coalesce(mid_mississippi,0) + coalesce(missouri,0) + coalesce(nemr,0) 
 	 + coalesce(nextech,0)
 	 + coalesce(northwest,0) + coalesce(ohio,0) + coalesce(paul_bunyan,0) + coalesce(pearl_river,0) + coalesce(peoples_rural,0)
-	 + coalesce(peoples_telecom,0) + coalesce(pioneer,0) + coalesce(premier,0) + coalesce(range_telephone,0)
+	 + coalesce(peoples_telecom,0) + coalesce(pike,0) + coalesce(pioneer,0) + coalesce(premier,0) + coalesce(range_telephone,0)
 	 + coalesce(rt_comm,0) + coalesce(siskiyou,0) + coalesce(smrl,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunflower,0)
 	 + coalesce(tallahatchie,0) + coalesce(toledotel,0) + coalesce(tombigbee,0) + coalesce(triangle,0)
 	 + coalesce(united,0) + coalesce(us_connect,0) + coalesce(van_horne,0)
@@ -667,6 +681,7 @@ drop table if exists fabric.libmap;
 create table fabric.libmap as(
 select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, score_map, fiber_map
 from fabric.lib_master5
+order by score_map
 );
 copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
 
