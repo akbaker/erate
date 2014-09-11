@@ -1456,15 +1456,19 @@ where master5.ncessch = new_values.ncessch;
 
 drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
-select ncessch, schnam, leaid, leanm, lcity, lstate, ulocal, member, geom, fiber_map AS fiber_v3, fiber_v2, fiber_v1, score_map AS score,
-	alenco_comm, alliance, alpine, arlington, blue_mountain, bie, butler_bremer, california, citizens, clear_lake, com_net, cai, dc,
-	dobson, dubois, dumont, dupage, elmwood, farmers, fatbeam, fibercomm, florida, franklin, ftc, galena, ganado, garden_valley, georgia,
-	gervais_datavision, golden_belt, h_and_b, heart_iowa, hempfield, htc, hudson, in_shore, kane, ketchikan, laporte, maine, manawa,
-	marion, marne_elk, mckenzie, mcleod, middleburgh, midstate, mifflin, montana, mtc, mte, navajo, new_mexico, newton, nextech, nogales,
-	north_carolina, nemr, lebanon, octorara, ohio, ortelco, otelco, palestine, paul_bunyan, peoples_rural, peoples_telecom, phoenixville,
-	pioneer, premier, pmt, puerto_rico, revere, rock_island, round_rock, runestone, s_and_a, sacred_wind, srtc, souderton, south_central,
-	snc, southwest_texas, spring_grove, sunesys, tca, toledotel, totah_totel, united, us_connect, van_horne, wabash, waldron,
-	west_carolina_tel, west_central, west_texas_rural, west_virginia, wikstrom, wilson, yadtel, yelcot
+select ncessch, schnam, leaid, leanm, lcity, lstate, ulocal, member, geom, fiber_map AS fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score,
+	advanced, alenco_comm, alliance, alpine, arlington, atc, bellwood_antis, bie, blue_mountain, bps, butler_bremer, c_spire, cai,
+	california, citizens, clear_lake, com_net, ctc, cunningham, dc, dobson, dubois, dubois_telephone, dumont, dupage, eastex, elmwood,
+	endeavor, farmers, fatbeam, fibercomm, florida, fort_laboeuf, franklin, ftc, galena, ganado, garden_valley, georgia, gervais_datavision,
+	glen_rose, golden_belt, green_hills, greenwood, grm, h_and_b, harrisonville, heart_iowa, hempfield, hiawatha, htc, hudson,
+	huntsville, in_shore, iowa, its, kane, karns_city, ketchikan, lakeland, laporte, lebanon, maine, manawa, manheim, marion, marne_elk,
+	mccormack, mckenzie, mcleod, middleburgh, midstate, mifflin, moniteau, monon, montana, mtc, mte, navajo, nemr, new_mexico, newton,
+	nextech, nogales, north_carolina, northampton, octorara, ohio, ortelco, otelco, palestine, paul_bunyan, peoples_rural, peoples_telecom,
+	phoenixville, pioneer, pmt, portage, premier, puerto_rico, range_telephone, red_river, redbank, revere, ritter, rock_island, roome,
+	round_rock, rt_comm, runestone, s_and_a, sacred_wind, shade_central, silver_star, snc, somerset, souderton, south_central, south_middleton,
+	southwest_arkansas, southwest_texas, spring_grove, srtc, stayton, sunesys, tca, toledotel, totah_totel, united, upper_dauphin, us_connect,
+	van_buren, van_horne, wabash, waldron, wayne_highlands, west_carolina_tel, west_central, west_texas_rural, west_virginia, wikstrom, 
+	wilson, xit, yadtel, yelcot
 from fabric.master5
 );
 

@@ -686,11 +686,22 @@ order by score_map
 copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
 
 alter table fabric.lib_master5
+	drop column if exists fiber_v3,
 	drop column if exists fiber_v2,
 	drop column if exists fiber_v1;
 alter table fabric.lib_master5
+	add column fiber_v3 int,
 	add column fiber_v2 int,
 	add column fiber_v1 int;
+
+with new_values as(
+select libid, fiber_map
+from fabric.lib_master4
+)
+update fabric.lib_master5
+set fiber_v3 = new_values.fiber_map
+from new_values
+where lib_master5.libid = new_values.libid;
 
 with new_values as(
 select libid, fiber_map
@@ -712,11 +723,14 @@ where lib_master5.libid = new_values.libid;
 
 drop table if exists fabric.libmap_fiber;
 create table fabric.libmap_fiber as(
-select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, fiber_map AS fiber_v3, fiber_v2, fiber_v1,
-	score_map AS score, alliance, blue_ridge, clear_lake, com_net, cai, dc, dobson, fibercomm, fontana, gervais_datavision,
-	golden_belt, grantsburg, h_and_b, heart_iowa, kansas, maine, manawa, missouri, nextech, nemr, ohio, paul_bunyan, peoples_rural,
-	peoples_telecom, premier, srtc, toledotel, united, us_connect, van_horne, vermont, wabash, webster_calhoun, west_carolina_tel,
-	wilson
+select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, fiber_map AS fiber_v4, fiber_v3, fiber_v2, fiber_v1,
+	score_map AS score, alliance, ayrshire, blue_ridge, bolivar, c_spire, cai, carnegie, cascade_com, clear_lake, columbus_lowndes,
+	com_net, corinth, ctc, cunningham, dc, dixie, dobson, dubois_telephone, dumont, einetwork, endeavor, fibercomm, fontana,
+	gervais_datavision, golden_belt, grantsburg, h_and_b, harrison, heart_iowa, iowa, jackson_george, kansas, kemper_newton, lamar,
+	madison, maine, manawa, marks_quitman, mccormack, mid_mississippi, missouri, nemr, nextech, northwest, ohio, paul_bunyan,
+	pearl_river, peoples_rural, peoples_telecom, pike, pioneer, premier, range_telephone, rt_comm, siskiyou, smrl, srtc, stayton,
+	sunflower, tallahatchie, toledotel, tombigbee, triangle, united, us_connect, van_horne, vermont, wabash, waynesboro_wayne,
+	webster_calhoun, west_carolina_tel, westel, wilkinson, wilson, xit, yazoo
 from fabric.lib_master5
 );
 
