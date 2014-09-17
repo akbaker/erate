@@ -1328,6 +1328,52 @@ where ncessch = '050411000151' or ncessch = '050411000286' or ncessch = '0504110
 	or ncessch = '050636000299' or ncessch = '050636000380' or ncessch = '050006800291' or ncessch = '050006800292'
 	or ncessch = '050006801062' or ncessch = '050006801063';
 
+alter table fabric.master5
+add column rock int,
+add column ksl_group int,
+add column fidelity int,
+add column sierra int,
+add column tec int,
+add column oregon_farmers int,
+add column nctc int,
+add column pinnacle int;
+
+update fabric.master5
+set rock = 9
+where ncessch = '317617000212' or ncessch = '317617001559';
+
+update fabric.master5
+set ksl_group = 9
+where ncessch in ('47007800289','470078000286','470078000291','470078000287','470078000292',
+	'470078000285','470078000288','470078000298','470078002234');
+
+update fabric.master5
+set fidelity = 9
+where ncessch in ('481311000812','481311000814','291251000511','292196001224','292196001225','292196002732','291245000509');
+
+update fabric.master5
+set sierra = 9
+where ncessch in ('060408009307','060408009306','060408010250','069109008161','062394003607','063192004918','062394013041',
+	'060016000936','060016010252','060016007023');
+
+update fabric.master5
+set tec = 9
+where ncessch in ('280459000857','130084002239','280459000899','280228000451','280228001237','470183000616','470085001898',
+	'010285001127','010084000333');
+
+update fabric.master5
+set oregon_farmers = 9
+where ncessch in ('292319001333','292319001334');
+
+update fabric.master5
+set nctc = 9
+where ncessch in ('210007000009','210007000008','210007000013','210007000010','210007002061');
+
+update fabric.master5
+set pinnacle = 9
+where ncessch in ('050873000586','050873000663','050873000587','402337001239','402337002708',
+	'402337001987','402337001241','402745001450');
+
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
@@ -1456,7 +1502,8 @@ where master5.ncessch = new_values.ncessch;
 
 drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
-select ncessch, schnam, leaid, leanm, lcity, lstate, ulocal, member, geom, fiber_map AS fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score,
+select ncessch AS nces_id, schnam AS school_name, leaid AS lea_id, leanm AS lea_name, lcity AS city, lstate AS state, 
+	ulocal AS locale, member AS enrollement, geom, fiber_map AS fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score,
 	advanced, alenco_comm, alliance, alpine, arlington, atc, bellwood_antis, bie, blue_mountain, bps, butler_bremer, c_spire, cai,
 	california, citizens, clear_lake, com_net, ctc, cunningham, dc, dobson, dubois, dubois_telephone, dumont, dupage, eastex, elmwood,
 	endeavor, farmers, fatbeam, fibercomm, florida, fort_laboeuf, franklin, ftc, galena, ganado, garden_valley, georgia, gervais_datavision,

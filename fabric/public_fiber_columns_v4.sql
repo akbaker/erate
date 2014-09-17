@@ -120,18 +120,34 @@ update analysis.nces_public_2011
 	set school_code_fl = stid_fl || ' ' || sea_fl;
 
 alter table fabric.fl_ind
+drop column if exists tech;
+
+alter table fabric.fl_ind
+add column tech character varying(10);
+
+update fabric.fl_ind
+set tech = 'Copper'
+where cxn_copper > 0;
+update fabric.fl_ind
+set tech = 'Wireless'
+where cxn_wireless > 0;
+update fabric.fl_ind
+set tech = 'Fiber'
+where cxn_fiber > 0;
+
+alter table fabric.fl_ind
 	drop column if exists fiber;
 alter table fabric.fl_ind
 	add column fiber int;
 update fabric.fl_ind
 	set fiber = 1
-	where cxn_fiber > 0;
+	where tech = 'Fiber';
 update fabric.fl_ind
 	set fiber = -1
-	where cxn_fiber = 0;
+	where tech = 'Copper' or tech = 'Wireless';
 update fabric.fl_ind
 	set fiber = 0
-	where cxn_fiber is null;
+	where tech is null;
 
 select fiber, count(*) from fabric.fl_ind group by fiber;
 
@@ -189,11 +205,8 @@ update fabric.me_ind
 	set fiber = 9
 	where cxn_type = 'FIBER' or cxn_type = 'DARK FIBER';
 update fabric.me_ind
-	set fiber = -9
-	where cxn_type <> 'FIBER' or cxn_type <> 'DARK FIBER';
-update fabric.me_ind
 	set fiber = 0
-	where fiber is null;
+	where fiber is null or cxn_type = 'ETHERNET';
 
 select fiber, count(*) from fabric.me_ind group by fiber;
 

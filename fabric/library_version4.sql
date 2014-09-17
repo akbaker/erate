@@ -476,7 +476,7 @@ where libid = 'MS0009-003' or libid = 'MS0009-004' or libid = 'MS0009-005' or li
 	or libid = 'MS0009-008' or libid = 'MS0009-009' or libid = 'MS0009-007';
 
 update fabric.lib_master5
-set pearl_river = 9
+set pearl_river = -9
 where libid = 'MS0039-002' or libid = 'MS0039-003';
 
 update fabric.lib_master5
@@ -613,6 +613,80 @@ update fabric.lib_master5
 set columbus_lowndes = 9
 where libid = 'MS0028-002';
 
+alter table fabric.lib_master5
+add column bucks int,
+add column fidelity int,
+add column sierra int,
+add column meridian_lauderdale int,
+add column central_mississippi int,
+add column copiah_jefferson int,
+add column harriette int,
+add column scmtc int,
+add column covington int,
+add column armstrong int;
+
+update fabric.lib_master5
+set bucks = 9
+where libid = 'PA0309-006' or libid = 'PA0309-004' or libid = 'PA0309-003'
+	or libid = 'PA0309-008' or libid = 'PA0309-005' or libid = 'PA0309-009';
+update fabric.lib_master5
+set bucks = -9
+where fscskey = 'PA0312' or fscskey = 'PA0317';
+
+update fabric.lib_master5
+set fidelity = 9
+where fscskey = 'MO0188';
+
+update fabric.lib_master5
+set sierra = 9
+where fscskey = 'CA0192' or fscskey = 'CA0064';
+
+update fabric.lib_master5
+set meridian_lauderdale = 9
+where libid = 'MS0032-002';
+
+update fabric.lib_master5
+set central_mississippi = 9
+where libid in ('MS0006-002','MS0006-022','MS0006-003','MS0006-011','MS0006-008');
+
+update fabric.lib_master5
+set copiah_jefferson = -9
+where libid in ('MS0008-006','MS0008-002');
+
+update fabric.lib_master5
+set harriette = 9
+where libid = 'MS0015-002';
+
+update fabric.lib_master5
+set scmtc = 9
+where libid = 'IA0189-002';
+
+update fabric.lib_master5
+set covington = -9
+where libid in ('MS0051-002','MS0051-003','MS0051-001');
+
+update fabric.lib_master5
+set yalobush = 9
+where libid = 'MS0002-003';
+update fabric.lib_master5
+set yalobush = -9
+where libid = 'MS0002-002';
+
+update fabric.lib_master5
+set armstrong = 9
+where libid = 'MS0018-002';
+
+update fabric.lib_master5
+set lee_itawamba = 9
+where libid = 'MS0025-002';
+update fabric.lib_master5
+set lee_itawamba = -9
+where libid = 'MS0025-003';
+
+update fabric.lib_master5
+set panora = 9
+where libid in ('IA0320-002','IA0317-002');
+
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
 alter table fabric.lib_master5
@@ -723,8 +797,9 @@ where lib_master5.libid = new_values.libid;
 
 drop table if exists fabric.libmap_fiber;
 create table fabric.libmap_fiber as(
-select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, fiber_map AS fiber_v4, fiber_v3, fiber_v2, fiber_v1,
-	score_map AS score, alliance, ayrshire, blue_ridge, bolivar, c_spire, cai, carnegie, cascade_com, clear_lake, columbus_lowndes,
+select fscskey AS fscs_key, system_name, libid AS library_id, libname AS library_name, c_out_ty AS library_type, geom, visits, 
+	fiber_map AS fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score, 
+	alliance, ayrshire, blue_ridge, bolivar, c_spire, cai, carnegie, cascade_com, clear_lake, columbus_lowndes,
 	com_net, corinth, ctc, cunningham, dc, dixie, dobson, dubois_telephone, dumont, einetwork, endeavor, fibercomm, fontana,
 	gervais_datavision, golden_belt, grantsburg, h_and_b, harrison, heart_iowa, iowa, jackson_george, kansas, kemper_newton, lamar,
 	madison, maine, manawa, marks_quitman, mccormack, mid_mississippi, missouri, nemr, nextech, northwest, ohio, paul_bunyan,
