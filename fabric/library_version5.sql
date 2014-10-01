@@ -1,108 +1,108 @@
-﻿drop table if exists fabric.lib_master5;
+﻿drop table if exists fabric.lib_master6;
 
 select *
-into fabric.lib_master5
+into fabric.lib_master6
 from analysis.imls_lib_2012;
 ----17586 records
 
-delete from fabric.lib_master5
+delete from fabric.lib_master6
 where c_out_ty = 'BM' or c_out_ty = 'BS';
 
 --Update matching key
-update fabric.lib_master5
+update fabric.lib_master6
 set libid = fscskey || '-' || fscs_seq;
 
 --Add number of visits
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column visits int;
 
 with new_values as(
 select fscskey, visits
 from analysis.imls_lib_stats
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set visits = new_values.visits
 from new_values
-where lib_master5.fscskey = new_values.fscskey;
+where lib_master6.fscskey = new_values.fscskey;
 
 --Add library system name
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column system_name character varying(100);
 
 with new_values as(
 select fscskey, libname
 from analysis.imls_lib_stats
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set system_name = new_values.libname
 from new_values
-where lib_master5.fscskey = new_values.fscskey;
+where lib_master6.fscskey = new_values.fscskey;
 
 --CAI
 select *
-from fabric.lib_master5, fabric.imls_cai
-where lib_master5.libid = imls_cai.imlsid;
+from fabric.lib_master6, fabric.imls_cai
+where lib_master6.libid = imls_cai.imlsid;
 
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column cai int;
 
 with new_values as(
 select imlsid, fiber AS cai_fiber
 from fabric.imls_cai
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set cai = new_values.cai_fiber
 from new_values
-where lib_master5.libid = new_values.imlsid;
+where lib_master6.libid = new_values.imlsid;
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column caiid character varying(10);
 
 with new_values as(
 select imlsid, caiid
 from fabric.imls_cai
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set caiid = new_values.caiid
 from new_values
-where lib_master5.libid = new_values.imlsid;
+where lib_master6.libid = new_values.imlsid;
 
 select *
-from fabric.lib_master5;
+from fabric.lib_master6;
 
 --KANSAS
 select *
-from fabric.lib_master5, fabric.ks_lib
-where lib_master5.libname = upper(ks_lib.library_name)
+from fabric.lib_master6, fabric.ks_lib
+where lib_master6.libname = upper(ks_lib.library_name)
 	and stabr = 'KS';
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column kansas int;
 
 with new_values as(
 select library_name, fiber AS ks_fiber
 from fabric.ks_lib
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set kansas = new_values.ks_fiber
 from new_values
 where libname = upper(new_values.library_name)
 	and stabr = 'KS';
 
 --MAINE
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column me_fscskey character varying(10);
 
-update fabric.lib_master5
+update fabric.lib_master6
 set me_fscskey = fscskey || fscs_seq
 where stabr = 'ME';
 
 select *
-from fabric.lib_master5
+from fabric.lib_master6
 where stabr = 'ME';
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column maine int;
 
 with new_values as(
@@ -110,18 +110,18 @@ select fscs_id, fiber AS me_fiber
 from fabric.me_ind
 where cai_type = 'LIB'
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set maine = new_values.me_fiber
 from new_values
-where lib_master5.me_fscskey = new_values.fscs_id;
+where lib_master6.me_fscskey = new_values.fscs_id;
 
 --MISSOURI
 select *
-from fabric.lib_master5, fabric.mo_lib
-where lib_master5.libname = upper(mo_lib.site_name)
+from fabric.lib_master6, fabric.mo_lib
+where lib_master6.libname = upper(mo_lib.site_name)
 	and stabr = 'MO';
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column missouri int;
 
 with new_values as(
@@ -129,64 +129,64 @@ select site_name, fiber as mo_fiber
 from fabric.mo_lib
 where loc_type = 'LIBRARY'
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set missouri = new_values.mo_fiber
 from new_values
-where lib_master5.libname = upper(new_values.site_name)
+where lib_master6.libname = upper(new_values.site_name)
 	and stabr = 'MO';
 
 --VERMONT
 select *
-from fabric.lib_master5, fabric.vt_lib
-where lib_master5.libid = vt_lib.library_id
+from fabric.lib_master6, fabric.vt_lib
+where lib_master6.libid = vt_lib.library_id
 	and stabr = 'VT';
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column vermont int;
 
 with new_values as(
 select library_id, fiber as vt_fiber
 from fabric.vt_lib
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set vermont = new_values.vt_fiber
 from new_values
-where lib_master5.libid = new_values.library_id
+where lib_master6.libid = new_values.library_id
 	and stabr = 'VT';
 
 --OHIO
 select *
-from fabric.lib_master5, fabric.oh_lib
-where lib_master5.fscskey = oh_lib.fscs
-	and lib_master5.libname = oh_lib.library_name;
+from fabric.lib_master6, fabric.oh_lib
+where lib_master6.fscskey = oh_lib.fscs
+	and lib_master6.libname = oh_lib.library_name;
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column ohio int;
 
 with new_values as(
 select fscs, library_name, fiber as oh_fiber
 from fabric.oh_lib
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set ohio = new_values.oh_fiber
 from new_values
-where lib_master5.fscskey = new_values.fscs
-	and lib_master5.libname = new_values.library_name;
+where lib_master6.fscskey = new_values.fscs
+	and lib_master6.libname = new_values.library_name;
 
 --C SPIRE
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	drop column if exists c_spire;
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	add column c_spire int;
 
-update fabric.lib_master5
+update fabric.lib_master6
 set c_spire = 9
 where fscskey = 'MS0025' or fscskey = 'MS0017';
 
 --IOWA
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	drop column if exists iowa;
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	add column iowa int;
 
 with new_values as(
@@ -194,14 +194,14 @@ select part_iii_site, fiber
 from fabric.ia_ind
 where nces_school_id IS NULL
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set iowa = new_values.fiber
 from new_values
 where libname = UPPER(part_iii_site)
 	and fipsst = '19';
 
 --EMAIL SUBMISSIONS
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	add column grantsburg int,
 	add column toledotel int,
 	add column wabash int,
@@ -272,43 +272,43 @@ alter table fabric.lib_master5
 	add column pike int,
 	add column columbus_lowndes int;
 
-update fabric.lib_master5
+update fabric.lib_master6
 set grantsburg = 9
 where fscskey = 'WI0120';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set toledotel = 9
 where libid = 'WA0069-027';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set wabash = 9
 where libid = 'OH0043-002' or libid = 'OH0043-005' or fscskey = 'OH0083' or fscskey = 'OH0055';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set peoples_telecom = 9
 where fscskey = 'KS0256';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set peoples_rural = 9
 where fscskey = 'KY0052' or fscskey = 'KY0090';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set clear_lake = 9
 where fscskey = 'IA0077' or fscskey = 'IA0084';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set com_net = 9
 where libid = 'OH0176-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set alliance = 9
 where fscskey = 'IA0108';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set heart_iowa = 9
 where fscskey = 'IA0200' or fscskey = 'IA0395' or fscskey = 'IA0506' or fscskey = 'IA0243';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set dc = 9
 where libid = 'DC0001-003' or libid = 'DC0001-005' or libid = 'DC0001-006' or libid = 'DC0001-007'
 	or libid = 'DC0001-028' or libid = 'DC0001-004' or libid = 'DC0001-008' or libid = 'DC0001-009'
@@ -318,61 +318,61 @@ where libid = 'DC0001-003' or libid = 'DC0001-005' or libid = 'DC0001-006' or li
 	or libid = 'DC0001-019' or libid = 'DC0001-021' or libid = 'DC0001-022' or libid = 'DC0001-020'
 	or libid = 'DC0001-023';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set us_connect = -9
 where fscskey = 'CO0094'; 
 
-update fabric.lib_master5
+update fabric.lib_master6
 set blue_ridge = 9
 where fscskey = 'VA0008';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set dobson = 9
 where libid = 'OK0070-010';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set west_carolina_tel = 9
 where libid = 'SC0004-009' or libid = 'SC8003-001' or libid = 'SC8003-002' 
 	or libid = 'SC8003-003' or libid = 'SC0028-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set manawa = 9
 where fscskey = 'WI0177';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set srtc = 9
 where libid = 'TX0086-002' or libid = 'TX0192-002' or libid = 'TX0078-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set premier = 9
 where fscskey = 'IA0184' or fscskey = 'IA0126' or fscskey = 'IA0424' or fscskey = 'IA0530';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set fibercomm = 9
 where fscskey = 'IA0225';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set h_and_b = 9
 where fscskey = 'KS0147' or fscskey = 'KS0091' or fscskey = 'KS0079';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set golden_belt = 9
 where fscskey = 'KS0010' or fscskey = 'KS0041' or fscskey = 'KS0290' or fscskey = 'KS0007'
 	or fscskey = 'KS0306' or fscskey = 'KS0019' or fscskey = 'KS0287' or fscskey = 'KS0195'
 	or fscskey = 'KS0284';
-update fabric.lib_master5
+update fabric.lib_master6
 set golden_belt = -9
 where fscskey = 'KS0036' or fscskey = 'KS0280' or fscskey = 'KS0170';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set united = 9
 where fscskey = 'KS0299' or fscskey = 'KS0292';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set fontana = 9
 where libid = 'NC0008-005' or libid = 'NC0008-002' or libid = 'NC0008-008' or libid = 'NC0008-003' or libid = 'NC0008-004';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set nextech = 9
 where libid = 'KS0144-002' or libid = 'KS0011-002' or libid = 'KS0034-002' or libid = 'KS0136-002'
 	or libid = 'KS0153-002' or libid = 'KS0141-002' or libid = 'KS0053-002' or libid = 'KS0145-002'
@@ -381,239 +381,239 @@ where libid = 'KS0144-002' or libid = 'KS0011-002' or libid = 'KS0034-002' or li
 	or libid = 'KS0046-002' or libid = 'KS0042-002' or libid = 'KS0005-002' or libid = 'KS0049-002'
 	or libid = 'KS0151-002' or libid = 'KS0040-002' or libid = 'KS0037-002' or libid = 'KS0002-002'
 	or libid = 'KS0154-002' or libid = 'KS0004-002' or libid = 'KS0016-002' or fscskey = 'KS0150';
-update fabric.lib_master5
+update fabric.lib_master6
 set nextech = -9
 where libid = 'KS0014-002' or libid = 'KS0006-002' or libid = 'KS0137-002' or libid = 'KS0321-002' 
 	or libid = 'KS0047-002' or libid = 'KS0009-002' or libid = 'KS0152-002';
 	
-update fabric.lib_master5
+update fabric.lib_master6
 set nemr = 9
 where libid = 'MO0061-002' or libid = 'MO0066-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set wilson = 9
 where fscskey = 'KS0021' or fscskey = 'KS0031';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set van_horne = 9
 where fscskey = 'IA0365';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set dumont = 9
 where fscskey = 'IA0509' or fscskey = 'IA0344';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set pioneer = 9
 where libid = 'OR0119-005';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set webster_calhoun = 9
 where libid = 'IA0556-002' or libid = 'IA0290-002' or libid = 'IA0377-002' or libid = 'IA0263-002'
 	or libid = 'IA0310-002' or libid = 'IA0313-002' or libid = 'IA0522-002' or libid = 'IA0185-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set gervais_datavision = 9
 where fscskey = 'OR0104' or fscskey = 'OR0083' or fscskey = 'OR0047' or fscskey = 'OR0036';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set paul_bunyan = 9
 where libid = 'MN0145-002' or libid = 'MN0145-003' or libid = 'MN0145-005';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set stayton = 9
 where fscskey = 'OR0083' or fscskey = 'OR0036';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set siskiyou = 9
 where libid = 'CA0135-011' or libid = 'CA0135-009' or libid = 'CA0135-011' or libid = 'CA0135-018';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set cascade_com = 9
 where fscskey = 'IA0465';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set rt_comm = -9
 where libid = 'WY0013-002' or libid = 'WY0013-004' or libid = 'WY0016-003' or libid = 'WY0004-002'
 	or libid = 'WY0004-003' or libid = 'WY0009-002' or libid = 'WY0023-003' or fscskey = 'WY0023';
-update fabric.lib_master5
+update fabric.lib_master6
 set rt_comm = 9
 where fscskey = 'WY0015' or fscskey = 'WY0022';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set dubois_telephone = -9
 where libid = 'WY0011-009';
-update fabric.lib_master5
+update fabric.lib_master6
 set dubois_telephone = 9
 where libid = 'WY0003-005';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set range_telephone = -9
 where libid = 'WY0007-002' or libid = 'WY0013-005';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set westel = 9
 where fscskey = 'IA0170' or fscskey = 'IA0418' or fscskey = 'IA0178' or fscskey = 'IA0419' or fscskey = 'IA0115';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set einetwork = 9
 where libid = 'PA0042-003' or fscskey = 'PA0051' or fscskey = 'PA0513' or libid = 'PA0050-003'
 	or libid = 'PA0034-005' or libid = 'PA0034-003'; 
 
-update fabric.lib_master5
+update fabric.lib_master6
 set sunflower = 9
 where libid = 'MS0044-004' or libid = 'MS0044-002' or libid = 'MS0044-003' or libid = 'MS0044-006';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set carnegie = 9
 where fscskey = 'MS0005';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set dixie = 9
 where libid = 'MS0009-002';
-update fabric.lib_master5
+update fabric.lib_master6
 set dixie = -9
 where libid = 'MS0009-003' or libid = 'MS0009-004' or libid = 'MS0009-005' or libid = 'MS0009-006'
 	or libid = 'MS0009-008' or libid = 'MS0009-009' or libid = 'MS0009-007';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set pearl_river = -9
 where libid = 'MS0039-002' or libid = 'MS0039-003';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set jackson_george = 9
 where libid = 'MS0020-003' or libid = 'MS0020-004' or libid = 'MS0020-005' or libid = 'MS0020-006' 
 	or libid = 'MS0020-007' or libid = 'MS0020-002' or libid = 'MS0020-008' or libid = 'MS0020-009';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set bolivar = -9
 where libid = 'MS0003-002' or libid = 'MS0003-008' or libid = 'MS0003-004' or libid = 'MS0003-003'
 	or libid = 'MS0003-005' or libid = 'MS0003-010' or libid = 'MS0003-006';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set waynesboro_wayne = -9
 where fscskey = 'MS8002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set marks_quitman = -9
 where libid = 'MS0030-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set corinth = 9
 where libid = 'MS0035-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set tombigbee = -9
 where fscskey = 'MS0046';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set yazoo = 9
 where fscskey = 'MS0042';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set madison = 9
 where libid = 'MS0029-002' or libid = 'MS0029-004' or libid = 'MS0029-005'; 
 
-update fabric.lib_master5
+update fabric.lib_master6
 set mccormack = 9
 where libid = 'MO0137-004';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set endeavor = 9
 where fscskey = 'IN0200' or libid = 'IN0212-005' or libid = 'IN0212-006';
-update fabric.lib_master5
+update fabric.lib_master6
 set endeavor = -9
 where libid = 'IN0196-005';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set northwest = -9
 where fscskey = 'IA0258' or libid = 'IA0375-002' or libid = 'IA0173-002' or libid = 'IA1076-002' or libid = 'IA0122-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set ayrshire = -9
 where libid = 'IA0259-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set ctc = 9
 where libid = 'MN0145-004';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set tallahatchie = 9
 where libid = 'MS0045-002';
-update fabric.lib_master5
+update fabric.lib_master6
 set tallahatchie = -9
 where libid = 'MS0045-005';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set triangle = 9
 where fscskey = 'MT0014' or fscskey = 'MT0036' or fscskey = 'MT0048' or libid = 'MT0030-006' or libid = 'MT0030-009' 
 	or fscskey = 'MT0077';
-update fabric.lib_master5
+update fabric.lib_master6
 set triangle = -9
 where fscskey = 'MT0013' or libid = 'MT0030-007' or fscskey = 'MT0065' or fscskey = 'MT0022' or fscskey = 'MT0052'
 	or fscskey = 'MT0037' or fscskey = 'MT0005';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set mid_mississippi = -9
 where libid = 'MS0033-002' or libid = 'MS0033-003' or libid = 'MS0033-004' or libid = 'MS0033-005' or libid = 'MS0033-006'
 	or libid = 'MS0033-007' or libid = 'MS0033-008' or libid = 'MS0033-009' or libid = 'MS0033-010' or libid = 'MS0033-011'
 	or libid = 'MS0033-012' or libid = 'MS0033-013' or libid = 'MS0033-014';
-update fabric.lib_master5
+update fabric.lib_master6
 set mid_mississippi = 9
 where libid = 'MS0033-000';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set cunningham = 9
 where fscskey = 'KS0003' or fscskey = 'KS0001';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set silver_star = 9
 where libid = 'WY0017-008' or libid = 'WY0017-007' or fscskey = 'WY0020' or libid = 'WY0020-003';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set xit = 9
 where fscskey = 'TX0457' or fscskey = 'TX0390';
-update fabric.lib_master5
+update fabric.lib_master6
 set xit = -9
 where fscskey = 'TX0295' or fscskey = 'TX0381';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set smrl = 9
 where libid = 'MS0043-002';
-update fabric.lib_master5
+update fabric.lib_master6
 set smrl = -9
 where libid = 'MS0043-003' or libid = 'MS0043-004';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set harrison = 9
 where libid = 'MS0016-013' or libid = 'MS0016-010' or libid = 'MS0016-004' or libid = 'MS0016-008' 
 	or libid = 'MS0016-006' or libid = 'MS0016-007' or libid = 'MS0016-012' or libid = 'MS0016-009'
 	or libid = 'MS0016-014';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set wilkinson = -9
 where libid = 'MS 0052-001' or libid = 'MS 0052-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set lamar = 9
 where libid = 'MS8001-003' or libid = 'MS8001-002' or libid = 'MS8001-001' or libid = 'MS8001-004';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set kemper_newton = -9
 where libid = 'MS0023-002' or libid = 'MS0023-004' or libid = 'MS0023-006' or libid = 'MS0023-004';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set pike = 9
 where libid = 'MS0040-003' or libid = 'MS0040-005' or libid = 'MS0040-006' or libid = 'MS0040-007'
 	or libid = 'MS0040-002' or libid = 'MS0040-008' or libid = 'MS0040-009' or libid = 'MS0040-010';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set columbus_lowndes = -9
 where libid = 'MS0028-003' or libid = 'MS0028-004' or libid = 'MS0028-005';
-update fabric.lib_master5
+update fabric.lib_master6
 set columbus_lowndes = 9
 where libid = 'MS0028-002';
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 add column bucks int,
 add column fidelity int,
 add column sierra int,
@@ -626,75 +626,119 @@ add column covington int,
 add column yalobusha int,
 add column armstrong int,
 add column lee_itawamba int,
-add column panora int;
+add column panora int,
+add column blackfoot int,
+add column logan int,
+add column first_regional int,
+add column west_liberty int,
+add column western_iowa int,
+add column twin_valley int,
+add column jefferson int;
 
-update fabric.lib_master5
+update fabric.lib_master6
 set bucks = 9
 where libid = 'PA0309-006' or libid = 'PA0309-004' or libid = 'PA0309-003'
 	or libid = 'PA0309-008' or libid = 'PA0309-005' or libid = 'PA0309-009';
-update fabric.lib_master5
+update fabric.lib_master6
 set bucks = -9
 where fscskey = 'PA0312' or fscskey = 'PA0317';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set fidelity = 9
 where fscskey = 'MO0188';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set sierra = 9
 where fscskey = 'CA0192' or fscskey = 'CA0064';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set meridian_lauderdale = 9
 where libid = 'MS0032-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set central_mississippi = 9
 where libid in ('MS0006-002','MS0006-022','MS0006-003','MS0006-011','MS0006-008');
 
-update fabric.lib_master5
+update fabric.lib_master6
 set copiah_jefferson = -9
 where libid in ('MS0008-006','MS0008-002');
 
-update fabric.lib_master5
+update fabric.lib_master6
 set harriette = 9
 where libid = 'MS0015-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set scmtc = 9
 where libid = 'IA0189-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set covington = -9
 where libid in ('MS0051-002','MS0051-003','MS0051-001');
 
-update fabric.lib_master5
+update fabric.lib_master6
 set yalobusha = 9
 where libid = 'MS0002-003';
-update fabric.lib_master5
+update fabric.lib_master6
 set yalobusha = -9
 where libid = 'MS0002-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set armstrong = 9
 where libid = 'MS0018-002';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set lee_itawamba = 9
 where libid = 'MS0025-002';
-update fabric.lib_master5
+update fabric.lib_master6
 set lee_itawamba = -9
 where libid = 'MS0025-003';
 
-update fabric.lib_master5
+update fabric.lib_master6
 set panora = 9
 where libid in ('IA0320-002','IA0317-002');
 
+update fabric.lib_master6
+set blackfoot = 9
+where libid = 'MT0060-002';
+
+update fabric.lib_master6
+set logan = 9
+where libid = 'KY0067-005';
+
+update fabric.lib_master6
+set first_regional = 9
+where fscskey = 'MS0013';
+
+update fabric.lib_master6
+set west_liberty = 9
+where libid in ('IA0462-002','IA0072-002');
+
+update fabric.lib_master6
+set western_iowa = 9
+where fscskey in ('IA0545','IA0532','IA0325');
+
+update fabric.lib_master6
+set twin_valley = 9
+where fscskey in ('KS0052','KS0067','KS0107','KS0177','KS0088','KS0266','KS0266','KS0342','KS0342','KS0305','KS0305');
+
+update fabric.lib_master6
+set mtc = 9
+where libid = 'IA0220-002';
+
+update fabric.lib_master6
+set comm1_net = 9
+where fscskey in ('IA0094','IA0096','IA0097','IA0093','IA0095');
+
+update fabric.lib_master6
+set jefferson = 9
+where fscskey = 'IA0304';
+
+
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	drop column if exists score_map;
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	add column score_map int;
 
 with new_values as(
@@ -721,56 +765,56 @@ select libid, coalesce(alliance,0) + coalesce(armstrong,0) + coalesce(ayrshire,0
 	 + coalesce(west_carolina_tel,0) + coalesce(westel,0) + coalesce(wilkinson,0) + coalesce(wilson,0) + coalesce(xit,0) 
 	 + coalesce(yalobusha,0) + coalesce(yazoo,0)
 	as row_score
-from fabric.lib_master5
+from fabric.lib_master6
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set score_map = new_values.row_score
 from new_values
-where lib_master5.libid = new_values.libid;
+where lib_master6.libid = new_values.libid;
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	drop column if exists fiber_map;
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	add column fiber_map int;
 
-update fabric.lib_master5
+update fabric.lib_master6
 set fiber_map = 1
 where score_map > 0;
 
-update fabric.lib_master5
+update fabric.lib_master6
 set fiber_map = 0
 where score_map = 0;
 
-update fabric.lib_master5
+update fabric.lib_master6
 set fiber_map = -1
 where score_map < 0;
 
 select fiber_map, count(*)
-from fabric.lib_master5
+from fabric.lib_master6
 group by fiber_map
 order by fiber_map;
 
 select score_map, count(*)
-from fabric.lib_master5
+from fabric.lib_master6
 group by score_map
 order by score_map;
 
 select *
-from fabric.lib_master5;
+from fabric.lib_master6;
 
 drop table if exists fabric.libmap;
 create table fabric.libmap as(
 select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, score_map, fiber_map
-from fabric.lib_master5
+from fabric.lib_master6
 order by score_map
 );
 copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
 
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	drop column if exists fiber_v3,
 	drop column if exists fiber_v2,
 	drop column if exists fiber_v1;
-alter table fabric.lib_master5
+alter table fabric.lib_master6
 	add column fiber_v3 int,
 	add column fiber_v2 int,
 	add column fiber_v1 int;
@@ -779,28 +823,28 @@ with new_values as(
 select libid, fiber_map
 from fabric.lib_master4
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set fiber_v3 = new_values.fiber_map
 from new_values
-where lib_master5.libid = new_values.libid;
+where lib_master6.libid = new_values.libid;
 
 with new_values as(
 select libid, fiber_map
 from fabric.lib_master3
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set fiber_v2 = new_values.fiber_map
 from new_values
-where lib_master5.libid = new_values.libid;
+where lib_master6.libid = new_values.libid;
 
 with new_values as(
 select libid, fiber_map
 from fabric.lib_master2
 )
-update fabric.lib_master5
+update fabric.lib_master6
 set fiber_v1 = new_values.fiber_map
 from new_values
-where lib_master5.libid = new_values.libid;
+where lib_master6.libid = new_values.libid;
 
 drop table if exists fabric.libmap_fiber;
 create table fabric.libmap_fiber as(
@@ -813,7 +857,7 @@ select fscskey AS fscs_key, system_name, libid AS library_id, libname AS library
 	pearl_river, peoples_rural, peoples_telecom, pike, pioneer, premier, range_telephone, rt_comm, scmtc, siskiyou, smrl, srtc, stayton,
 	sunflower, tallahatchie, toledotel, tombigbee, triangle, united, us_connect, van_horne, vermont, wabash, waynesboro_wayne,
 	webster_calhoun, west_carolina_tel, westel, wilkinson, wilson, xit, yalobusha, yazoo
-from fabric.lib_master5
+from fabric.lib_master6
 );
 
 copy(select * from fabric.libmap_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber_publish.csv' with delimiter '|' CSV header;
