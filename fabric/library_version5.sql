@@ -633,7 +633,13 @@ add column first_regional int,
 add column west_liberty int,
 add column western_iowa int,
 add column twin_valley int,
-add column jefferson int;
+add column jefferson int,
+add column cross_tel int,
+add column union_tel int,
+add column winthrop int,
+add column lemonweir_valley int,
+add column la_valle int,
+add column richland_grant int;
 
 update fabric.lib_master6
 set bucks = 9
@@ -732,6 +738,32 @@ where fscskey in ('IA0094','IA0096','IA0097','IA0093','IA0095');
 update fabric.lib_master6
 set jefferson = 9
 where fscskey = 'IA0304';
+
+update fabric.lib_master6
+set cross_tel = 9
+where libid in ('OK0066-003','OK0062-013');
+
+update fabric.lib_master6
+set union_tel = 9
+where libid = 'WI0309-002' or fscskey in ('WI0379','WI0128','WI0254');
+
+update fabric.lib_master6
+set winthrop = 9
+where libid = 'MN9030-005';
+
+update fabric.lib_master6
+set lemonweir_valley = 9
+where fscskey = 'WI0221';
+
+update fabric.lib_master6
+set la_valle = 9
+where fscskey = 'WI0168';
+
+update fabric.lib_master6
+set richland_grant = 9
+where fscskey in ('WI0111','WI0299');
+
+
 
 
 -------------------------CORROBORATION SCORE------------------------------
