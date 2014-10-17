@@ -1378,7 +1378,8 @@ add column lemonweir_valley int,
 add column la_valle int,
 add column richland_grant int,
 add column lakeview int,
-add column spring_grove_comm int;
+add column spring_grove_comm int,
+add column park_region int;
 
 update fabric.master7
 set rock = 9
@@ -1562,6 +1563,10 @@ where ncessch in ('421308003155','421308007208','421308003154');
 alter table fabric.master7
 set spring_grove_comm = 9
 where ncessch in ('273330001458','273330001459');
+
+alter table fabric.master7
+set park_region = 9
+where leaid in ('2703300','2703750','2740830','2711880','2707110','2700083');
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE

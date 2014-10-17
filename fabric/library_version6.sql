@@ -200,6 +200,36 @@ from new_values
 where libname = UPPER(part_iii_site)
 	and fipsst = '19';
 
+--SOUTH CAROLINA
+alter table fabric.lib_master7
+	drop column if exists south_carolina;
+alter table fabric.lib_master7
+	add column south_carolina int;
+
+with new_values as(
+select fscs_id, fiber
+from fabric.sc_lib
+)
+update fabric.lib_master7
+set south_carolina = new_values.fiber
+from new_values
+where libid = fscs_id;
+
+--NEW YORK
+alter table fabric.lib_master7
+drop column if exists new_york;
+alter table fabric.lib_master7
+add column new_york int;
+
+with new_values as(
+select fscs, fiber
+from fabric.ny_lib
+)
+update fabric.lib_master7
+set new_york = new_values.fiber
+from new_values
+where fscskey = fscs;
+
 --EMAIL SUBMISSIONS
 alter table fabric.lib_master7
 	add column grantsburg int,
@@ -642,7 +672,8 @@ add column winthrop int,
 add column lemonweir_valley int,
 add column la_valle int,
 add column richland_grant int,
-add column spring_grove_comm int;
+add column spring_grove_comm int,
+add column park_region int;
 
 update fabric.lib_master7
 set bucks = 9
@@ -769,6 +800,10 @@ where fscskey in ('WI0111','WI0299');
 update fabric.lib_master7
 set spring_grove_comm = 9
 where fscskey = 'MN9035';
+
+update fabric.lib_master7
+set park_region = 9
+where fscskey in ('MN0113','MN0109','MN0111');
 
 
 -------------------------CORROBORATION SCORE------------------------------
