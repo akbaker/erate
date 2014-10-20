@@ -811,7 +811,7 @@ set panhandle = 9
 where libid in ('OK0013-002','OK0042-002','OK0010-002');
 update fabric.lib_master7
 set panhandle = -9
-where libid in ('OK0049-002','OK0119-001');
+where libid in ('OK0049-002','OK0119-001','TX0290-002','TX0219-002','TX0378-002');
 
 
 -------------------------CORROBORATION SCORE------------------------------
