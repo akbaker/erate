@@ -492,6 +492,21 @@ from new_values
 where leanm = district and schnam = school
 	and lstate = 'MS';
 
+--SDTA
+alter table fabric.master7
+drop column if exists sdta;
+alter table fabric.master7
+add column sdta int;
+
+with new_values as(
+select nces_id, fiber
+from fabric.sdta
+)
+update fabric.master7
+set sdta = new_values.fiber
+from new_values
+where ncessch = nces_id;
+
 --EMAIL SUBMISSIONS
 alter table fabric.master7
 	add column revere int,
@@ -1379,7 +1394,8 @@ add column la_valle int,
 add column richland_grant int,
 add column lakeview int,
 add column spring_grove_comm int,
-add column park_region int;
+add column park_region int,
+add column panhandle int;
 
 update fabric.master7
 set rock = 9
@@ -1567,6 +1583,29 @@ where ncessch in ('273330001458','273330001459');
 alter table fabric.master7
 set park_region = 9
 where leaid in ('2703300','2703750','2740830','2711880','2707110','2700083');
+
+alter table fabric.master7
+set panhandle = 9
+where ncessch in ('401158000547','401158000546','400486000166','400486000167','401641000763','401641000764','402982001562',
+	'402982001563','484254004866','401287000597','401287000598','401359000639','401359000635','401359000636','401359000637',
+	'401359000640','401359002108','401359000641','401359002669','401359000642','401374000651','401374000652','401509000706',
+	'401509029763','402307001230','403048001698','403048001699','400351000089','400351000090','403033001688','403033001689',
+	'400375000115','400375000116','401188000553','401188000554','401722000795','401722000796'
+
+alter table fabric.master7
+set panhandle = 9
+where ncessch in ('402892001518');
+
+
+
+
+
+
+
+
+
+
+
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE

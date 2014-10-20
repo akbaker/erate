@@ -592,3 +592,15 @@ update fabric.ms_ind
 set fiber = 0
 where connection_tech = 'Unknown' or connection_tech IS NULL;
 
+--SDTA
+alter table fabric.sdta
+drop column if exists fiber;
+alter table fabric.sdta
+add column fiber int;
+
+update fabric.sdta
+set fiber = 9
+where facility = 'FTTP';
+update fabric.sdta
+set fiber = -9
+where facility in ('FTTN','Copper','WISP');

@@ -673,7 +673,8 @@ add column lemonweir_valley int,
 add column la_valle int,
 add column richland_grant int,
 add column spring_grove_comm int,
-add column park_region int;
+add column park_region int,
+add column panhandle int;
 
 update fabric.lib_master7
 set bucks = 9
@@ -804,6 +805,13 @@ where fscskey = 'MN9035';
 update fabric.lib_master7
 set park_region = 9
 where fscskey in ('MN0113','MN0109','MN0111');
+
+update fabric.lib_master7
+set panhandle = 9
+where libid in ('OK0013-002','OK0042-002','OK0010-002');
+update fabric.lib_master7
+set panhandle = -9
+where libid in ('OK0049-002','OK0119-001');
 
 
 -------------------------CORROBORATION SCORE------------------------------
