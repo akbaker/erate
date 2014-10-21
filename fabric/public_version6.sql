@@ -1395,7 +1395,11 @@ add column richland_grant int,
 add column lakeview int,
 add column spring_grove_comm int,
 add column park_region int,
-add column panhandle int;
+add column panhandle int,
+add column park_region int,
+add column tri_county int,
+add column wittenberg int,
+add column nu_telecom int;
 
 update fabric.master7
 set rock = 9
@@ -1595,6 +1599,25 @@ alter table fabric.master7
 set panhandle = -9
 where ncessch in ('402892001518','483465008347','483465003891','483465003889','483465003890','483465003888','483465009006',
 	'484101004663','484101004664','484101004665','481083000550','481083000549');
+
+
+alter table fabric.master7
+set park_region = 9
+where leaid in ('2703300','2703750','2740830','2711880','2707110','2700083');
+
+alter table fabric.master7
+set tri_county = 9
+where ncessch in ('550420000449','550681000739','550681000740','551665002173','550420000450','550420000451');
+
+alter table fabric.master7
+set wittenberg = 9
+where ncessch in ('551710002223','551710002222');
+
+alter table fabric.master7
+set nu_telecom = 9
+where ncessch in ('270012800630','270264000049','274272001809','270010602570','270010502567','271712000023','270009100365',
+	'272340001142','271497000756','270447000199','271009000430','270012502260','272132001072','270009903539','270008800408',
+	'270016301310','270032804386');
 
 
 --------------------------------CORROBORATION SCORING----------------------------------

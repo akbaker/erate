@@ -674,7 +674,10 @@ add column la_valle int,
 add column richland_grant int,
 add column spring_grove_comm int,
 add column park_region int,
-add column panhandle int;
+add column panhandle int,
+add column tri_county int
+add column wittenberg int,
+add column nu_telecom int;
 
 update fabric.lib_master7
 set bucks = 9
@@ -813,6 +816,25 @@ update fabric.lib_master7
 set panhandle = -9
 where libid in ('OK0049-002','OK0119-001','TX0290-002','TX0219-002','TX0378-002');
 
+update fabric.lib_master7
+set park_region = 9
+where fscskey in ('MN0113','MN0109','MN0111');
+
+update fabric.lib_master7
+set tri_county = 9
+where fscskey = 'WI0311' or libid = 'WI0140-002';
+
+update fabric.lib_master7
+set wittenberg = 9
+where libid = 'WI0291-007';
+
+update fabric.lib_master7
+set nu_telecom = 9
+where libid in ('MN0051-002','MN0051-003','MN0051-004','MN0051-005','MN0051-007','MN0051-010','MN0051-033','MN0051-011',
+	'MN0051-012','MN0051-013','MN0051-014','MN0051-015','MN0051-016','MN0051-017','MN0051-019','MN0051-020','MN0051-021',
+	'MN0051-022','MN0051-023','MN0051-024','MN0051-032','MN0051-025','MN0051-026','MN0051-027','MN0051-028','MN0051-029');
+
+ 
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
