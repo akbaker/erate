@@ -675,7 +675,7 @@ add column richland_grant int,
 add column spring_grove_comm int,
 add column park_region int,
 add column panhandle int,
-add column tri_county int
+add column tri_county int,
 add column wittenberg int,
 add column nu_telecom int;
 
@@ -859,17 +859,19 @@ select libid, coalesce(alliance,0) + coalesce(armstrong,0) + coalesce(ayrshire,0
 	 + coalesce(lemonweir_valley,0) + coalesce(logan,0) + coalesce(madison,0)  
 	 + coalesce(maine,0) + coalesce(manawa,0) 
 	 + coalesce(marks_quitman,0) + coalesce(mccormack,0) + coalesce(meridian_lauderdale,0) + coalesce(mid_mississippi,0) 
-	 + coalesce(missouri,0) + coalesce(mtc,0) + coalesce(nemr,0) + coalesce(nextech,0)
-	 + coalesce(northwest,0) + coalesce(ohio,0) + coalesce(panora,0) + coalesce(paul_bunyan,0) + coalesce(pearl_river,0) 
+	 + coalesce(missouri,0) + coalesce(mtc,0) + coalesce(nemr,0) + coalesce(new_york,0) + coalesce(nextech,0)
+	 + coalesce(northwest,0) + coalesce(nu_telecom,0) + coalesce(ohio,0) 
+	 + coalesce(panhandle,0) + coalesce(panora,0) + coalesce(park_region,0) + coalesce(paul_bunyan,0) + coalesce(pearl_river,0) 
 	 + coalesce(peoples_rural,0) + coalesce(peoples_telecom,0) + coalesce(pike,0) + coalesce(pioneer,0) + coalesce(premier,0) 
 	 + coalesce(range_telephone,0) + coalesce(richland_grant,0)
-	 + coalesce(rt_comm,0) + coalesce(scmtc,0) + coalesce(siskiyou,0) + coalesce(smrl,0) + coalesce(srtc,0) + coalesce(stayton,0) 
-	 + coalesce(sunflower,0)
-	 + coalesce(tallahatchie,0) + coalesce(toledotel,0) + coalesce(tombigbee,0) + coalesce(triangle,0) + coalesce(twin_valley,0)
+	 + coalesce(rt_comm,0) + coalesce(scmtc,0) + coalesce(siskiyou,0) + coalesce(smrl,0) + coalesce(south_carolina,0) 
+	 + coalesce(spring_grove_comm,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunflower,0)
+	 + coalesce(tallahatchie,0) + coalesce(toledotel,0) + coalesce(tombigbee,0) + coalesce(triangle,0) + coalesce(tri_county,0)
+	 + coalesce(twin_valley,0)
 	 + coalesce(union_tel,0) + coalesce(united,0) + coalesce(us_connect,0) + coalesce(van_horne,0)
 	 + coalesce(vermont,0) + coalesce(wabash,0) + coalesce(waynesboro_wayne,0) + coalesce(webster_calhoun,0)
 	 + coalesce(west_carolina_tel,0) + coalesce(west_liberty,0) + coalesce(westel,0) + coalesce(western_iowa,0) 
-	 + coalesce(wilkinson,0) + coalesce(wilson,0) + coalesce(winthrop,0) + coalesce(xit,0) 
+	 + coalesce(wilkinson,0) + coalesce(wilson,0) + coalesce(winthrop,0) + coalesce(wittenberg,0) + coalesce(xit,0) 
 	 + coalesce(yalobusha,0) + coalesce(yazoo,0)
 	as row_score
 from fabric.lib_master7
@@ -909,24 +911,35 @@ order by score_map;
 select *
 from fabric.lib_master7;
 
-drop table if exists fabric.libmap;
-create table fabric.libmap as(
-select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, score_map, fiber_map
-from fabric.lib_master7
-order by score_map
-);
-copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
+--drop table if exists fabric.libmap;
+--create table fabric.libmap as(
+--select fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, score_map, fiber_map
+--from fabric.lib_master7
+--order by score_map
+--);
+--copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
 
 alter table fabric.lib_master7
+	drop column if exists fiber_v5,
 	drop column if exists fiber_v4,
 	drop column if exists fiber_v3,
 	drop column if exists fiber_v2,
 	drop column if exists fiber_v1;
 alter table fabric.lib_master7
+	add column fiber_v5 int,
 	add column fiber_v4 int,
 	add column fiber_v3 int,
 	add column fiber_v2 int,
 	add column fiber_v1 int;
+
+with new_values as(
+select libid, fiber_map
+from fabric.lib_master6
+)
+update fabric.lib_master7
+set fiber_v4 = new_values.fiber_map
+from new_values
+where lib_master7.libid = new_values.libid;
 
 with new_values as(
 select libid, fiber_map
@@ -967,13 +980,13 @@ where lib_master7.libid = new_values.libid;
 drop table if exists fabric.libmap_fiber;
 create table fabric.libmap_fiber as(
 select fscskey AS fscs_key, system_name, libid AS library_id, libname AS library_name, c_out_ty AS library_type, geom, visits, 
-	fiber_map AS fiber_v5, fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score, 
+	fiber_map AS fiber_v6, fiber_v5, fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score, 
 	alliance, armstrong, ayrshire, blackfoot, blue_ridge, bolivar, bucks, c_spire, cai, carnegie, cascade_com, central_mississippi, 
 	clear_lake, columbus_lowndes, com_net, comm1_net, copiah_jefferson, corinth, covington, cross_tel, ctc, cunningham, dc, dixie, 
 	dobson, dubois_telephone, dumont, einetwork, endeavor, fibercomm, fidelity, first_regional, fontana,
 	gervais_datavision, golden_belt, grantsburg, h_and_b, harriette, harrison, heart_iowa, iowa, jackson_george, jefferson, kansas, 
 	kemper_newton, la_valle, lamar, lee_itawamba, lemonweir_valley, logan,
-	madison, maine, manawa, marks_quitman, mccormack, meridian_lauderdale, mid_mississippi, missouri, mtc, nemr, nextech, northwest, 
+	madison, maine, manawa, marks_quitman, mccormack, meridian_lauderdale, mid_mississippi, missouri, mtc, nemr, new_york, nextech, northwest, 
 	ohio, panora, paul_bunyan, pearl_river, peoples_rural, peoples_telecom, pike, pioneer, premier, range_telephone, richland_grant,
 	rt_comm, scmtc, siskiyou, smrl, srtc, stayton,
 	sunflower, tallahatchie, toledotel, tombigbee, triangle, union_tel, united, us_connect, van_horne, vermont, wabash, waynesboro_wayne,

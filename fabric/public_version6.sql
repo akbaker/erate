@@ -1399,7 +1399,10 @@ add column panhandle int,
 add column park_region int,
 add column tri_county int,
 add column wittenberg int,
-add column nu_telecom int;
+add column nu_telecom int,
+add column pa_cyber int,
+add column western_iowa int,
+add column east_strodsburg int;
 
 update fabric.master7
 set rock = 9
@@ -1618,6 +1621,19 @@ set nu_telecom = 9
 where ncessch in ('270012800630','270264000049','274272001809','270010602570','270010502567','271712000023','270009100365',
 	'272340001142','271497000756','270447000199','271009000430','270012502260','272132001072','270009903539','270008800408',
 	'270016301310','270032804386');
+
+alter table fabric.master7
+set pa_cyber = 9
+where ncessch in ('420007100534','42152706566','420014300906');
+
+alter table fabric.master7
+set western_iowa = 9
+where ncessch in ('190378000085','191275000771','191275000772','190633000522','190633000218','190633001989','190633000217');
+
+alter table fabric.master7
+set east_strodsburg = 9
+where ncessch in ('420867000373','420867006798','420867000518','420867006935','420867003204','420867000051','420867000522',
+	'420867003201','420867000130','420867003202');
 
 
 --------------------------------CORROBORATION SCORING----------------------------------
