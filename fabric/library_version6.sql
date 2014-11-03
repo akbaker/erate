@@ -986,11 +986,12 @@ select fscskey AS fscs_key, system_name, libid AS library_id, libname AS library
 	dobson, dubois_telephone, dumont, einetwork, endeavor, fibercomm, fidelity, first_regional, fontana,
 	gervais_datavision, golden_belt, grantsburg, h_and_b, harriette, harrison, heart_iowa, iowa, jackson_george, jefferson, kansas, 
 	kemper_newton, la_valle, lamar, lee_itawamba, lemonweir_valley, logan,
-	madison, maine, manawa, marks_quitman, mccormack, meridian_lauderdale, mid_mississippi, missouri, mtc, nemr, new_york, nextech, northwest, 
-	ohio, panora, paul_bunyan, pearl_river, peoples_rural, peoples_telecom, pike, pioneer, premier, range_telephone, richland_grant,
-	rt_comm, scmtc, siskiyou, smrl, srtc, stayton,
-	sunflower, tallahatchie, toledotel, tombigbee, triangle, union_tel, united, us_connect, van_horne, vermont, wabash, waynesboro_wayne,
-	webster_calhoun, west_carolina_tel, west_liberty, westel, western_iowa, wilkinson, wilson, winthrop, xit, yalobusha, yazoo
+	madison, maine, manawa, marks_quitman, mccormack, meridian_lauderdale, mid_mississippi, missouri, mtc, nemr, new_york, nextech, 
+	northwest, nu_telecom, ohio, panhandle, panora, park_region, paul_bunyan, pearl_river, peoples_rural, peoples_telecom, pike, 
+	pioneer, premier, range_telephone, richland_grant, rt_comm, scmtc, siskiyou, smrl, south_carolina, spring_grove_comm, srtc, stayton,
+	sunflower, tallahatchie, toledotel, tombigbee, triangle, twin_valley, union_tel, united, us_connect, van_horne, vermont, wabash, 
+	waynesboro_wayne, webster_calhoun, west_carolina_tel, west_liberty, westel, western_iowa, wilkinson, wilson, winthrop, wittenberg,
+	xit, yalobusha, yazoo
 from fabric.lib_master7
 );
 

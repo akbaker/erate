@@ -1579,58 +1579,58 @@ update fabric.master7
 set richland_grant = 9
 where ncessch in ('550498002244','550498000543');
 
-alter table fabric.master7
+update fabric.master7
 set lakeview = 9
 where ncessch in ('421308003155','421308007208','421308003154');
 
-alter table fabric.master7
+update fabric.master7
 set spring_grove_comm = 9
 where ncessch in ('273330001458','273330001459');
 
-alter table fabric.master7
+update fabric.master7
 set park_region = 9
 where leaid in ('2703300','2703750','2740830','2711880','2707110','2700083');
 
-alter table fabric.master7
+update fabric.master7
 set panhandle = 9
 where ncessch in ('401158000547','401158000546','400486000166','400486000167','401641000763','401641000764','402982001562',
 	'402982001563','484254004866','401287000597','401287000598','401359000639','401359000635','401359000636','401359000637',
 	'401359000640','401359002108','401359000641','401359002669','401359000642','401374000651','401374000652','401509000706',
 	'401509029763','402307001230','403048001698','403048001699','400351000089','400351000090','403033001688','403033001689',
 	'400375000115','400375000116','401188000553','401188000554','401722000795','401722000796');
-alter table fabric.master7
+update fabric.master7
 set panhandle = -9
 where ncessch in ('402892001518','483465008347','483465003891','483465003889','483465003890','483465003888','483465009006',
 	'484101004663','484101004664','484101004665','481083000550','481083000549');
 
 
-alter table fabric.master7
+update fabric.master7
 set park_region = 9
 where leaid in ('2703300','2703750','2740830','2711880','2707110','2700083');
 
-alter table fabric.master7
+update fabric.master7
 set tri_county = 9
 where ncessch in ('550420000449','550681000739','550681000740','551665002173','550420000450','550420000451');
 
-alter table fabric.master7
+update fabric.master7
 set wittenberg = 9
 where ncessch in ('551710002223','551710002222');
 
-alter table fabric.master7
+update fabric.master7
 set nu_telecom = 9
 where ncessch in ('270012800630','270264000049','274272001809','270010602570','270010502567','271712000023','270009100365',
 	'272340001142','271497000756','270447000199','271009000430','270012502260','272132001072','270009903539','270008800408',
 	'270016301310','270032804386');
 
-alter table fabric.master7
+update fabric.master7
 set pa_cyber = 9
 where ncessch in ('420007100534','42152706566','420014300906');
 
-alter table fabric.master7
+update fabric.master7
 set western_iowa = 9
 where ncessch in ('190378000085','191275000771','191275000772','190633000522','190633000218','190633001989','190633000217');
 
-alter table fabric.master7
+update fabric.master7
 set east_strodsburg = 9
 where ncessch in ('420867000373','420867006798','420867000518','420867006935','420867003204','420867000051','420867000522',
 	'420867003201','420867000130','420867003202');
@@ -1651,8 +1651,8 @@ select ncessch, coalesce(advanced,0) + coalesce(alenco_comm,0) + coalesce(allian
 	+ coalesce(cimarron,0) + coalesce(citizens,0) + coalesce(clear_lake,0) + coalesce(com_net,0) + coalesce(comm1_net,0) 
 	+ coalesce(cross_tel,0) + coalesce(ctc,0) + coalesce(cunningham,0) 
 	+ coalesce(dakota,0) + coalesce(dc,0) + coalesce(dobson,0) + coalesce(downingtown,0) + coalesce(dubois,0) 
-	+ coalesce(dubois_telephone,0) + coalesce(dumont,0) + coalesce(dupage,0) + coalesce(eastex,0) + coalesce(eastland,0) + coalesce(elmwood,0)
-	+ coalesce(endeavor,0) + coalesce(eureka,0)
+	+ coalesce(dubois_telephone,0) + coalesce(dumont,0) + coalesce(dupage,0) + coalesce(east_strodsburg,0) + coalesce(eastex,0) 
+	+ coalesce(eastland,0) + coalesce(elmwood,0) + coalesce(endeavor,0) + coalesce(eureka,0)
 	+ coalesce(farmers,0) + coalesce(fatbeam,0) + coalesce(fibercomm,0) + coalesce(fidelity,0) + coalesce(florida,0) + coalesce(fort_laboeuf,0) 
 	+ coalesce(franklin,0) + coalesce(ftc,0) + coalesce(galena,0) + coalesce(ganado,0) + coalesce(garden_valley,0) 
 	+ coalesce(georgia,0) + coalesce(gervais_datavision,0) + coalesce(glen_rose,0) + coalesce(golden_belt,0) 
@@ -1661,6 +1661,7 @@ select ncessch, coalesce(advanced,0) + coalesce(alenco_comm,0) + coalesce(allian
 	+ coalesce(htc,0) 
 	+ coalesce(hudson,0) + coalesce(huntsville,0) + coalesce(in_shore,0) + coalesce(iowa,0) + coalesce(its,0) + coalesce(kane,0) 
 	+ coalesce(karns_city,0) + coalesce(ketchikan,0) + coalesce(ksl_group,0) + coalesce(la_valle,0) + coalesce(lakeland,0)
+	+ coalesce(lakeview,0) 
 	+ coalesce(laporte,0) + coalesce (lebanon,0) + coalesce(lemonweir_valley,0) + coalesce(logan,0) + coalesce(maine,0) 
 	+ coalesce(manawa,0) + coalesce(manheim,0)
 	+ coalesce(marion,0) + coalesce(marne_elk,0) + coalesce(matanuska_susitna,0) + coalesce(mbo,0) + coalesce(mccormack,0)
@@ -1669,28 +1670,31 @@ select ncessch, coalesce(advanced,0) + coalesce(alenco_comm,0) + coalesce(allian
 	+ coalesce(monon,0) + coalesce(montana,0) + coalesce(mtc,0) + coalesce(mte,0) + coalesce(navajo,0) + coalesce(nctc,0)
 	+ coalesce(nemr,0)
 	+ coalesce(new_mexico,0) + coalesce(newton,0) + coalesce(nextech,0) + coalesce(nogales,0) + coalesce(north_carolina,0)
-	+ coalesce(northampton,0)
+	+ coalesce(northampton,0) + coalesce(nu_telecom,0)
 	+ coalesce(octorara,0) + coalesce(ohio,0) + coalesce(oran,0) + coalesce(oregon_farmers,0)
-	+ coalesce(ortelco,0) + coalesce(otelco,0) + coalesce(palestine,0) + coalesce(paul_bunyan,0) + coalesce(peoples_rural,0) 
+	+ coalesce(ortelco,0) + coalesce(otelco,0) + coalesce(pa_cyber,0)
+	+ coalesce(palestine,0) + coalesce(panhandle,0) + coalesce(park_region,0)
+	+ coalesce(paul_bunyan,0) + coalesce(peoples_rural,0) 
 	+ coalesce(peoples_telecom,0) + coalesce(phoenixville,0) + coalesce(pinnacle,0)
 	+ coalesce(pioneer,0) + coalesce(pmt,0) + coalesce(portage,0) + coalesce(pottawatomie,0)
 	+ coalesce(premier,0) + coalesce(puerto_rico,0) 
 	+ coalesce(range_telephone,0) + coalesce(red_river,0) + coalesce(redbank,0) + coalesce(revere,0) + coalesce(richland_grant,0) 
 	+ coalesce(ritter,0) + coalesce(rock,0)
 	+ coalesce(rock_island,0) + coalesce(roome,0) + coalesce(round_rock,0) + coalesce(rt_comm,0) + coalesce(runestone,0) 
-	+ coalesce(s_and_a,0)
-	+ coalesce(sacred_wind,0) + coalesce(shade_central,0) + coalesce(sierra,0) + coalesce(silver_star,0) + coalesce(siskiyou,0) 
+	+ coalesce(s_and_a,0) + coalesce(sacred_wind,0) + coalesce(sdta,0)
+	+ coalesce(shade_central,0) + coalesce(sierra,0) + coalesce(silver_star,0) + coalesce(siskiyou,0) 
 	+ coalesce(snc,0) + coalesce(somerset,0) 
 	+ coalesce(souderton,0) + coalesce(south_central,0) + coalesce(south_middleton,0) + coalesce(southwest_arkansas,0)
 	+ coalesce(southwest_texas,0) 
-	+ coalesce(spring_grove,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunesys,0) + coalesce(tca,0) + coalesce(tec,0)
-	+ coalesce(telalaska,0)
-	+ coalesce(toledotel,0) + coalesce(totah_totel,0) + coalesce(tussey,0) + coalesce(twin_valley,0) + coalesce(union_tel,0)
+	+ coalesce(spring_grove,0) + coalesce(spring_grove_comm,0)
+	+ coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunesys,0) + coalesce(tca,0) + coalesce(tec,0)
+	+ coalesce(telalaska,0) + coalesce(toledotel,0) + coalesce(totah_totel,0) + coalesce(tri_county,0) 
+	+ coalesce(tussey,0) + coalesce(twin_valley,0) + coalesce(union_tel,0)
 	+ coalesce(united,0) + coalesce(united_com,0) + coalesce(upper_dauphin,0) 
 	+ coalesce(us_connect,0) + coalesce(van_buren,0) + coalesce(van_horne,0) + coalesce(wabash,0) + coalesce(waldron,0) 
 	+ coalesce(wayne_highlands,0) + coalesce(weatherly,0) + coalesce(west_carolina_tel,0) + coalesce(west_central,0) 
-	+ coalesce(west_liberty,0) + coalesce(west_texas_rural,0) 
-	+ coalesce(west_virginia,0) + coalesce(wikstrom,0) + coalesce(wilson,0) + coalesce(winthrop,0)
+	+ coalesce(west_liberty,0) + coalesce(west_texas_rural,0) + coalesce(west_virginia,0) + coalesce(western_iowa,0)
+	+ coalesce(wikstrom,0) + coalesce(wilson,0) + coalesce(winthrop,0) + coalesce(wittenberg,0)
 	+ coalesce(xit,0) + coalesce(yadtel,0) + coalesce(yelcot,0)
 	as row_score
 from fabric.master7
@@ -1738,15 +1742,26 @@ order by score_map
 copy(select * from fabric.publicmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/public_map_fiber.csv' with delimiter '|' CSV header;
 
 alter table fabric.master7
+	drop column if exists fiber_v5,
 	drop column if exists fiber_v4,
 	drop column if exists fiber_v3,
 	drop column if exists fiber_v2,
 	drop column if exists fiber_v1;
 alter table fabric.master7
+	add column fiber_v5 int,
 	add column fiber_v4 int,
 	add column fiber_v3 int,
 	add column fiber_v2 int,
 	add column fiber_v1 int;
+
+with new_values as(
+select ncessch, fiber_map
+from fabric.master6
+)
+update fabric.master7
+set fiber_v5 = new_values.fiber_map
+from new_values
+where master7.ncessch = new_values.ncessch;
 
 with new_values as(
 select ncessch, fiber_map
@@ -1787,22 +1802,25 @@ where master7.ncessch = new_values.ncessch;
 drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
 select ncessch AS nces_id, schnam AS school_name, leaid AS lea_id, leanm AS lea_name, lcity AS city, lstate AS state, 
-	ulocal AS locale, member AS enrollement, geom, fiber_map AS fiber_v5, fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score,
+	ulocal AS locale, member AS enrollement, geom, fiber_map AS fiber_v6, fiber_v5, fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score,
 	advanced, alenco_comm, alliance, alpine, arlington, atc, bainbridge_island, bellwood_antis, bie, blackfoot, blue_mountain, bps, 
 	butler_bremer, c_spire, cai, california, chariton_valley, cimarron, citizens, clear_lake, com_net, comm1_net, cross_tel, ctc, 
-	cunningham, dakota, dc, dobson, downingtown, dubois, dubois_telephone, dumont, dupage, eastex, eastland, elmwood,
+	cunningham, dakota, dc, dobson, downingtown, dubois, dubois_telephone, dumont, dupage, east_strodsburg, eastex, eastland, elmwood,
 	endeavor, eureka, farmers, fatbeam, fibercomm, fidelity, florida, fort_laboeuf, franklin, ftc, galena, ganado, garden_valley, 
 	georgia, gervais_datavision, glen_rose, golden_belt, green_hills, greenwood, grm, h_and_b, harrisonville, heart_iowa, hempfield, 
-	hiawatha, htc, hudson, huntsville, in_shore, iowa, its, kane, karns_city, ketchikan, ksl_group, la_valle, lakeland, laporte, 
-	lebanon, lemonweir_valley, logan, maine, manawa, manheim, marion, marne_elk, matanuska_susitna, mbo,
+	hiawatha, htc, hudson, huntsville, in_shore, iowa, its, kane, karns_city, ketchikan, ksl_group, la_valle, lakeland, lakeview, 
+	laporte, lebanon, lemonweir_valley, logan, maine, manawa, manheim, marion, marne_elk, matanuska_susitna, mbo,
 	mccormack, mckenzie, mcleod, middleburgh, midstate, mifflin, mississippi, moniteau, monon, montana, mtc, mte, navajo, nctc, nemr, 
-	new_mexico, newton, nextech, nogales, north_carolina, northampton, octorara, ohio, oran, oregon_farmers, ortelco, otelco, 
-	palestine, paul_bunyan, peoples_rural, peoples_telecom, phoenixville, pinnacle, pioneer, pmt, portage, pottawatomie, premier, 
+	new_mexico, newton, nextech, nogales, north_carolina, northampton, nu_telecom, octorara, ohio, oran, oregon_farmers, ortelco, otelco, 
+	pa_cyber, palestine, panhandle, park_region, paul_bunyan, peoples_rural, peoples_telecom, phoenixville, pinnacle, pioneer, pmt, 
+	portage, pottawatomie, premier, 
 	puerto_rico, range_telephone, red_river, redbank, revere, richland_grant, ritter, rock, rock_island, roome, round_rock, rt_comm, 
-	runestone, s_and_a, sacred_wind, shade_central, sierra, silver_star, siskiyou, snc, somerset, souderton, south_central, south_middleton,
-	southwest_arkansas, southwest_texas, spring_grove, srtc, stayton, sunesys, tca, tec, telalaska, toledotel, totah_totel, united, 
+	runestone, s_and_a, sacred_wind, sdta, shade_central, sierra, silver_star, siskiyou, snc, somerset, souderton, south_central, 
+	south_middleton, southwest_arkansas, southwest_texas, spring_grove, spring_grove_comm, srtc, stayton, sunesys, 
+	tca, tec, telalaska, toledotel, totah_totel, tri_county, tussey, twin_valley, union_tel, united, 
 	united_com, upper_dauphin, us_connect, van_buren, van_horne, wabash, waldron, wayne_highlands, weatherly, west_carolina_tel, 
-	west_central, west_liberty, west_texas_rural, west_virginia, wikstrom, wilson, winthrop, xit, yadtel, yelcot
+	west_central, west_liberty, west_texas_rural, west_virginia, western_iowa, wikstrom, wilson, winthrop, wittenberg, xit, 
+	yadtel, yelcot
 from fabric.master7
 );
 
