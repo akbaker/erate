@@ -5,6 +5,9 @@ into fabric.lib_master7
 from analysis.imls_lib_2012;
 ----17586 records
 
+ALTER TABLE fabric.lib_master7
+ ADD COLUMN gid SERIAL PRIMARY KEY;
+
 delete from fabric.lib_master7
 where c_out_ty = 'BM' or c_out_ty = 'BS';
 
@@ -937,7 +940,7 @@ select libid, fiber_map
 from fabric.lib_master6
 )
 update fabric.lib_master7
-set fiber_v4 = new_values.fiber_map
+set fiber_v5 = new_values.fiber_map
 from new_values
 where lib_master7.libid = new_values.libid;
 
@@ -996,3 +999,10 @@ from fabric.lib_master7
 );
 
 copy(select * from fabric.libmap_fiber) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber_publish.csv' with delimiter '|' CSV header;
+
+DROP TABLE IF EXISTS analysis.erate_library_map_fiber;
+
+CREATE TABLE analysis.erate_library_map_fiber AS(
+SELECT gid, fscskey, system_name, libid, libname, c_out_ty AS lib_type, geom, visits, score_map, fiber_map
+FROM fabric.lib_master7
+);
