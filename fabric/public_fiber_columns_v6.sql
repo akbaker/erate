@@ -604,3 +604,26 @@ where facility = 'FTTP';
 update fabric.sdta
 set fiber = -9
 where facility in ('FTTN','Copper','WISP');
+
+--SOUTH CAROLINA
+alter table fabric.sc_ind
+drop column if exists fiber;
+alter table fabric.sc_ind
+add column fiber int;
+
+update fabric.sc_ind
+set fiber = 9
+where cxn_tech = 'Fiber';
+
+--ALABAMA
+alter table fabric.al_ind
+drop column if exists fiber;
+alter table fabric.al_ind
+add column fiber int;
+
+update fabric.al_ind
+set fiber = 9
+where cxn_tech = 'Fiber';
+update fabric.al_ind
+set fiber = -9
+where cxn_tech <> 'Fiber';

@@ -507,6 +507,46 @@ set sdta = new_values.fiber
 from new_values
 where ncessch = nces_id;
 
+update fabric.master7
+set sdta = 9
+where ncessch in ('468044100486','468044100450','468044100493','590013400162','464638000415','464638000416','464638000922',
+	'468044100449','590018100161','467560000698','467560000699','467560001326');
+
+
+--SOUTH CAROLINA
+alter table fabric.master7
+drop column if exists south_carolina;
+alter table fabric.master7
+add column south_carolina int;
+
+with new_values as(
+select nces_id, fiber
+from fabric.sc_ind
+)
+update fabric.master7
+set south_carolina = new_values.fiber
+from new_values
+where ncessch = nces_id;
+
+--ALABAMA
+alter table fabric.master7
+drop column if exists alabama;
+alter table fabric.master7
+add column alabama int;
+
+update fabric.al_ind
+set nces_id = '0' || nces_id 
+where length(nces_id) = 11;
+
+with new_values as(
+select nces_id, fiber
+from fabric.al_ind
+)
+update fabric.master7
+set alabama = new_values.fiber
+from new_values
+where ncessch = nces_id;
+
 --EMAIL SUBMISSIONS
 alter table fabric.master7
 	add column revere int,
@@ -858,7 +898,8 @@ where leaid = '2700104' or ncessch = '271389000714';
 
 update fabric.master7
 set golden_belt = 9
-where leaid = '2008220' or leaid = '2009060' or leaid = '2009930' or leaid = '2004020' or leaid = '2000020';
+where leaid = '2008220' or leaid = '2009060' or leaid = '2009930' or leaid = '2004020' or leaid = '2000020' or leaid = '2011910'
+	or leaid = '2008700';
 	
 update fabric.master7
 set united = 9
@@ -1396,13 +1437,13 @@ add column lakeview int,
 add column spring_grove_comm int,
 add column park_region int,
 add column panhandle int,
-add column park_region int,
 add column tri_county int,
 add column wittenberg int,
 add column nu_telecom int,
 add column pa_cyber int,
 add column western_iowa int,
-add column east_strodsburg int;
+add column east_strodsburg int,
+add column dtc int;
 
 update fabric.master7
 set rock = 9
@@ -1635,6 +1676,9 @@ set east_strodsburg = 9
 where ncessch in ('420867000373','420867006798','420867000518','420867006935','420867003204','420867000051','420867000522',
 	'420867003201','420867000130','420867003202');
 
+update fabric.master7
+set dtc = 9
+where ncessch in ('470099001246','470099000324','470099000323','470099002117','470099000325');
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
@@ -1644,13 +1688,14 @@ alter table fabric.master7
 	add column score_map int;
 
 with new_values as(
-select ncessch, coalesce(advanced,0) + coalesce(alenco_comm,0) + coalesce(alliance,0) + coalesce(alpine,0) + coalesce(arlington,0) 
+select ncessch, coalesce(advanced,0) + coalesce(alabama,0) + coalesce(alenco_comm,0) + coalesce(alliance,0) + coalesce(alpine,0) 
+	+ coalesce(arlington,0) 
 	+ coalesce(atc,0) + coalesce(bainbridge_island,0) + coalesce(bellwood_antis,0) + coalesce(bie,0) + coalesce(blackfoot,0) 
 	+ coalesce(blue_mountain,0) + coalesce(bps,0) 
 	+ coalesce(butler_bremer,0) + coalesce(c_spire,0) + coalesce(cai,0) + coalesce(california,0) + coalesce(chariton_valley,0)
 	+ coalesce(cimarron,0) + coalesce(citizens,0) + coalesce(clear_lake,0) + coalesce(com_net,0) + coalesce(comm1_net,0) 
 	+ coalesce(cross_tel,0) + coalesce(ctc,0) + coalesce(cunningham,0) 
-	+ coalesce(dakota,0) + coalesce(dc,0) + coalesce(dobson,0) + coalesce(downingtown,0) + coalesce(dubois,0) 
+	+ coalesce(dakota,0) + coalesce(dc,0) + coalesce(dobson,0) + coalesce(downingtown,0) + coalesce(dtc,0) + coalesce(dubois,0) 
 	+ coalesce(dubois_telephone,0) + coalesce(dumont,0) + coalesce(dupage,0) + coalesce(east_strodsburg,0) + coalesce(eastex,0) 
 	+ coalesce(eastland,0) + coalesce(elmwood,0) + coalesce(endeavor,0) + coalesce(eureka,0)
 	+ coalesce(farmers,0) + coalesce(fatbeam,0) + coalesce(fibercomm,0) + coalesce(fidelity,0) + coalesce(florida,0) + coalesce(fort_laboeuf,0) 
@@ -1683,8 +1728,8 @@ select ncessch, coalesce(advanced,0) + coalesce(alenco_comm,0) + coalesce(allian
 	+ coalesce(rock_island,0) + coalesce(roome,0) + coalesce(round_rock,0) + coalesce(rt_comm,0) + coalesce(runestone,0) 
 	+ coalesce(s_and_a,0) + coalesce(sacred_wind,0) + coalesce(sdta,0)
 	+ coalesce(shade_central,0) + coalesce(sierra,0) + coalesce(silver_star,0) + coalesce(siskiyou,0) 
-	+ coalesce(snc,0) + coalesce(somerset,0) 
-	+ coalesce(souderton,0) + coalesce(south_central,0) + coalesce(south_middleton,0) + coalesce(southwest_arkansas,0)
+	+ coalesce(snc,0) + coalesce(somerset,0) + coalesce(souderton,0) + coalesce(south_carolina,0)
+	+ coalesce(south_central,0) + coalesce(south_middleton,0) + coalesce(southwest_arkansas,0)
 	+ coalesce(southwest_texas,0) 
 	+ coalesce(spring_grove,0) + coalesce(spring_grove_comm,0)
 	+ coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunesys,0) + coalesce(tca,0) + coalesce(tec,0)
@@ -1803,9 +1848,9 @@ drop table if exists fabric.map_fiber;
 create table fabric.map_fiber as(
 select ncessch AS nces_id, schnam AS school_name, leaid AS lea_id, leanm AS lea_name, lcity AS city, lstate AS state, 
 	ulocal AS locale, member AS enrollement, geom, fiber_map AS fiber_v6, fiber_v5, fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score,
-	advanced, alenco_comm, alliance, alpine, arlington, atc, bainbridge_island, bellwood_antis, bie, blackfoot, blue_mountain, bps, 
-	butler_bremer, c_spire, cai, california, chariton_valley, cimarron, citizens, clear_lake, com_net, comm1_net, cross_tel, ctc, 
-	cunningham, dakota, dc, dobson, downingtown, dubois, dubois_telephone, dumont, dupage, east_strodsburg, eastex, eastland, elmwood,
+	advanced, alabama, alenco_comm, alliance, alpine, arlington, atc, bainbridge_island, bellwood_antis, bie, blackfoot, blue_mountain, 
+	bps, butler_bremer, c_spire, cai, california, chariton_valley, cimarron, citizens, clear_lake, com_net, comm1_net, cross_tel, ctc, 
+	cunningham, dakota, dc, dobson, downingtown, dtc, dubois, dubois_telephone, dumont, dupage, east_strodsburg, eastex, eastland, elmwood,
 	endeavor, eureka, farmers, fatbeam, fibercomm, fidelity, florida, fort_laboeuf, franklin, ftc, galena, ganado, garden_valley, 
 	georgia, gervais_datavision, glen_rose, golden_belt, green_hills, greenwood, grm, h_and_b, harrisonville, heart_iowa, hempfield, 
 	hiawatha, htc, hudson, huntsville, in_shore, iowa, its, kane, karns_city, ketchikan, ksl_group, la_valle, lakeland, lakeview, 
@@ -1815,8 +1860,8 @@ select ncessch AS nces_id, schnam AS school_name, leaid AS lea_id, leanm AS lea_
 	pa_cyber, palestine, panhandle, park_region, paul_bunyan, peoples_rural, peoples_telecom, phoenixville, pinnacle, pioneer, pmt, 
 	portage, pottawatomie, premier, 
 	puerto_rico, range_telephone, red_river, redbank, revere, richland_grant, ritter, rock, rock_island, roome, round_rock, rt_comm, 
-	runestone, s_and_a, sacred_wind, sdta, shade_central, sierra, silver_star, siskiyou, snc, somerset, souderton, south_central, 
-	south_middleton, southwest_arkansas, southwest_texas, spring_grove, spring_grove_comm, srtc, stayton, sunesys, 
+	runestone, s_and_a, sacred_wind, sdta, shade_central, sierra, silver_star, siskiyou, snc, somerset, souderton, south_carolina,
+	south_central, south_middleton, southwest_arkansas, southwest_texas, spring_grove, spring_grove_comm, srtc, stayton, sunesys, 
 	tca, tec, telalaska, toledotel, totah_totel, tri_county, tussey, twin_valley, union_tel, united, 
 	united_com, upper_dauphin, us_connect, van_buren, van_horne, wabash, waldron, wayne_highlands, weatherly, west_carolina_tel, 
 	west_central, west_liberty, west_texas_rural, west_virginia, western_iowa, wikstrom, wilson, winthrop, wittenberg, xit, 
