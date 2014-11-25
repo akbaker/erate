@@ -7,8 +7,8 @@ CREATE TABLE fabric.vt_lib
 	city character varying(50),
 	zip character varying(5),
 	county character varying(50),
-	phone character varying(10)
-	
+	phone character varying(10),
+	library_id character varying(10)
 )	
 WITH (
   OIDS=FALSE
