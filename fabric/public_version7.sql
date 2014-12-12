@@ -881,7 +881,7 @@ where ncessch = '480000600274' or ncessch = '480000600275' or ncessch = '4809980
 	or ncessch = '481587001153' or ncessch = '482262002298' or ncessch = '482274002304' or ncessch = '482274002305'
 	or ncessch = '482340002374' or ncessch = '482340002375' or ncessch = '482340006118' or ncessch = '482587005525'
 	or ncessch = '482587005526' or ncessch = '483197003552' or ncessch = '483197003553' or ncessch = '482587005527'
-	or ncessch = '483396003777' or ncessch = '482274011279' or ncessch = '483828004270' or leaid = '4004350';
+	or ncessch = '483396003777' or ncessch = '482274011279' or ncessch = 'bbmap_block_geog_lookup_dec2013270' or leaid = '4004350';
 
 update fabric.master7
 set southwest_texas = 9
@@ -1574,7 +1574,7 @@ set weatherly = 9
 where ncessch in ('422514001327','422514006838','422514006446');
 
 update fabric.master7
-set oran = 9
+set oran  = 9
 where ncessch in ('1929760011700','192976001694');
 
 update fabric.master7
@@ -1704,7 +1704,10 @@ add column three_rivers int,
 add column filer int,
 add column ponderosa int,
 add column north_arkansas int,
-add column pinnacle int;
+add column pinnacle int,
+add column allen int,
+add column ferndale int,
+add column triangle int;
 
 update fabric.master7
 set cameron = 9
@@ -1756,6 +1759,26 @@ where ncessch in ('050615000330','050615000331','050615000277','050342000102','0
 update fabric.master7
 set pinnacle = 9
 where leaid in ('4023370', '4027450');
+
+update fabric.master7
+set allen = 9
+where ncessch in ('210007000009','210007000008','210007000013','210007000010','210007002061');
+
+update fabric.master7
+set ferndale = -9
+where ncessch in ('420975001225','420975001223');
+
+update fabric.master7
+set triangle = 9
+where ncessch in ('3014150','3013590','3013560','3004440','3004500','3000096','3000097','3022750','3028911','3003000','3006260',
+	'3006270','3004050','3013395','3013400','3013660','3019310','3026640','3026670','3028910','3009120','3017580','3000098',
+	'3000101','3003760','3003750','3011240','3011260','3012210','3014430','3024990','3013470','3015360','3015390','3003800',
+	'3025560','3022230','3022260','3008860','3008850','3010530','3018870','3018900','3028750','3028770');
+
+update fabric.master7
+set triangle = -9
+where ncessch in ('3012350','3027930','3013440','3023850','3013140','3018060','3018290','3018660','3021870','3021900','3028380',
+	'3004890','3004920');
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE

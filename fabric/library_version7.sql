@@ -840,7 +840,8 @@ where libid in ('MN0051-002','MN0051-003','MN0051-004','MN0051-005','MN0051-007'
 alter table fabric.lib_master7
 add column madison_county int,
 add column cameron int,
-add column allegheny int;
+add column allegheny int,
+add column sturm int;
 
 update fabric.lib_master7
 set madison_county = 9
@@ -858,7 +859,9 @@ update fabric.lib_master7
 set allegheny = 9
 where libid in ('PA0042-003','PA0050-003','PA0034-005','PA0034-003') OR fscskey in ('PA0051','PA0513');
 
-
+update fabric.lib_master7
+set sturm = 9
+where fscskey = 'WI0177';
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE
