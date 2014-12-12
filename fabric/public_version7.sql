@@ -1701,7 +1701,10 @@ where ncessch in ('080729001258','080729001257','080729006394','080255000143','0
 alter table fabric.master7
 add column  cameron int,
 add column three_rivers int,
-add column filer int;
+add column filer int,
+add column ponderosa int,
+add column north_arkansas int,
+add column pinnacle int;
 
 update fabric.master7
 set cameron = 9
@@ -1732,15 +1735,27 @@ update fabric.master7
 set filer = 9
 where ncessch in ('160105000193','160105001006','160105000631','160105000194','320012000132','320012000579','320012000692');
 
-
 update fabric.master7
 set filer = 9
 where ncessch = '160105000195';
 
+update fabric.master7
+set ponderosa = 9
+where ncessch in ('60486000476','60011609296','60011609482','60011612212','60011607170','60011612495','60011613035');
 
+update fabric.master7
+set ponderosa = -9
+where ncessch in ('63680503059','63680507971','63039004737','63680500409','63680500399','63680512899','63680500401','60011611163',
+	'60011607169','60011610544');
 
+update fabric.master7
+set north_arkansas = 9
+where ncessch in ('050615000330','050615000331','050615000277','050342000102','050342000103','051092000820','051092000821',
+	'050007600685','050007600686');
 
-
+update fabric.master7
+set pinnacle = 9
+where leaid in ('4023370', '4027450');
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
