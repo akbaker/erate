@@ -841,7 +841,12 @@ alter table fabric.lib_master8
 add column madison_county int,
 add column cameron int,
 add column allegheny int,
-add column sturm int;
+add column sturm int,
+add column southern_kansas int,
+add column ne_nebraska int,
+add column pinnacle int,
+add column filer int,
+add column ponderosa int;
 
 update fabric.lib_master8
 set madison_county = 9
@@ -862,6 +867,31 @@ where libid in ('PA0042-003','PA0050-003','PA0034-005','PA0034-003') OR fscskey 
 update fabric.lib_master8
 set sturm = 9
 where fscskey = 'WI0177';
+
+update fabric.lib_master8
+set southern_kansas = -9
+where libid in ('KS0200-002','KS0247-002','KS0198-002','KS0235-002','KS0248-002','KS8009-001',
+	'KS0242-002','KS0163-002','','KS0173-002');
+
+update fabric.lib_master8
+set ne_nebraska = 9
+where fscskey in ('NE9021','NE0210','NE0218','NE0251','NE0056','NE0053','NE0232');
+
+update fabric.lib_master8
+set pinnacle = 9
+where libid = 'AR0023-005';
+
+update fabric.lib_master8
+set filer = -9
+where libid = 'ID0030-002';
+
+update fabric.lib_master8
+set filer = 9
+where libid = 'NV0007-013';
+
+update fabric.lib_master8
+set ponderosa = -9
+where libid in ('CA0040-003','CA0040-005','CA0064-004','CA0040-031');
 
 -------------------------CORROBORATION SCORE------------------------------
 --MAP SCORE

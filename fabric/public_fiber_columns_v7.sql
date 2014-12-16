@@ -605,6 +605,15 @@ update fabric.sdta
 set fiber = -9
 where facility in ('FTTN','Copper','WISP');
 
+alter table fabric.sdta_addtl
+drop column if exists fiber;
+alter table fabric.sdta_addtl
+add column fiber int;
+
+update fabric.sdta_addtl
+set fiber = 9
+where facility = 'FTTP';
+
 --SOUTH CAROLINA
 alter table fabric.sc_ind
 drop column if exists fiber;

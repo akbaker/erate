@@ -512,6 +512,14 @@ set sdta = 9
 where ncessch in ('468044100486','468044100450','468044100493','590013400162','464638000415','464638000416','464638000922',
 	'468044100449','590018100161','467560000698','467560000699','467560001326');
 
+with new_values as(
+select nces_id, fiber
+from fabric.sdta_addtl
+)
+update fabric.master8
+set sdta = new_values.fiber
+from new_values
+where ncessch = nces_id;
 
 --SOUTH CAROLINA
 alter table fabric.master8
@@ -1722,7 +1730,8 @@ add column north_arkansas int,
 add column pinnacle int,
 add column allen int,
 add column ferndale int,
-add column triangle int;
+add column triangle int,
+add column southern_kansas int;
 
 update fabric.master8
 set cameron = 9
@@ -1794,6 +1803,15 @@ update fabric.master8
 set triangle = -9
 where ncessch in ('3012350','3027930','3013440','3023850','3013140','3018060','3018290','3018660','3021870','3021900','3028380',
 	'3004890','3004920');
+
+update fabric.master8
+set southern_kansas = 9
+where leaid in ('2004920','2007500','2003900','2004230','2011220');
+
+update fabric.master8
+set southern_kansas = -9
+where leaid in ('2008550','2005760','2004500','2005520');
+
 
 --------------------------------CORROBORATION SCORING----------------------------------
 --MAP SCORE
