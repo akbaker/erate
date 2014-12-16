@@ -854,7 +854,7 @@ where libid = 'AR0049-004';
 
 update fabric.lib_master8
 set cameron = 9
-where libid in ('LA0012-001','LA0012-008','LA0012-005','LA0012-006','LA0012-007')
+where libid in ('LA0012-001','LA0012-008','LA0012-005','LA0012-006','LA0012-007');
 
 update fabric.lib_master8
 set cameron = -9
@@ -901,28 +901,31 @@ alter table fabric.lib_master8
 	add column score_map int;
 
 with new_values as(
-select libid, coalesce(alliance,0) + coalesce(armstrong,0) + coalesce(ayrshire,0) + coalesce(blackfoot,0) + coalesce(blue_ridge,0) 
-	+ coalesce(bolivar,0) + coalesce(bucks,0)
+select libid, coalesce(allegheny,0) + coalesce(alliance,0) + coalesce(armstrong,0) + coalesce(ayrshire,0) 
+	+ coalesce(blackfoot,0) + coalesce(blue_ridge,0) 
+	+ coalesce(bolivar,0) + coalesce(bucks,0) + coalesce(cameron,0)
 	 + coalesce(c_spire,0) + coalesce(cai,0) + coalesce(carnegie,0) + coalesce(cascade_com,0) + coalesce(central_mississippi,0)
 	 + coalesce(clear_lake,0) + coalesce(columbus_lowndes,0) + coalesce(com_net,0) + coalesce(comm1_net,0) + coalesce(copiah_jefferson,0)
 	 + coalesce(corinth,0)  + coalesce(covington,0) + coalesce(cross_tel,0) + coalesce (ctc,0) + coalesce(cunningham,0) 
 	 + coalesce(dc,0) + coalesce(dixie,0) + coalesce(dobson,0)
 	 + coalesce(dubois_telephone,0) + coalesce(dumont,0) + coalesce(einetwork,0) + coalesce(endeavor,0)
-	 + coalesce(fibercomm,0) + coalesce(fidelity,0) + coalesce(first_regional,0) + coalesce(fontana,0) 
+	 + coalesce(fibercomm,0) + coalesce(fidelity,0) + coalesce(filer,0) + coalesce(first_regional,0) + coalesce(fontana,0) 
 	 + coalesce(gervais_datavision,0) + coalesce(golden_belt,0)
 	 + coalesce(grantsburg,0) + coalesce(h_and_b,0) + coalesce(harriette,0) + coalesce(harrison,0) + coalesce(heart_iowa,0) 
 	 + coalesce(iowa,0) + coalesce(jackson_george,0) + coalesce(jefferson,0)
 	 + coalesce(kansas,0) + coalesce(kemper_newton,0) + coalesce(la_valle,0) + coalesce(lamar,0) + coalesce(lee_itawamba,0) 
-	 + coalesce(lemonweir_valley,0) + coalesce(logan,0) + coalesce(madison,0)  
+	 + coalesce(lemonweir_valley,0) + coalesce(logan,0) + coalesce(madison,0) + coalesce(madison_county,0) 
 	 + coalesce(maine,0) + coalesce(manawa,0) 
 	 + coalesce(marks_quitman,0) + coalesce(mccormack,0) + coalesce(meridian_lauderdale,0) + coalesce(mid_mississippi,0) 
-	 + coalesce(missouri,0) + coalesce(mtc,0) + coalesce(nemr,0) + coalesce(new_york,0) + coalesce(nextech,0)
+	 + coalesce(missouri,0) + coalesce(mtc,0) + coalesce(ne_nebraska,0) + coalesce(nemr,0) + coalesce(new_york,0) + coalesce(nextech,0)
 	 + coalesce(northwest,0) + coalesce(nu_telecom,0) + coalesce(ohio,0) 
 	 + coalesce(panhandle,0) + coalesce(panora,0) + coalesce(park_region,0) + coalesce(paul_bunyan,0) + coalesce(pearl_river,0) 
-	 + coalesce(peoples_rural,0) + coalesce(peoples_telecom,0) + coalesce(pike,0) + coalesce(pioneer,0) + coalesce(premier,0) 
+	 + coalesce(peoples_rural,0) + coalesce(peoples_telecom,0) + coalesce(pike,0) + coalesce(pinnacle,0)
+	 + coalesce(pioneer,0) + coalesce(ponderosa,0) + coalesce(premier,0) 
 	 + coalesce(range_telephone,0) + coalesce(richland_grant,0)
 	 + coalesce(rt_comm,0) + coalesce(scmtc,0) + coalesce(siskiyou,0) + coalesce(smrl,0) + coalesce(south_carolina,0) 
-	 + coalesce(spring_grove_comm,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sunflower,0)
+	 + coalesce(southern_kansas,0)
+	 + coalesce(spring_grove_comm,0) + coalesce(srtc,0) + coalesce(stayton,0) + coalesce(sturm,0) + coalesce(sunflower,0)
 	 + coalesce(tallahatchie,0) + coalesce(toledotel,0) + coalesce(tombigbee,0) + coalesce(triangle,0) + coalesce(tri_county,0)
 	 + coalesce(twin_valley,0)
 	 + coalesce(union_tel,0) + coalesce(united,0) + coalesce(us_connect,0) + coalesce(van_horne,0)
@@ -977,17 +980,28 @@ from fabric.lib_master8;
 --copy(select * from fabric.libmap) to '/Users/FCC/Documents/allison/E-rate analysis/Maps/library_map_fiber.csv' with delimiter '|' CSV header;
 
 alter table fabric.lib_master8
+	drop column if exists fiber_v6,
 	drop column if exists fiber_v5,
 	drop column if exists fiber_v4,
 	drop column if exists fiber_v3,
 	drop column if exists fiber_v2,
 	drop column if exists fiber_v1;
 alter table fabric.lib_master8
+	add column fiber_v6 int,
 	add column fiber_v5 int,
 	add column fiber_v4 int,
 	add column fiber_v3 int,
 	add column fiber_v2 int,
 	add column fiber_v1 int;
+
+with new_values as(
+select libid, fiber_map
+from fabric.lib_master7
+)
+update fabric.lib_master8
+set fiber_v6 = new_values.fiber_map
+from new_values
+where lib_master8.libid = new_values.libid;
 
 with new_values as(
 select libid, fiber_map
@@ -1037,15 +1051,15 @@ where lib_master8.libid = new_values.libid;
 drop table if exists fabric.libmap_fiber;
 create table fabric.libmap_fiber as(
 select fscskey AS fscs_key, system_name, libid AS library_id, libname AS library_name, c_out_ty AS library_type, geom, visits, 
-	fiber_map AS fiber_v6, fiber_v5, fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score, 
-	alliance, armstrong, ayrshire, blackfoot, blue_ridge, bolivar, bucks, c_spire, cai, carnegie, cascade_com, central_mississippi, 
+	fiber_map AS fiber_v7, fiber_v6, fiber_v5, fiber_v4, fiber_v3, fiber_v2, fiber_v1, score_map AS score, 
+	allegheny, alliance, armstrong, ayrshire, blackfoot, blue_ridge, bolivar, bucks, c_spire, cai, cameron, carnegie, cascade_com, central_mississippi, 
 	clear_lake, columbus_lowndes, com_net, comm1_net, copiah_jefferson, corinth, covington, cross_tel, ctc, cunningham, dc, dixie, 
-	dobson, dubois_telephone, dumont, einetwork, endeavor, fibercomm, fidelity, first_regional, fontana,
+	dobson, dubois_telephone, dumont, einetwork, endeavor, fibercomm, fidelity, filer, first_regional, fontana,
 	gervais_datavision, golden_belt, grantsburg, h_and_b, harriette, harrison, heart_iowa, iowa, jackson_george, jefferson, kansas, 
 	kemper_newton, la_valle, lamar, lee_itawamba, lemonweir_valley, logan,
-	madison, maine, manawa, marks_quitman, mccormack, meridian_lauderdale, mid_mississippi, missouri, mtc, nemr, new_york, nextech, 
-	northwest, nu_telecom, ohio, panhandle, panora, park_region, paul_bunyan, pearl_river, peoples_rural, peoples_telecom, pike, 
-	pioneer, premier, range_telephone, richland_grant, rt_comm, scmtc, siskiyou, smrl, south_carolina, spring_grove_comm, srtc, stayton,
+	madison, madison_county, maine, manawa, marks_quitman, mccormack, meridian_lauderdale, mid_mississippi, missouri, mtc, ne_nebraska, nemr, new_york, nextech, 
+	northwest, nu_telecom, ohio, panhandle, panora, park_region, paul_bunyan, pearl_river, peoples_rural, peoples_telecom, pike, pinnacle, 
+	pioneer, ponderosa, premier, range_telephone, richland_grant, rt_comm, scmtc, siskiyou, smrl, south_carolina, southern_kansas, spring_grove_comm, srtc, stayton, sturm,
 	sunflower, tallahatchie, toledotel, tombigbee, triangle, twin_valley, union_tel, united, us_connect, van_horne, vermont, wabash, 
 	waynesboro_wayne, webster_calhoun, west_carolina_tel, west_liberty, westel, western_iowa, wilkinson, wilson, winthrop, wittenberg,
 	xit, yalobusha, yazoo
